@@ -262,11 +262,11 @@ A: Ocena ryzyka: [POZIOM] ([N]/10) — [top 2–3 tematy jednym zdaniu].
 ```
 
 **3 "Tematy wymagające uwagi" cards:**
-- Select the 3 transactions with the highest PLN value that have a methodological question or documentation matter
+- Select up to 3 transactions with the highest PLN value that have a methodological question or documentation matter. If fewer than 3 such transactions exist, include all of them.
 - Format: [KATEGORIA] | [Nazwa transakcji] | [Kwota PLN]
 - One sentence: konkretna kwestia metodologiczna lub dokumentacyjna — pisana na poziomie senior TP, bez tłumaczenia pojęć
 
-Category labels: FINANSOWANIE / LICENCJA / JV / USŁUGI / GWARANCJE / INSTRUMENTY / INNE
+Category labels: FINANSOWANIE / LICENCJA / JV / USŁUGI (incl. management fees, B+R, refaktury) / GWARANCJE / INSTRUMENTY / INNE
 
 #### Action Titles — section headers
 
