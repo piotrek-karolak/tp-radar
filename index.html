@@ -3,20 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TP Radar — Transfer Pricing Dashboard</title>
+  <title>TP Radar — Transfer Pricing Intelligence</title>
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
 <header>
-  <h1>TP Radar</h1>
-  <p class="subtitle">Automatyczna analiza ryzyk Transfer Pricing polskich spółek</p>
-  <span class="stats" id="stats">Ładowanie...</span>
+  <div class="header-inner">
+    <div class="header-eyebrow">Transfer Pricing Intelligence · Polska</div>
+    <h1>TP <span>Radar</span></h1>
+    <p class="header-sub">Automatyczna analiza ryzyk Transfer Pricing polskich spółek na podstawie sprawozdań finansowych z e-KRS</p>
+    <div class="header-stats">
+      <div class="stat-block">
+        <div class="stat-num" id="stat-total">—</div>
+        <div class="stat-label">Spółek w bazie</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num" id="stat-critical">—</div>
+        <div class="stat-label">Critical risk</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num" id="stat-high">—</div>
+        <div class="stat-label">High risk</div>
+      </div>
+    </div>
+  </div>
 </header>
 
 <div class="filter-bar">
   <select id="filter-risk">
-    <option value="all">Wszystkie poziomy ryzyka</option>
+    <option value="all">Wszystkie poziomy</option>
     <option value="CRITICAL">CRITICAL</option>
     <option value="HIGH">HIGH</option>
     <option value="MEDIUM">MEDIUM</option>
@@ -36,21 +52,17 @@
 </div>
 
 <footer>
-  TP Radar · Dane ze sprawozdań finansowych (e-KRS) · Analiza: Claude Code
+  TP Radar · Dane ze sprawozdań finansowych (e-KRS / RDF) · Analiza: Claude Code · 2026
 </footer>
 
-<!-- Add company modal -->
+<!-- Modal -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <button class="modal-close" id="modal-close">&times;</button>
     <h2>Dodaj spółkę do analizy</h2>
-    <p style="color:#555;font-size:14px;line-height:1.6;">
-      Otwórz Claude Code w katalogu projektu tp-radar i wpisz:
-    </p>
+    <p>Otwórz Claude Code w katalogu projektu <code>tp-radar</code> i wpisz:</p>
     <div class="modal-command">analizuj [nazwa spółki]</div>
-    <p style="color:#888;font-size:12px;line-height:1.5;">
-      Claude Code automatycznie pobierze sprawozdanie finansowe z e-KRS, przeprowadzi analizę ryzyk TP i opublikuje wyniki na tej stronie (~5 minut).
-    </p>
+    <p style="font-size:12px;color:#b0a898;">Claude Code automatycznie pobierze sprawozdanie finansowe z e-KRS, przeprowadzi analizę ryzyk TP i opublikuje wyniki (~5 minut).</p>
   </div>
 </div>
 

@@ -3,636 +3,782 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WB Electronics S.A. — Analiza ryzyk Transfer Pricing 2024</title>
+  <title>WB Electronics S.A. — Analiza TP 2024</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #f5f1ea;
+      --surface:      #ffffff;
+      --surface-dim:  #faf8f4;
+      --border:       #ddd8cc;
+      --border-light: #ece8e0;
+      --text:         #1a1714;
+      --text-muted:   #7a7068;
+      --text-faint:   #b0a898;
+      --brand:        #1a1714;
+      --accent:       #b91c1c;
+      --critical:     #dc2626;
+      --high:         #ea580c;
+      --medium:       #b45309;
+      --low:          #15803d;
+      --critical-bg:  #fef2f2;
+      --high-bg:      #fff7ed;
+      --medium-bg:    #fffbeb;
+      --low-bg:       #f0fdf4;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-ui:      'DM Sans', system-ui, sans-serif;
+      --font-mono:    'DM Mono', 'Courier New', monospace;
+    }
 
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: #f4f5f7;
-      color: #1a1a2e;
+      font-family: var(--font-ui);
+      background: var(--bg);
+      color: var(--text);
       font-size: 14px;
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
-    header {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
-      color: white;
-      padding: 48px 40px 36px;
-      position: relative;
-      overflow: hidden;
+    /* ── Back link ── */
+    .back-link {
+      display: inline-block;
+      margin: 18px 32px;
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      letter-spacing: 0.3px;
+      transition: color 0.15s;
     }
-    header::before {
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Header ── */
+    .report-header {
+      background: var(--brand);
+      color: #f5f1ea;
+      padding: 52px 40px 44px;
+      border-bottom: 3px solid var(--accent);
+      position: relative;
+    }
+    .report-header::after {
       content: '';
       position: absolute;
-      top: -80px; right: -80px;
-      width: 350px; height: 350px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.04);
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(245,241,234,0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+    .report-header-inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; }
+
+    .report-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
     }
 
-    .header-tag {
-      font-size: 11px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      opacity: 0.6;
+    .report-title {
+      font-family: var(--font-display);
+      font-size: 52px;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: 1;
       margin-bottom: 10px;
     }
 
-    h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 6px; }
-    .header-sub { font-size: 16px; opacity: 0.75; margin-bottom: 24px; }
-
-    .header-meta {
-      display: flex; gap: 12px; flex-wrap: wrap;
+    .report-subtitle {
+      font-size: 15px;
+      color: rgba(245,241,234,0.55);
+      font-weight: 300;
+      margin-bottom: 28px;
     }
-    .meta-chip {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 20px;
-      padding: 5px 14px;
-      font-size: 12px;
+
+    .header-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
     }
-    .meta-chip.warning { background: rgba(239,68,68,0.2); border-color: rgba(239,68,68,0.4); }
-    .meta-chip.ok { background: rgba(34,197,94,0.2); border-color: rgba(34,197,94,0.3); }
 
-    .container { max-width: 1200px; margin: 0 auto; padding: 36px 24px; }
+    .chip {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 4px 12px;
+      border-radius: 2px;
+      background: rgba(245,241,234,0.1);
+      border: 1px solid rgba(245,241,234,0.18);
+      color: rgba(245,241,234,0.75);
+    }
 
+    .chip.risk-high {
+      background: rgba(234,88,12,0.25);
+      border-color: rgba(234,88,12,0.5);
+      color: #fed7aa;
+      font-weight: 500;
+    }
+
+    /* ── Container ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    /* ── Section label ── */
     .section-label {
+      font-family: var(--font-mono);
       font-size: 10px;
-      letter-spacing: 2.5px;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      font-weight: 700;
-      color: #0f3460;
-      border-left: 3px solid #0f3460;
-      padding-left: 10px;
-      margin: 36px 0 16px;
+      color: var(--text-muted);
+      border-left: 3px solid var(--accent);
+      padding-left: 12px;
+      margin: 44px 0 18px;
     }
 
-    /* RISK SCORE HEADER */
-    .risk-overview {
+    /* ── Summary KPI box ── */
+    .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 14px;
-      margin-bottom: 8px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
     }
 
-    .risk-card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px 22px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-      border: 1px solid rgba(0,0,0,0.06);
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 18px 20px;
+    }
+
+    .kpi-card .kv {
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .kpi-card .kl {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+    }
+
+    /* ── Risk score row ── */
+    .risk-score-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .score-card {
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 18px 20px;
       text-align: center;
     }
 
-    .risk-card .score {
-      font-size: 42px;
-      font-weight: 800;
+    .score-card .sv {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 1;
       margin-bottom: 4px;
+    }
+
+    .score-card .sl { font-size: 11px; color: var(--text-muted); }
+
+    .sv.critical { color: var(--critical); }
+    .sv.high     { color: var(--high); }
+    .sv.medium   { color: var(--medium); }
+    .sv.low      { color: var(--low); }
+    .sv.neutral  { color: var(--text); }
+
+    /* ── Financial metrics ── */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .metric {
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .metric .mv {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text);
       line-height: 1;
     }
-    .risk-card .score.red { color: #dc2626; }
-    .risk-card .score.orange { color: #ea580c; }
-    .risk-card .score.yellow { color: #ca8a04; }
-    .risk-card .score.green { color: #16a34a; }
 
-    .risk-card .label {
-      font-size: 11px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: #888;
-      margin-bottom: 4px;
+    .metric .mk { font-size: 10px; color: var(--text-muted); letter-spacing: 0.5px; }
+    .metric .mt { font-size: 10px; color: var(--text-faint); margin-top: 2px; }
+
+    .mv.ok   { color: var(--low); }
+    .mv.warn { color: var(--medium); }
+    .mv.bad  { color: var(--critical); }
+
+    /* ── Struct cards ── */
+    .struct-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 10px;
     }
-    .risk-card .value { font-size: 16px; font-weight: 600; color: #333; }
 
-    /* TRANSACTIONS TABLE */
+    .struct-card {
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 14px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .flag { font-size: 22px; }
+
+    .struct-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    .struct-loc  { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+    .struct-role { font-size: 11px; font-weight: 500; margin-top: 4px; }
+    .struct-role.full   { color: var(--low); }
+    .struct-role.major  { color: var(--medium); }
+    .struct-role.parent { color: var(--accent); }
+
+    /* ── Tables ── */
     .table-wrap {
-      background: white;
-      border-radius: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
       overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-      border: 1px solid rgba(0,0,0,0.06);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
-    .table-header {
-      background: #1a1a2e;
-      color: white;
-      padding: 16px 20px;
+    .table-head {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-light);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background: var(--surface-dim);
     }
 
-    .table-header h3 { font-size: 14px; font-weight: 600; }
-    .table-header span { font-size: 12px; opacity: 0.7; }
+    .table-head h3 { font-size: 13px; font-weight: 600; color: var(--text); }
+    .table-head span { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
 
     table { width: 100%; border-collapse: collapse; }
+
     thead th {
-      background: #f8f9ff;
-      padding: 11px 16px;
-      text-align: left;
-      font-size: 11px;
-      letter-spacing: 0.8px;
+      padding: 10px 16px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 1px;
       text-transform: uppercase;
-      color: #666;
-      border-bottom: 1px solid #eee;
+      color: var(--text-muted);
+      text-align: left;
+      border-bottom: 1px solid var(--border-light);
+      background: var(--surface-dim);
     }
-    thead th.right { text-align: right; }
+    thead th.r { text-align: right; }
 
-    tbody tr { border-bottom: 1px solid #f4f5f7; }
+    tbody tr { border-bottom: 1px solid var(--border-light); }
     tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: #fafbff; }
+    tbody tr:hover { background: var(--surface-dim); }
 
-    tbody td { padding: 11px 16px; font-size: 13px; vertical-align: middle; }
-    tbody td.right { text-align: right; font-variant-numeric: tabular-nums; }
-    tbody td.bold { font-weight: 700; }
-    tbody td.entity { font-weight: 600; color: #1a1a2e; }
+    tbody td { padding: 10px 16px; font-size: 13px; }
+    tbody td.r { text-align: right; font-family: var(--font-mono); }
+    tbody td.bold { font-weight: 600; }
+    tbody td.entity { font-weight: 600; color: var(--text); }
 
-    .total-row { background: #f0f2ff !important; border-top: 2px solid #c7d2fe !important; }
-    .total-row td { font-weight: 700; color: #1a1a2e; }
+    .total-row { background: #f0f0e8 !important; }
+    .total-row td { font-weight: 700; border-top: 2px solid var(--border); }
 
-    /* RISK BADGES */
-    .risk-badge {
+    /* ── Two-column layout ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media(max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Risk badges ── */
+    .badge {
       display: inline-block;
-      padding: 3px 10px;
-      border-radius: 12px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 2px;
+      font-weight: 500;
     }
-    .risk-badge.CRITICAL { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
-    .risk-badge.HIGH { background: #ffedd5; color: #c2410c; border: 1px solid #fdba74; }
-    .risk-badge.MEDIUM { background: #fef9c3; color: #854d0e; border: 1px solid #fde047; }
-    .risk-badge.LOW { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .badge.CRITICAL { background: var(--critical-bg); color: var(--critical); }
+    .badge.HIGH     { background: var(--high-bg);     color: var(--high); }
+    .badge.MEDIUM   { background: var(--medium-bg);   color: var(--medium); }
+    .badge.LOW      { background: var(--low-bg);      color: var(--low); }
 
-    /* RISK ANALYSIS CARDS */
-    .risk-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 8px; }
+    /* ── Risk analysis cards ── */
+    .risk-list { display: flex; flex-direction: column; gap: 10px; }
 
-    .risk-item {
-      background: white;
-      border-radius: 12px;
+    .risk-card {
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
       overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-      border: 1px solid rgba(0,0,0,0.06);
       display: flex;
     }
 
-    .risk-stripe {
-      width: 6px;
-      flex-shrink: 0;
-    }
-    .risk-stripe.CRITICAL { background: #dc2626; }
-    .risk-stripe.HIGH { background: #ea580c; }
-    .risk-stripe.MEDIUM { background: #ca8a04; }
-    .risk-stripe.LOW { background: #16a34a; }
+    .risk-stripe { width: 4px; flex-shrink: 0; }
+    .risk-stripe.CRITICAL { background: var(--critical); }
+    .risk-stripe.HIGH     { background: var(--high); }
+    .risk-stripe.MEDIUM   { background: var(--medium); }
+    .risk-stripe.LOW      { background: var(--low); }
 
-    .risk-content { padding: 18px 22px; flex: 1; }
+    .risk-body-inner { padding: 16px 20px; flex: 1; }
 
     .risk-title-row {
       display: flex;
-      align-items: center;
+      align-items: baseline;
       gap: 10px;
-      margin-bottom: 8px;
       flex-wrap: wrap;
+      margin-bottom: 8px;
     }
 
-    .risk-title { font-weight: 700; font-size: 15px; color: #1a1a2e; }
-    .risk-amount { font-size: 13px; font-weight: 600; color: #0f3460; background: #e0e7ff; border-radius: 6px; padding: 2px 10px; }
+    .risk-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
 
-    .risk-body { font-size: 13px; color: #444; line-height: 1.65; }
-    .risk-body strong { color: #1a1a2e; }
+    .risk-amt {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      background: var(--surface-dim);
+      border: 1px solid var(--border-light);
+      padding: 1px 8px;
+      border-radius: 2px;
+    }
 
-    .risk-bullets { margin-top: 10px; padding-left: 16px; }
-    .risk-bullets li { margin-bottom: 4px; color: #555; }
+    .risk-desc { font-size: 13px; color: #4a4540; line-height: 1.65; }
+    .risk-desc strong { color: var(--text); }
+
+    .risk-bullets { margin-top: 8px; padding-left: 16px; }
+    .risk-bullets li { margin-bottom: 3px; font-size: 12px; color: var(--text-muted); }
 
     .risk-rec {
-      margin-top: 12px;
-      background: #f0f4ff;
-      border-left: 3px solid #4f46e5;
-      padding: 10px 14px;
-      border-radius: 0 6px 6px 0;
+      margin-top: 10px;
+      border-left: 3px solid var(--brand);
+      padding: 8px 12px;
       font-size: 12px;
-      color: #3730a3;
-    }
-    .risk-rec strong { color: #312e81; }
-
-    /* STRUCTURE */
-    .structure-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 10px;
-      margin-bottom: 8px;
+      color: #3d3830;
+      background: var(--surface-dim);
+      border-radius: 0 4px 4px 0;
     }
 
-    .sub-card {
-      background: white;
-      border-radius: 10px;
-      padding: 14px 18px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      border: 1px solid rgba(0,0,0,0.06);
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-    }
-
-    .sub-flag { font-size: 22px; }
-    .sub-info { flex: 1; }
-    .sub-name { font-weight: 700; font-size: 13px; color: #1a1a2e; }
-    .sub-loc { font-size: 12px; color: #888; }
-    .sub-share { font-size: 12px; font-weight: 600; margin-top: 4px; }
-    .sub-share.full { color: #15803d; }
-    .sub-share.major { color: #ca8a04; }
-    .sub-share.minor { color: #dc2626; }
-
-    /* SUMMARY BOX */
-    .summary-box {
-      background: linear-gradient(135deg, #1a1a2e, #0f3460);
-      color: white;
-      border-radius: 12px;
-      padding: 28px 32px;
-      margin-bottom: 8px;
-    }
-    .summary-box h3 { font-size: 18px; margin-bottom: 16px; opacity: 0.85; font-weight: 500; }
-    .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
-    .summary-item { }
-    .summary-item .s-val { font-size: 26px; font-weight: 800; margin-bottom: 2px; }
-    .summary-item .s-label { font-size: 11px; opacity: 0.65; text-transform: uppercase; letter-spacing: 1px; }
-
-    /* NOTE */
-    .note-box {
+    /* ── Note / info box ── */
+    .info-box {
       background: #fffbeb;
-      border: 1px solid #fde68a;
-      border-left: 4px solid #f59e0b;
-      border-radius: 8px;
+      border: 1px solid #fcd34d;
+      border-left: 4px solid #b45309;
+      border-radius: 4px;
       padding: 14px 18px;
       font-size: 13px;
       color: #78350f;
-      margin-bottom: 8px;
       line-height: 1.65;
+      margin-bottom: 10px;
     }
 
-    .disclaimer-box {
-      background: #f1f5f9;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 14px 18px;
+    .info-box strong { color: #431407; }
+
+    /* ── Methodology ── */
+    .method-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 10px;
+    }
+
+    .method-box {
+      background: var(--surface-dim);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px 20px;
       font-size: 12px;
-      color: #64748b;
-      margin-top: 16px;
-      line-height: 1.65;
+      color: var(--text-muted);
+      line-height: 1.7;
     }
 
+    .method-box strong { color: var(--text); }
+
+    /* ── Footer ── */
     footer {
       text-align: center;
       padding: 28px;
-      font-size: 11px;
-      color: #aaa;
-      border-top: 1px solid #e5e7eb;
-      margin-top: 40px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-faint);
+      border-top: 1px solid var(--border);
+      letter-spacing: 0.5px;
     }
-
-    .bar-container { width: 100%; background: #f0f0f0; border-radius: 4px; height: 6px; margin-top: 6px; }
-    .bar-fill { height: 6px; border-radius: 4px; }
-    .bar-fill.red { background: #dc2626; }
-    .bar-fill.orange { background: #ea580c; }
-    .bar-fill.blue { background: #3b82f6; }
-
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    @media(max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
-
-    .back-link { display: inline-block; margin: 16px 24px; color: #005a9e; text-decoration: none; font-size: 14px; }
-    .back-link:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
 
-<a href="../index.html" class="back-link">← Powrót do dashboardu</a>
+<a href="../index.html" class="back-link">← powrót do dashboardu</a>
 
-<header>
-  <div class="header-tag">Analiza ryzyk · Transfer Pricing · Sprawozdanie jednostkowe 2024</div>
-  <h1>WB Electronics S.A.</h1>
-  <p class="header-sub">Identyfikacja i ocena ryzyk TP na podstawie sprawozdania finansowego za rok 2024</p>
-  <div class="header-meta">
-    <span class="meta-chip">KRS: 0000369722</span>
-    <span class="meta-chip">Ożarów Mazowiecki</span>
-    <span class="meta-chip">Spółka dominująca WB Group</span>
-    <span class="meta-chip">Sprawozdanie: 2024-01-01 – 2024-12-31</span>
-    <span class="meta-chip warning">⚠ Ryzyko TP: WYSOKIE</span>
-    <span class="meta-chip">Źródło: e-KRS / RDF · live extraction</span>
+<div class="report-header">
+  <div class="report-header-inner">
+    <div class="report-eyebrow">Analiza ryzyk Transfer Pricing · Sprawozdanie jednostkowe PSR 2024</div>
+    <h1 class="report-title">WB Electronics S.A.</h1>
+    <p class="report-subtitle">Identyfikacja i ocena ryzyk TP na podstawie sprawozdania finansowego za rok zakończony 31 grudnia 2024 roku</p>
+    <div class="header-chips">
+      <span class="chip">KRS 0000369722</span>
+      <span class="chip">Ożarów Mazowiecki</span>
+      <span class="chip">Spółka dominująca WB Group</span>
+      <span class="chip">PSR / UoR</span>
+      <span class="chip">Analiza: 2026-03-23</span>
+      <span class="chip risk-high">⚠ Ryzyko TP: WYSOKIE · 8/10</span>
+    </div>
   </div>
-</header>
+</div>
 
 <div class="container">
 
-  <!-- SUMMARY KPIs -->
-  <div class="section-label">Kluczowe dane finansowe 2024</div>
+  <!-- 1. KLUCZOWE DANE FINANSOWE -->
+  <div class="section-label">01 — Kluczowe dane finansowe</div>
 
-  <div class="summary-box">
-    <h3>Profil finansowy WB Electronics S.A.</h3>
-    <div class="summary-grid">
-      <div class="summary-item">
-        <div class="s-val">2 252 mln</div>
-        <div class="s-label">Przychody ze sprzedaży (PLN)</div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kv">2 252 mln</div>
+      <div class="kl">Przychody ze sprzedaży (PLN)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kv">489 mln</div>
+      <div class="kl">Zysk z działalności operacyjnej (PLN)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kv">428 mln</div>
+      <div class="kl">Zysk netto (PLN)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kv">945 mln</div>
+      <div class="kl">Zakupy od podmiotów powiązanych (PLN)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kv">933 mln</div>
+      <div class="kl">Gwarancje i poręczenia udzielone (PLN)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kv">85 mln</div>
+      <div class="kl">Dywidendy od spółek zależnych (PLN)</div>
+    </div>
+  </div>
+
+  <!-- 2. OCENA RYZYK TP -->
+  <div class="section-label">02 — Ogólna ocena ryzyk TP</div>
+
+  <div class="risk-score-row">
+    <div class="score-card">
+      <div class="sv high">WYSOKI</div>
+      <div class="sl">Ogólny poziom ryzyka TP</div>
+    </div>
+    <div class="score-card">
+      <div class="sv neutral">8/10</div>
+      <div class="sl">Wynik scoring</div>
+    </div>
+    <div class="score-card">
+      <div class="sv critical">606,8 mln</div>
+      <div class="sl">Zakupy od FLYTRONIC — CRITICAL</div>
+    </div>
+    <div class="score-card">
+      <div class="sv critical">932,9 mln</div>
+      <div class="sl">Gwarancje bez ujawnionego fee — CRITICAL</div>
+    </div>
+    <div class="score-card">
+      <div class="sv high">42%</div>
+      <div class="sl">Udział zakupów RP w przychodach</div>
+    </div>
+  </div>
+
+  <!-- 3. WSKAŹNIKI OPERACYJNE -->
+  <div class="section-label">03 — Wskaźniki operacyjne (Wymiar 3)</div>
+
+  <div class="metrics-row">
+    <div class="metric">
+      <div class="mv ok">21,7%</div>
+      <div class="mk">Marża EBIT</div>
+      <div class="mt">Ocena: LOW (wysoka marża integratora)</div>
+    </div>
+    <div class="metric">
+      <div class="mv warn">42,0%</div>
+      <div class="mk">Zakupy RP / przychody</div>
+      <div class="mt">Ocena: HIGH (>20% — istotna zależność)</div>
+    </div>
+    <div class="metric">
+      <div class="mv warn">7,9%</div>
+      <div class="mk">Sprzedaż RP / przychody</div>
+      <div class="mt">Ocena: MEDIUM (7–15%)</div>
+    </div>
+    <div class="metric">
+      <div class="mv bad">933 mln</div>
+      <div class="mk">Gwarancje bez fee</div>
+      <div class="mt">Ocena: CRITICAL (brak wynagrodzenia)</div>
+    </div>
+    <div class="metric">
+      <div class="mv warn">18</div>
+      <div class="mk">Spółek zależnych</div>
+      <div class="mt">6 krajów — wysoka złożoność grupy</div>
+    </div>
+    <div class="metric">
+      <div class="mv warn">~10,7%</div>
+      <div class="mk">Implied rate pożyczek</div>
+      <div class="mt">Wymaga weryfikacji safe harbour</div>
+    </div>
+  </div>
+
+  <!-- 4. STRUKTURA GRUPY -->
+  <div class="section-label">04 — Struktura grupy kapitałowej</div>
+
+  <div class="info-box">
+    <strong>WB Electronics S.A. — podmiot dominujący WB Group.</strong> Spółka pełni funkcje integratora systemów obronnych: kupuje komponenty i podzespoły od spółek grupy (głównie FLYTRONIC S.A.) i sprzedaje zintegrowane systemy klientom zewnętrznym (głównie Ministerstwo Obrony Narodowej). Kluczowe ryzyko TP: alokacja zysku między WBE a producentami komponentów (FLYTRONIC, AREX) w relacji integrator–producent.
+  </div>
+
+  <div class="struct-grid">
+    <div class="struct-card">
+      <div class="flag">🇵🇱</div>
+      <div>
+        <div class="struct-name">FLYTRONIC S.A.</div>
+        <div class="struct-loc">Gliwice (KRS: 0000737347)</div>
+        <div class="struct-role full">100% udziałów · kluczowy dostawca</div>
       </div>
-      <div class="summary-item">
-        <div class="s-val">428 mln</div>
-        <div class="s-label">Zysk netto (PLN)</div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇵🇱</div>
+      <div>
+        <div class="struct-name">Z.A. i U.P. AREX Sp. z o.o.</div>
+        <div class="struct-loc">Gdynia (KRS: 0000239180)</div>
+        <div class="struct-role full">100% udziałów · komponenty pomiarowe</div>
       </div>
-      <div class="summary-item">
-        <div class="s-val">945 mln</div>
-        <div class="s-label">Zakupy od podmiotów powiązanych (PLN)</div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇵🇱</div>
+      <div>
+        <div class="struct-name">RADMOR S.A.</div>
+        <div class="struct-loc">Gdynia (KRS: 0000074029)</div>
+        <div class="struct-role major">98,34% udziałów · producent radiostacji</div>
       </div>
-      <div class="summary-item">
-        <div class="s-val">177 mln</div>
-        <div class="s-label">Sprzedaż do podmiotów powiązanych (PLN)</div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇵🇱</div>
+      <div>
+        <div class="struct-name">MINDMADE Sp. z o.o.</div>
+        <div class="struct-loc">Warszawa (KRS: 0000369320)</div>
+        <div class="struct-role full">100% · usługi IT / oprogramowanie</div>
       </div>
-      <div class="summary-item">
-        <div class="s-val">933 mln</div>
-        <div class="s-label">Udzielone gwarancje i poręczenia (PLN)</div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇵🇱</div>
+      <div>
+        <div class="struct-name">WB CENTRUM KOMPOZYTÓW Sp. z o.o.</div>
+        <div class="struct-loc">Czechowice-Dziedzice (KRS: 0000325477)</div>
+        <div class="struct-role major">99,27% udziałów · produkcja</div>
       </div>
-      <div class="summary-item">
-        <div class="s-val">85 mln</div>
-        <div class="s-label">Dywidendy od spółek zależnych (PLN)</div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇵🇱</div>
+      <div>
+        <div class="struct-name">PN STANDARD Sp. z o.o.</div>
+        <div class="struct-loc">Warszawa (KRS: 0000811270)</div>
+        <div class="struct-role major">85% udziałów</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇺🇦</div>
+      <div>
+        <div class="struct-name">WB UKRAINE LLC</div>
+        <div class="struct-loc">Kijów, Ukraina</div>
+        <div class="struct-role major">100% · strefa konfliktu zbrojnego ⚠</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇬🇪</div>
+      <div>
+        <div class="struct-name">DELTA-WB LLC</div>
+        <div class="struct-loc">Tbilisi, Gruzja</div>
+        <div class="struct-role major">50% udziałów · joint venture</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇲🇾</div>
+      <div>
+        <div class="struct-name">WBE TECHNOLOGIES SDN BHD</div>
+        <div class="struct-loc">Kuala Lumpur, Malezja</div>
+        <div class="struct-role full">100% udziałów</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇮🇳</div>
+      <div>
+        <div class="struct-name">WB ELECTRONICS INDIA PVT. LTD.</div>
+        <div class="struct-loc">New Delhi, Indie</div>
+        <div class="struct-role parent">49% udziałów · mniejszościowy</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇸🇦</div>
+      <div>
+        <div class="struct-name">WB MIDDLE EAST FOR MILITARY INDUSTRIES LLC</div>
+        <div class="struct-loc">Riyadh, Arabia Saudyjska</div>
+        <div class="struct-role parent">45% udziałów · joint venture</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇵🇱</div>
+      <div>
+        <div class="struct-name">4EN S.A. + WPT HOLDING Sp. z o.o.</div>
+        <div class="struct-loc">Warszawa / Łaziska Górne</div>
+        <div class="struct-role major">80% / 50% udziałów · energia</div>
       </div>
     </div>
   </div>
 
-  <!-- RISK OVERVIEW -->
-  <div class="section-label">Ogólna ocena ryzyk TP</div>
-
-  <div class="risk-overview">
-    <div class="risk-card">
-      <div class="label">Ogólny poziom ryzyka</div>
-      <div class="score red">WYSOKI</div>
-      <div class="value">3 obszary krytyczne</div>
-    </div>
-    <div class="risk-card">
-      <div class="label">Wartość transakcji TP</div>
-      <div class="score orange">1,2 mld</div>
-      <div class="value">PLN (zakupy + sprzedaż)</div>
-    </div>
-    <div class="risk-card">
-      <div class="label">Udział zakupów od powiązanych</div>
-      <div class="score orange">42%</div>
-      <div class="value">przychodów ogółem</div>
-    </div>
-    <div class="risk-card">
-      <div class="label">Spółek w grupie</div>
-      <div class="score yellow">18</div>
-      <div class="value">w 7 krajach</div>
-    </div>
-    <div class="risk-card">
-      <div class="label">Gwarancje bez wynagrodzenia?</div>
-      <div class="score red">933 mln</div>
-      <div class="value">PLN — brak informacji o fee</div>
-    </div>
-  </div>
-
-  <!-- STRUKTURA GRUPY -->
-  <div class="section-label">Struktura grupy kapitałowej</div>
-
-  <div class="structure-grid">
-    <div class="sub-card">
-      <div class="sub-flag">🇵🇱</div>
-      <div class="sub-info">
-        <div class="sub-name">FLYTRONIC S.A.</div>
-        <div class="sub-loc">Gliwice (KRS: 0000737347)</div>
-        <div class="sub-share full">100% udziałów · kluczowy dostawca</div>
-      </div>
-    </div>
-    <div class="sub-card">
-      <div class="sub-flag">🇵🇱</div>
-      <div class="sub-info">
-        <div class="sub-name">Z.A. i U.P. AREX Sp. z o.o.</div>
-        <div class="sub-loc">Gdynia (KRS: 0000239180)</div>
-        <div class="sub-share full">100% udziałów · dostawca komponentów</div>
-      </div>
-    </div>
-    <div class="sub-card">
-      <div class="sub-flag">🇵🇱</div>
-      <div class="sub-info">
-        <div class="sub-name">RADMOR S.A.</div>
-        <div class="sub-loc">Gdynia (KRS: 0000074029)</div>
-        <div class="sub-share major">98,34% udziałów</div>
-      </div>
-    </div>
-    <div class="sub-card">
-      <div class="sub-flag">🇵🇱</div>
-      <div class="sub-info">
-        <div class="sub-name">MINDMADE Sp. z o.o.</div>
-        <div class="sub-loc">Warszawa (KRS: 0000369320)</div>
-        <div class="sub-share full">100% · usługi IT/software</div>
-      </div>
-    </div>
-    <div class="sub-card">
-      <div class="sub-flag">🇵🇱</div>
-      <div class="sub-info">
-        <div class="sub-name">WB CENTRUM KOMPOZYTÓW Sp. z o.o.</div>
-        <div class="sub-loc">Czechowice-Dziedzice (KRS: 0000325477)</div>
-        <div class="sub-share major">99,27% udziałów</div>
-      </div>
-    </div>
-    <div class="sub-card">
-      <div class="sub-flag">🇵🇱</div>
-      <div class="sub-info">
-        <div class="sub-name">PN STANDARD Sp. z o.o.</div>
-        <div class="sub-loc">Warszawa (KRS: 0000811270)</div>
-        <div class="sub-share major">85% udziałów</div>
-      </div>
-    </div>
-    <div class="sub-card">
-      <div class="sub-flag">🇺🇦</div>
-      <div class="sub-info">
-        <div class="sub-name">WB UKRAINE LLC</div>
-        <div class="sub-loc">Kijów, Ukraina</div>
-        <div class="sub-share full">100% · strefa konfliktu zbrojnego ⚠</div>
-      </div>
-    </div>
-    <div class="sub-card">
-      <div class="sub-flag">🇬🇪</div>
-      <div class="sub-info">
-        <div class="sub-name">DELTA-WB LLC</div>
-        <div class="sub-loc">Tbilisi, Gruzja</div>
-        <div class="sub-share minor">50% udziałów · joint venture</div>
-      </div>
-    </div>
-    <div class="sub-card">
-      <div class="sub-flag">🇲🇾</div>
-      <div class="sub-info">
-        <div class="sub-name">WBE TECHNOLOGIES SDN BHD</div>
-        <div class="sub-loc">Kuala Lumpur, Malezja</div>
-        <div class="sub-share full">100% udziałów</div>
-      </div>
-    </div>
-    <div class="sub-card">
-      <div class="sub-flag">🇮🇳</div>
-      <div class="sub-info">
-        <div class="sub-name">WB ELECTRONICS INDIA PVT. LTD.</div>
-        <div class="sub-loc">New Delhi, Indie</div>
-        <div class="sub-share minor">49% udziałów · mniejszościowy</div>
-      </div>
-    </div>
-    <div class="sub-card">
-      <div class="sub-flag">🇸🇦</div>
-      <div class="sub-info">
-        <div class="sub-name">WB MIDDLE EAST FOR MILITARY INDUSTRIES LLC</div>
-        <div class="sub-loc">Riyadh, Arabia Saudyjska</div>
-        <div class="sub-share minor">45% udziałów · joint venture</div>
-      </div>
-    </div>
-    <div class="sub-card">
-      <div class="sub-flag">🇵🇱</div>
-      <div class="sub-info">
-        <div class="sub-name">4EN S.A. + WPT HOLDING Sp. z o.o.</div>
-        <div class="sub-loc">Warszawa / Łaziska Górne</div>
-        <div class="sub-share major">80% / 50% udziałów</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TRANSAKCJE TP -->
-  <div class="section-label">Transakcje z podmiotami powiązanymi — 2024</div>
+  <!-- 5. TRANSAKCJE TP -->
+  <div class="section-label">05 — Transakcje z podmiotami powiązanymi · 2024</div>
 
   <div class="two-col">
     <div class="table-wrap">
-      <div class="table-header">
-        <h3>Zakup usług, towarów i materiałów od powiązanych</h3>
-        <span>RAZEM: 945 343 921 PLN</span>
+      <div class="table-head">
+        <h3>Zakupy od podmiotów powiązanych</h3>
+        <span>RAZEM 945 343 921 PLN</span>
       </div>
       <table>
         <thead>
           <tr>
             <th>Podmiot</th>
-            <th class="right">Kwota (PLN)</th>
-            <th>% ogółu zakupów</th>
+            <th class="r">Kwota (PLN)</th>
+            <th>Udział</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td class="entity">FLYTRONIC S.A.</td>
-            <td class="right bold">606 800 435</td>
-            <td>
-              <div>64,2%</div>
-              <div class="bar-container"><div class="bar-fill red" style="width:64%"></div></div>
-            </td>
+            <td class="r bold">606 800 435</td>
+            <td><span class="badge CRITICAL">64,2%</span></td>
           </tr>
           <tr>
             <td class="entity">Z.A. i U.P. AREX Sp. z o.o.</td>
-            <td class="right">160 994 664</td>
-            <td>
-              <div>17,0%</div>
-              <div class="bar-container"><div class="bar-fill orange" style="width:17%"></div></div>
-            </td>
-          </tr>
-          <tr>
-            <td class="entity">MINDMADE Sp. z o.o.</td>
-            <td class="right">49 216 876</td>
-            <td>
-              <div>5,2%</div>
-              <div class="bar-container"><div class="bar-fill blue" style="width:5%"></div></div>
-            </td>
+            <td class="r">160 994 664</td>
+            <td>17,0%</td>
           </tr>
           <tr>
             <td class="entity">RADMOR S.A.</td>
-            <td class="right">72 158 728</td>
-            <td>
-              <div>7,6%</div>
-              <div class="bar-container"><div class="bar-fill blue" style="width:8%"></div></div>
-            </td>
+            <td class="r">72 158 728</td>
+            <td>7,6%</td>
+          </tr>
+          <tr>
+            <td class="entity">MINDMADE Sp. z o.o.</td>
+            <td class="r">49 216 876</td>
+            <td>5,2%</td>
           </tr>
           <tr>
             <td class="entity">WB UKRAINE LLC</td>
-            <td class="right">24 523 713</td>
-            <td>
-              <div>2,6%</div>
-              <div class="bar-container"><div class="bar-fill blue" style="width:3%"></div></div>
-            </td>
+            <td class="r">24 523 713</td>
+            <td>2,6%</td>
           </tr>
           <tr>
             <td class="entity">PN STANDARD Sp. z o.o.</td>
-            <td class="right">14 803 275</td>
-            <td>
-              <div>1,6%</div>
-              <div class="bar-container"><div class="bar-fill blue" style="width:2%"></div></div>
-            </td>
+            <td class="r">14 803 275</td>
+            <td>1,6%</td>
           </tr>
           <tr>
             <td class="entity">WB CENTRUM KOMPOZYTÓW</td>
-            <td class="right">10 066 897</td>
+            <td class="r">10 066 897</td>
             <td>1,1%</td>
           </tr>
           <tr>
             <td class="entity">Pozostałe</td>
-            <td class="right">6 779 334</td>
+            <td class="r">6 779 333</td>
             <td>0,7%</td>
           </tr>
           <tr class="total-row">
             <td>RAZEM</td>
-            <td class="right">945 343 921</td>
-            <td><strong>100%</strong></td>
+            <td class="r">945 343 921</td>
+            <td>100%</td>
           </tr>
         </tbody>
       </table>
     </div>
 
     <div class="table-wrap">
-      <div class="table-header">
+      <div class="table-head">
         <h3>Sprzedaż do podmiotów powiązanych</h3>
-        <span>RAZEM: 177 374 106 PLN</span>
+        <span>RAZEM 177 374 106 PLN</span>
       </div>
       <table>
         <thead>
           <tr>
             <th>Podmiot</th>
-            <th class="right">Kwota (PLN)</th>
+            <th class="r">Kwota (PLN)</th>
             <th>Kraj</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td class="entity">WB UKRAINE LLC ⚠</td>
-            <td class="right bold">127 983 253</td>
+            <td class="r bold">127 983 253</td>
             <td>🇺🇦 Ukraina</td>
           </tr>
           <tr>
             <td class="entity">DELTA-WB LLC ⚠</td>
-            <td class="right">35 056 891</td>
+            <td class="r">35 056 891</td>
             <td>🇬🇪 Gruzja</td>
           </tr>
           <tr>
             <td class="entity">RADMOR S.A.</td>
-            <td class="right">4 468 747</td>
+            <td class="r">4 468 747</td>
             <td>🇵🇱 Polska</td>
           </tr>
           <tr>
             <td class="entity">FLYTRONIC S.A.</td>
-            <td class="right">3 770 524</td>
+            <td class="r">3 770 524</td>
             <td>🇵🇱 Polska</td>
           </tr>
           <tr>
             <td class="entity">4EN S.A.</td>
-            <td class="right">2 833 457</td>
+            <td class="r">2 833 457</td>
             <td>🇵🇱 Polska</td>
           </tr>
           <tr>
             <td class="entity">Z.A. i U.P. AREX Sp. z o.o.</td>
-            <td class="right">2 732 213</td>
+            <td class="r">2 732 213</td>
             <td>🇵🇱 Polska</td>
           </tr>
           <tr>
             <td class="entity">MINDMADE Sp. z o.o.</td>
-            <td class="right">311 904</td>
+            <td class="r">311 904</td>
             <td>🇵🇱 Polska</td>
           </tr>
           <tr>
             <td class="entity">Pozostałe</td>
-            <td class="right">217 117</td>
+            <td class="r">217 117</td>
             <td>—</td>
           </tr>
           <tr class="total-row">
             <td>RAZEM</td>
-            <td class="right">177 374 106</td>
+            <td class="r">177 374 106</td>
             <td>—</td>
           </tr>
         </tbody>
@@ -640,242 +786,242 @@
     </div>
   </div>
 
-  <!-- SALDO ROZRACHUNKÓW -->
-  <div class="section-label">Saldo rozrachunków z podmiotami powiązanymi</div>
+  <!-- 6. SALDO ROZRACHUNKÓW -->
+  <div class="section-label">06 — Saldo rozrachunków z podmiotami powiązanymi · 31.12.2024</div>
 
   <div class="table-wrap">
-    <div class="table-header">
-      <h3>Saldo rozrachunków z podmiotami powiązanymi na 31.12.2024</h3>
+    <div class="table-head">
+      <h3>Saldo rozrachunków</h3>
       <span>Należności: 17,4 mln PLN | Zobowiązania: 281,5 mln PLN</span>
     </div>
     <table>
       <thead>
         <tr>
           <th>Podmiot</th>
-          <th class="right">Należności (PLN)</th>
-          <th class="right">Zobowiązania (PLN)</th>
+          <th class="r">Należności (PLN)</th>
+          <th class="r">Zobowiązania (PLN)</th>
           <th>Uwaga</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td class="entity">FLYTRONIC S.A.</td>
-          <td class="right">0</td>
-          <td class="right bold">211 588 749</td>
-          <td><span class="risk-badge HIGH">35% przychodów — termin płatności?</span></td>
+          <td class="r">—</td>
+          <td class="r bold">211 588 749</td>
+          <td><span class="badge HIGH">35% przychodów · termin płatności?</span></td>
         </tr>
         <tr>
           <td class="entity">Z.A. i U.P. AREX Sp. z o.o.</td>
-          <td class="right">0</td>
-          <td class="right">54 142 832</td>
-          <td><span class="risk-badge MEDIUM">Wysoka kwota zobowiązań</span></td>
+          <td class="r">—</td>
+          <td class="r">54 142 832</td>
+          <td><span class="badge MEDIUM">Wysoka kwota zobowiązań</span></td>
         </tr>
         <tr>
           <td class="entity">DELTA-WB LLC (Gruzja)</td>
-          <td class="right">13 955 617</td>
-          <td class="right">215 514</td>
-          <td><span class="risk-badge HIGH">Należności = 39% sprzedaży</span></td>
+          <td class="r">13 955 617</td>
+          <td class="r">215 514</td>
+          <td><span class="badge HIGH">Należności = 39% rocznej sprzedaży</span></td>
         </tr>
         <tr>
           <td class="entity">RADMOR S.A.</td>
-          <td class="right">2 193 606</td>
-          <td class="right">11 680 558</td>
+          <td class="r">2 193 606</td>
+          <td class="r">11 680 558</td>
           <td>Obrót dwustronny</td>
         </tr>
         <tr>
           <td class="entity">PN STANDARD Sp. z o.o.</td>
-          <td class="right">2 937</td>
-          <td class="right">1 967 285</td>
+          <td class="r">2 937</td>
+          <td class="r">1 967 285</td>
           <td>—</td>
         </tr>
         <tr class="total-row">
           <td>RAZEM</td>
-          <td class="right">17 367 703</td>
-          <td class="right">281 454 500</td>
-          <td>Pozycja netto: dłużnik netto</td>
+          <td class="r">17 367 703</td>
+          <td class="r">281 454 500</td>
+          <td>Pozycja netto: dłużnik netto wobec grupy</td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <!-- ANALIZA RYZYK -->
-  <div class="section-label">Identyfikacja i analiza ryzyk TP</div>
+  <!-- 7. ANALIZA RYZYK -->
+  <div class="section-label">07 — Identyfikacja i analiza ryzyk TP</div>
 
   <div class="risk-list">
 
     <!-- RYZYKO 1 -->
-    <div class="risk-item">
+    <div class="risk-card">
       <div class="risk-stripe CRITICAL"></div>
-      <div class="risk-content">
+      <div class="risk-body-inner">
         <div class="risk-title-row">
-          <span class="risk-badge CRITICAL">KRYTYCZNY</span>
-          <span class="risk-title">Zakupy od FLYTRONIC S.A. — 606,8 mln PLN</span>
-          <span class="risk-amount">~27% przychodów WBE</span>
+          <span class="badge CRITICAL">CRITICAL</span>
+          <span class="risk-title">Zakupy od FLYTRONIC S.A.</span>
+          <span class="risk-amt">606 800 435 PLN · ~27% przychodów WBE</span>
         </div>
-        <div class="risk-body">
-          To zdecydowanie największa transakcja TP w grupie. WB Electronics pełni rolę <strong>integratora systemów</strong> — kupuje gotowe systemy/komponenty od FLYTRONIC (spółka w 100% zależna) i sprzedaje je klientom końcowym (głównie MON, wojsko). Wynik podatkowy WBE jest bezpośrednio determinowany przez cenę zakupu od FLYTRONIC.
-          <ul class="risk-bullets">
-            <li>Zobowiązania wobec FLYTRONIC: <strong>211,6 mln PLN</strong> — terminy płatności znacznie przekraczają standardowe warunki rynkowe</li>
-            <li>Ryzyko: organ podatkowy może zbadać, czy WBE zachowuje odpowiednią marżę jako dystrybutor/integrator</li>
-            <li>Metoda TP: CUP niemożliwy (produkty obronne, brak porównywalnych). Prawdopodobnie TNMM lub koszt plus po stronie FLYTRONIC</li>
-            <li>Dodatkowe ryzyko: transakcje obronne — ograniczona baza porównawcza w benchmarkingu</li>
-          </ul>
-        </div>
+        <p class="risk-desc">
+          To zdecydowanie największa transakcja TP w grupie. WB Electronics pełni rolę <strong>integratora systemów</strong> — kupuje gotowe systemy i komponenty od FLYTRONIC (100% zależna) i sprzedaje je klientom końcowym (głównie MON). Wynik podatkowy WBE jest bezpośrednio determinowany przez cenę zakupu od FLYTRONIC.
+        </p>
+        <ul class="risk-bullets">
+          <li>Zobowiązania wobec FLYTRONIC: <strong>211,6 mln PLN</strong> — terminy płatności znacznie przekraczają standardowe warunki rynkowe</li>
+          <li>Ryzyko: organ podatkowy może zakwestionować, czy WBE zachowuje odpowiednią marżę jako dystrybutor/integrator</li>
+          <li>Metoda TP: CUP niemożliwy (produkty obronne, brak porównywalnych). Prawdopodobnie TNMM lub koszt plus po stronie FLYTRONIC</li>
+          <li>Dodatkowe ryzyko: ograniczona baza porównawcza dla benchmarkingu w sektorze obronnym</li>
+        </ul>
         <div class="risk-rec">
-          <strong>Rekomendacja:</strong> Sprawdzić dokumentację TP dla tej transakcji — czy stosowana jest metoda TNMM lub RPM, jaki jest wybrany wskaźnik poziomu zysku (PLI), czy benchmarking obejmuje porównywalne dystrybutory/integratorów systemów obronnych. Zweryfikować uzasadnienie wydłużonych terminów płatności (211,6 mln PLN zobowiązań).
+          <strong>Rekomendacja:</strong> Sprawdzić dokumentację TP — czy stosowana jest metoda TNMM lub RPM, jaki wskaźnik poziomu zysku (PLI), czy benchmarking obejmuje porównywalne dystrybutory/integratorów systemów obronnych. Zweryfikować uzasadnienie wydłużonych terminów płatności (211,6 mln PLN zobowiązań).
         </div>
       </div>
     </div>
 
     <!-- RYZYKO 2 -->
-    <div class="risk-item">
+    <div class="risk-card">
       <div class="risk-stripe CRITICAL"></div>
-      <div class="risk-content">
+      <div class="risk-body-inner">
         <div class="risk-title-row">
-          <span class="risk-badge CRITICAL">KRYTYCZNY</span>
-          <span class="risk-title">Gwarancje i poręczenia udzielone — 932,9 mln PLN</span>
-          <span class="risk-amount">bez ujawnionego wynagrodzenia</span>
+          <span class="badge CRITICAL">CRITICAL</span>
+          <span class="risk-title">Gwarancje i poręczenia udzielone bez wynagrodzenia</span>
+          <span class="risk-amt">932 946 234 PLN · wzrost o 77% r/r</span>
         </div>
-        <div class="risk-body">
-          WBE udzieliła gwarancji i poręczeń o wartości <strong>932,9 mln PLN</strong> (vs 527,9 mln w 2023 — wzrost o 77%). W sprawozdaniu brak informacji o wynagrodzeniu pobieranym za udzielenie gwarancji od spółek zależnych. To jeden z najbardziej ryzykownych obszarów TP w Polsce i na świecie.
-          <ul class="risk-bullets">
-            <li>Gwarancje: 742,3 mln PLN (wzrost z 414,2 mln)</li>
-            <li>Poręczenia: 190,6 mln PLN (wzrost z 113,7 mln)</li>
-            <li>Brak wpisu w sekcji "przychody odsetkowe / wynagrodzenia" za gwarancje</li>
-            <li>Zgodnie z wytycznymi OECD (rozdz. X) — udzielenie gwarancji grupowej powinno być wynagradzane rynkową opłatą</li>
-            <li>Przychody odsetkowe WBE: jedynie 1,19 mln PLN — nieproporcjonalnie niskie przy 11 mln pożyczek i 933 mln gwarancji</li>
-          </ul>
-        </div>
+        <p class="risk-desc">
+          WBE udzieliła gwarancji i poręczeń o wartości <strong>932,9 mln PLN</strong> (vs 527,9 mln w 2023). W sprawozdaniu brak informacji o wynagrodzeniu pobieranym za udzielenie gwarancji od spółek zależnych. To jeden z najbardziej ryzykownych obszarów TP w Polsce i na świecie.
+        </p>
+        <ul class="risk-bullets">
+          <li>Gwarancje: 742,3 mln PLN (wzrost z 414,2 mln)</li>
+          <li>Poręczenia: 190,6 mln PLN (wzrost z 113,7 mln)</li>
+          <li>Brak wpisu w sekcji "wynagrodzenia za gwarancje" w informacji dodatkowej</li>
+          <li>Wytyczne OECD (rozdz. X): udzielenie gwarancji grupowej powinno być wynagradzane rynkową opłatą</li>
+          <li>Przychody odsetkowe WBE: jedynie 1,19 mln PLN — nieproporcjonalnie niskie przy 933 mln gwarancji</li>
+        </ul>
         <div class="risk-rec">
-          <strong>Rekomendacja:</strong> Pilnie zweryfikować czy WBE pobiera opłatę gwarancyjną (guarantee fee) od spółek zależnych, na rzecz których udzielono gwarancji. Brak takiej opłaty stanowi ryzyko korekty TP. Rynkowa stawka guarantee fee mieści się typowo w przedziale 0,5–2,5% rocznie od wartości gwarancji — przy 933 mln PLN oznaczałoby to 4,7–23,3 mln PLN rocznego wynagrodzenia.
+          <strong>Rekomendacja:</strong> Pilnie zweryfikować, czy WBE pobiera guarantee fee od spółek zależnych. Brak takiej opłaty stanowi ryzyko korekty TP. Rynkowa stawka: 0,5–2,5% rocznie od wartości gwarancji — przy 933 mln PLN oznaczałoby to 4,7–23,3 mln PLN rocznego wynagrodzenia.
         </div>
       </div>
     </div>
 
     <!-- RYZYKO 3 -->
-    <div class="risk-item">
+    <div class="risk-card">
       <div class="risk-stripe HIGH"></div>
-      <div class="risk-content">
+      <div class="risk-body-inner">
         <div class="risk-title-row">
-          <span class="risk-badge HIGH">WYSOKIE</span>
-          <span class="risk-title">Sprzedaż do WB UKRAINE LLC — 127,9 mln PLN</span>
-          <span class="risk-amount">Ukraina · strefa konfliktu</span>
+          <span class="badge HIGH">HIGH</span>
+          <span class="risk-title">Sprzedaż do WB UKRAINE LLC</span>
+          <span class="risk-amt">127 983 253 PLN · Ukraina · strefa konfliktu</span>
         </div>
-        <div class="risk-body">
-          WBE sprzedała do ukraińskiej spółki (100% zależnej) produkty i usługi o wartości <strong>127,9 mln PLN</strong>. Jednocześnie kupuje od WB Ukraine za <strong>24,5 mln PLN</strong>. W kontekście trwającego konfliktu zbrojnego na Ukrainie transakcja ta generuje szereg ryzyk:
-          <ul class="risk-bullets">
-            <li>Ryzyko cen: czy ceny sprzedaży uwzględniają ryzyko kraju (country risk premium)?</li>
-            <li>Ryzyko windykacji: brak należności na koniec roku (saldo = 0) — czy transakcje były z góry płatne? Czy poprzednie należności zostały umorzone?</li>
-            <li>Ryzyko recharacterization: możliwe zakwestionowanie sensu ekonomicznego transakcji w warunkach konfliktu</li>
-            <li>Zakupy od WB UKRAINE (24,5 mln) — co kupuje WBE od spółki z Ukrainy w warunkach wojennych?</li>
-          </ul>
-        </div>
+        <p class="risk-desc">
+          WBE sprzedała do ukraińskiej spółki (100% zależnej) produkty i usługi za <strong>127,9 mln PLN</strong>. Jednocześnie kupuje od WB Ukraine za 24,5 mln PLN. W kontekście trwającego konfliktu zbrojnego transakcja generuje szereg ryzyk TP i operacyjnych.
+        </p>
+        <ul class="risk-bullets">
+          <li>Ryzyko cen: czy ceny sprzedaży uwzględniają premię za ryzyko kraju (country risk premium)?</li>
+          <li>Ryzyko windykacji: saldo należności = 0 na koniec roku — transakcje prepaid, czy poprzednie należności umorzone?</li>
+          <li>Ryzyko recharacterization: możliwe zakwestionowanie sensu ekonomicznego transakcji w warunkach konfliktu</li>
+          <li>Zakupy od WB Ukraine (24,5 mln PLN) — co kupuje WBE od spółki z Ukrainy w warunkach wojennych?</li>
+        </ul>
         <div class="risk-rec">
-          <strong>Rekomendacja:</strong> Dokumentacja TP powinna zawierać szczegółowe uzasadnienie ekonomiczne transakcji z WB Ukraine, opis zastosowanych warunków płatności i zabezpieczeń, analizę zgodności z przepisami sankcyjnymi. Zweryfikować, czy ceny eksportu do Ukrainy zawierają premię za ryzyko kraju.
+          <strong>Rekomendacja:</strong> Dokumentacja TP powinna zawierać szczegółowe uzasadnienie ekonomiczne, opis warunków płatności i zabezpieczeń, analizę zgodności z przepisami sankcyjnymi. Zweryfikować, czy ceny eksportu do Ukrainy zawierają premię za ryzyko kraju.
         </div>
       </div>
     </div>
 
     <!-- RYZYKO 4 -->
-    <div class="risk-item">
+    <div class="risk-card">
       <div class="risk-stripe HIGH"></div>
-      <div class="risk-content">
+      <div class="risk-body-inner">
         <div class="risk-title-row">
-          <span class="risk-badge HIGH">WYSOKIE</span>
-          <span class="risk-title">Refaktury kosztów — 28,6 mln przychodów / 945 mln kosztów</span>
-          <span class="risk-amount">asymetria + metoda rozliczenia</span>
+          <span class="badge HIGH">HIGH</span>
+          <span class="risk-title">Refaktury kosztów wewnątrzgrupowych</span>
+          <span class="risk-amt">28,6 mln PLN przychodów · asymetria z kosztami</span>
         </div>
-        <div class="risk-body">
-          WBE refakturuje koszty na spółki grupy (28,6 mln PLN przychodów z refaktur) oraz ponosi koszty refakturowane przez spółki grupy (wliczone w 945 mln zakupów). Sprawozdanie informuje, że "przychody i koszty z refaktur dotyczą tego samego tytułu — per saldo".
-          <ul class="risk-bullets">
-            <li>Sposób prezentacji per saldo utrudnia ocenę rzeczywistego zakresu transakcji refakturowych</li>
-            <li>Brak informacji o marży (mark-up) na refakturach — czy są pass-through, czy z narzutem?</li>
-            <li>Usługi o niskiej wartości dodanej — czy stosowany jest safe harbour 5% mark-up?</li>
-            <li>FLYTRONIC otrzymuje 28 mln PLN refaktur — najwyższa kwota w grupie</li>
-          </ul>
-        </div>
+        <p class="risk-desc">
+          WBE refakturuje koszty na spółki grupy (28,6 mln PLN przychodów z refaktur) i ponosi koszty refakturowane przez spółki grupy (wliczone w 945 mln zakupów). Sprawozdanie informuje, że "przychody i koszty z refaktur dotyczą tego samego tytułu — per saldo".
+        </p>
+        <ul class="risk-bullets">
+          <li>Prezentacja per saldo utrudnia ocenę rzeczywistego zakresu transakcji refakturowych</li>
+          <li>Brak informacji o marży (mark-up) — czy są pass-through, czy z narzutem?</li>
+          <li>Usługi o niskiej wartości dodanej — czy stosowany jest safe harbour 5% mark-up?</li>
+          <li>FLYTRONIC otrzymuje 28 mln PLN refaktur — najwyższa kwota w grupie</li>
+        </ul>
         <div class="risk-rec">
-          <strong>Rekomendacja:</strong> Opracować szczegółowy katalog refakturowanych kosztów z podziałem na usługi o niskiej wartości dodanej (eligible for simplified approach) i pozostałe. Dla usług low-value-adding zastosować metodę koszt plus 5% zgodnie z rozporządzeniem TP. Udokumentować klucze alokacji kosztów.
+          <strong>Rekomendacja:</strong> Opracować katalog refakturowanych kosztów z podziałem na usługi low-value-adding (kwalifikujące się do uproszczonego podejścia) i pozostałe. Dla LVA zastosować koszt plus 5% zgodnie z rozporządzeniem TP. Udokumentować klucze alokacji kosztów.
         </div>
       </div>
     </div>
 
     <!-- RYZYKO 5 -->
-    <div class="risk-item">
+    <div class="risk-card">
       <div class="risk-stripe MEDIUM"></div>
-      <div class="risk-content">
+      <div class="risk-body-inner">
         <div class="risk-title-row">
-          <span class="risk-badge MEDIUM">UMIARKOWANE</span>
-          <span class="risk-title">Zakupy od AREX — 161 mln PLN i MINDMADE — 49,2 mln PLN</span>
-          <span class="risk-amount">dostawy komponentów i usługi IT</span>
+          <span class="badge MEDIUM">MEDIUM</span>
+          <span class="risk-title">Zakupy od AREX (161 mln) i MINDMADE (49,2 mln)</span>
+          <span class="risk-amt">dostawy komponentów i usługi IT</span>
         </div>
-        <div class="risk-body">
-          Dwie kolejne duże transakcje zakupowe: od AREX (zakłady automatyki pomiarowej, Gdynia) i MINDMADE (oprogramowanie, IT). Obie spółki są w 100% zależne od WBE.
-          <ul class="risk-bullets">
-            <li>AREX: zakupy 161 mln PLN, dywidendy od AREX: 45 mln PLN — to sugeruje, że AREX jest rentowną spółką produkcyjną. Pytanie: czy ceny sprzedaży do WBE są rynkowe?</li>
-            <li>MINDMADE: zakupy 49,2 mln PLN przy dywidendach 1,2 mln PLN — niska rentowność IT house'u vs. high-value services</li>
-            <li>Dla usług IT wycena metodą TNMM (poziom zysku EBIT) powinna być porównana z rynkowymi marżami firm IT</li>
-          </ul>
-        </div>
+        <p class="risk-desc">
+          Dwie kolejne duże transakcje zakupowe od spółek w 100% zależnych od WBE: AREX (zakłady automatyki pomiarowej, Gdynia) i MINDMADE (oprogramowanie, IT). Obie spółki wypłacają dywidendy, co sugeruje rentowność — ale czy ceny sprzedaży do WBE są rynkowe?
+        </p>
+        <ul class="risk-bullets">
+          <li>AREX: zakupy 161 mln PLN, dywidendy 45 mln PLN — rentowna spółka produkcyjna, pytanie o rynkowość cen</li>
+          <li>MINDMADE: zakupy 49,2 mln PLN przy dywidendach 1,2 mln PLN — niska rentowność IT house'u vs. high-value services</li>
+          <li>Dla usług IT wycena metodą TNMM powinna być porównana z rynkowymi marżami firm IT</li>
+        </ul>
         <div class="risk-rec">
-          <strong>Rekomendacja:</strong> Przeprowadzić benchmark dla zakupów od AREX (porównywalność: producenci specjalistycznych komponentów elektronicznych/pomiarowych) i MINDMADE (porównywalność: firmy IT świadczące usługi na zlecenie). Zweryfikować marże EBIT obu spółek.
+          <strong>Rekomendacja:</strong> Przeprowadzić benchmark dla zakupów od AREX (porównywalność: producenci specjalistycznych komponentów elektronicznych) i MINDMADE (firmy IT świadczące usługi na zlecenie). Zweryfikować marże EBIT obu spółek.
         </div>
       </div>
     </div>
 
     <!-- RYZYKO 6 -->
-    <div class="risk-item">
+    <div class="risk-card">
       <div class="risk-stripe MEDIUM"></div>
-      <div class="risk-content">
+      <div class="risk-body-inner">
         <div class="risk-title-row">
-          <span class="risk-badge MEDIUM">UMIARKOWANE</span>
-          <span class="risk-title">Sprzedaż do DELTA-WB LLC (Gruzja) — 35 mln PLN</span>
-          <span class="risk-amount">należności 14 mln PLN · 50% JV</span>
+          <span class="badge MEDIUM">MEDIUM</span>
+          <span class="risk-title">Sprzedaż do DELTA-WB LLC (Gruzja)</span>
+          <span class="risk-amt">35 056 891 PLN · należności 14 mln PLN · 50% JV</span>
         </div>
-        <div class="risk-body">
-          WBE sprzedała do gruzińskiego joint venture (50% udział) za 35 mln PLN. Na dzień bilansowy należności od DELTA-WB wynoszą 13,9 mln PLN — to ok. 39% rocznej sprzedaży nieuregulowane.
-          <ul class="risk-bullets">
-            <li>Poziom należności sugeruje wydłużone terminy płatności (powyżej 90 dni)</li>
-            <li>Gruzja — kraj o niskim poziomie opodatkowania (CIT 15%), potencjalne ryzyko przesunięcia zysku</li>
-            <li>50% joint venture — czy ceny są negocjowane "na odległość ramienia" z partnerem zewnętrznym?</li>
-          </ul>
-        </div>
+        <p class="risk-desc">
+          WBE sprzedała do gruzińskiego joint venture (50% udział) za 35 mln PLN. Na dzień bilansowy należności od DELTA-WB wynoszą 13,9 mln PLN — ok. 39% rocznej sprzedaży nieuregulowane.
+        </p>
+        <ul class="risk-bullets">
+          <li>Poziom należności sugeruje wydłużone terminy płatności (powyżej 90 dni)</li>
+          <li>Gruzja — kraj o niskim poziomie opodatkowania (CIT 15%), potencjalne ryzyko przesunięcia zysku</li>
+          <li>50% JV — czy ceny negocjowane "na długość ramienia" z partnerem zewnętrznym?</li>
+        </ul>
         <div class="risk-rec">
-          <strong>Rekomendacja:</strong> Udokumentować warunki handlowe sprzedaży do DELTA-WB, w tym terminy płatności i uzasadnienie dla salda należności. Sprawdzić, czy DELTA-WB pełni funkcje dystrybutora czy agenta — to determinuje metodę TP.
+          <strong>Rekomendacja:</strong> Udokumentować warunki handlowe sprzedaży do DELTA-WB, terminy płatności i uzasadnienie salda należności. Sprawdzić, czy DELTA-WB pełni funkcje dystrybutora czy agenta — to determinuje metodę TP.
         </div>
       </div>
     </div>
 
     <!-- RYZYKO 7 -->
-    <div class="risk-item">
+    <div class="risk-card">
       <div class="risk-stripe MEDIUM"></div>
-      <div class="risk-content">
+      <div class="risk-body-inner">
         <div class="risk-title-row">
-          <span class="risk-badge MEDIUM">UMIARKOWANE</span>
-          <span class="risk-title">Pożyczki długoterminowe — 11,1 mln PLN</span>
-          <span class="risk-amount">przychody odsetkowe: 1,19 mln PLN</span>
+          <span class="badge MEDIUM">MEDIUM</span>
+          <span class="risk-title">Pożyczki długoterminowe udzielone spółkom grupy</span>
+          <span class="risk-amt">11 136 818 PLN · przychody odsetkowe: 1,19 mln PLN</span>
         </div>
-        <div class="risk-body">
-          WBE posiada udzielone pożyczki długoterminowe w wysokości 11,1 mln PLN (wzrost z 3,3 mln w 2023). Przychody odsetkowe wynoszą 1,19 mln PLN, co implikuje stopę ok. 10,7% — na pierwszy rzut oka wysoka, ale wymaga weryfikacji.
-          <ul class="risk-bullets">
-            <li>Pożyczkobiorcy: FLYTRONIC (61 tys. PLN odsetek), MINDMADE (313 tys.), WB CENTRUM KOMPOZYTÓW (732 tys.), POLCAM SYSTEMS (3,8 tys.), WPT HOLDING (81 tys.)</li>
-            <li>Różne stopy dla różnych pożyczkobiorców — czy odpowiadają ratingowi kredytowemu podmiotu?</li>
-            <li>Polski safe harbour dla pożyczek: stopa bazowa NBP + 2,3% — czy pożyczki spełniają warunki?</li>
-          </ul>
-        </div>
+        <p class="risk-desc">
+          WBE posiada udzielone pożyczki długoterminowe w wysokości 11,1 mln PLN (wzrost z 3,3 mln w 2023). Przychody odsetkowe wynoszą 1,19 mln PLN, co implikuje stopę ok. 10,7% — wymaga weryfikacji pod kątem safe harbour.
+        </p>
+        <ul class="risk-bullets">
+          <li>Pożyczkobiorcy: FLYTRONIC (61 tys. PLN odsetek), MINDMADE (313 tys.), WB CENTRUM KOMPOZYTÓW (732 tys.), POLCAM SYSTEMS (3,8 tys.), WPT HOLDING (81 tys.)</li>
+          <li>Różne stopy dla różnych pożyczkobiorców — czy odpowiadają ratingowi kredytowemu podmiotu?</li>
+          <li>Polski safe harbour dla pożyczek: stopa bazowa NBP + 2,3% — czy pożyczki spełniają warunki?</li>
+        </ul>
         <div class="risk-rec">
-          <strong>Rekomendacja:</strong> Zweryfikować, czy pożyczki kwalifikują się do safe harbour (art. 11g ustawy CIT) — jeśli tak, dokumentacja uproszczona. Jeśli nie, przygotować analizę porównawczą stóp procentowych dla pożyczek wewnątrzgrupowych.
+          <strong>Rekomendacja:</strong> Zweryfikować, czy pożyczki kwalifikują się do safe harbour (art. 11g ustawy CIT). Jeśli tak — dokumentacja uproszczona. Jeśli nie — przygotować analizę porównawczą stóp procentowych dla pożyczek wewnątrzgrupowych.
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- PODSUMOWANIE PRIORYTETÓW -->
-  <div class="section-label">Priorytety dokumentacyjne na rok 2024</div>
+  <!-- 8. PRIORYTETY DOKUMENTACYJNE -->
+  <div class="section-label">08 — Priorytety dokumentacyjne · rok 2024</div>
 
   <div class="table-wrap">
-    <div class="table-header">
+    <div class="table-head">
       <h3>Macierz ryzyk TP — priorytetyzacja działań</h3>
       <span>Wg wartości transakcji i poziomu ryzyka</span>
     </div>
@@ -883,76 +1029,85 @@
       <thead>
         <tr>
           <th>Transakcja</th>
-          <th class="right">Wartość (mln PLN)</th>
+          <th class="r">Wartość (mln PLN)</th>
           <th>Ryzyko</th>
-          <th>Priorytet dokumentacji</th>
+          <th>Priorytet</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="entity">Zakupy od FLYTRONIC S.A.</td>
-          <td class="right bold">606,8</td>
-          <td><span class="risk-badge CRITICAL">KRYTYCZNY</span></td>
+          <td class="entity">Gwarancje i poręczenia (brak fee)</td>
+          <td class="r bold">932,9</td>
+          <td><span class="badge CRITICAL">CRITICAL</span></td>
           <td>🔴 Natychmiastowy</td>
         </tr>
         <tr>
-          <td class="entity">Gwarancje i poręczenia (brak fee)</td>
-          <td class="right bold">932,9</td>
-          <td><span class="risk-badge CRITICAL">KRYTYCZNY</span></td>
+          <td class="entity">Zakupy od FLYTRONIC S.A.</td>
+          <td class="r bold">606,8</td>
+          <td><span class="badge CRITICAL">CRITICAL</span></td>
           <td>🔴 Natychmiastowy</td>
         </tr>
         <tr>
           <td class="entity">Sprzedaż do WB UKRAINE LLC</td>
-          <td class="right">127,9</td>
-          <td><span class="risk-badge HIGH">WYSOKIE</span></td>
+          <td class="r">127,9</td>
+          <td><span class="badge HIGH">HIGH</span></td>
           <td>🟠 Wysoki</td>
         </tr>
         <tr>
           <td class="entity">Zakupy od Z.A. i U.P. AREX Sp. z o.o.</td>
-          <td class="right">161,0</td>
-          <td><span class="risk-badge HIGH">WYSOKIE</span></td>
+          <td class="r">161,0</td>
+          <td><span class="badge HIGH">HIGH</span></td>
           <td>🟠 Wysoki</td>
         </tr>
         <tr>
-          <td class="entity">Refaktury kosztów (wszystkie)</td>
-          <td class="right">28,6</td>
-          <td><span class="risk-badge HIGH">WYSOKIE</span></td>
+          <td class="entity">Refaktury kosztów wewnątrzgrupowych</td>
+          <td class="r">28,6</td>
+          <td><span class="badge HIGH">HIGH</span></td>
           <td>🟠 Wysoki</td>
         </tr>
         <tr>
           <td class="entity">Zakupy od MINDMADE Sp. z o.o.</td>
-          <td class="right">49,2</td>
-          <td><span class="risk-badge MEDIUM">UMIARKOWANE</span></td>
+          <td class="r">49,2</td>
+          <td><span class="badge MEDIUM">MEDIUM</span></td>
           <td>🟡 Standardowy</td>
         </tr>
         <tr>
           <td class="entity">Sprzedaż do DELTA-WB LLC (Gruzja)</td>
-          <td class="right">35,1</td>
-          <td><span class="risk-badge MEDIUM">UMIARKOWANE</span></td>
+          <td class="r">35,1</td>
+          <td><span class="badge MEDIUM">MEDIUM</span></td>
           <td>🟡 Standardowy</td>
         </tr>
         <tr>
           <td class="entity">Pożyczki wewnątrzgrupowe</td>
-          <td class="right">11,1</td>
-          <td><span class="risk-badge MEDIUM">UMIARKOWANE</span></td>
+          <td class="r">11,1</td>
+          <td><span class="badge MEDIUM">MEDIUM</span></td>
           <td>🟡 Standardowy</td>
         </tr>
         <tr>
           <td class="entity">Dywidendy od spółek zależnych</td>
-          <td class="right">85,4</td>
-          <td><span class="risk-badge LOW">NISKIE</span></td>
+          <td class="r">85,4</td>
+          <td><span class="badge LOW">LOW</span></td>
           <td>🟢 Niski</td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="note-box">
-    <strong>Ważna obserwacja — profil WBE jako integratora:</strong> WB Electronics S.A. jest spółką-matką pełniącą funkcje integratora systemów obronnych. Kupuje gotowe produkty i komponenty od spółek grupy (945 mln PLN) i sprzedaje je głównie klientom zewnętrznym (głównie MON) za 2 252 mln PLN. Marża brutto na tej działalności wynosi znaczną część z 428 mln PLN zysku netto. Kluczowe pytanie TP: <strong>czy alokacja zysku pomiędzy WBE a spółkami zależnymi (szczególnie FLYTRONIC i AREX) odzwierciedla wkład funkcyjny i ryzykowy każdej ze stron?</strong>
+  <div class="info-box">
+    <strong>Obserwacja — profil WBE jako integratora systemów:</strong> WB Electronics S.A. kupuje gotowe produkty i komponenty od spółek grupy (945 mln PLN) i sprzedaje je klientom zewnętrznym — głównie Ministerstwu Obrony Narodowej — za 2 252 mln PLN. Kluczowe pytanie TP: <strong>czy alokacja zysku między WBE a spółkami zależnymi (szczególnie FLYTRONIC i AREX) odzwierciedla wkład funkcyjny i ryzykowy każdej ze stron?</strong> Marża integratora w sektorze obronnym przy specjalistycznych, niemającym rynkowych substytutów produktach wymaga szczególnie starannego uzasadnienia.
   </div>
 
-  <div class="disclaimer-box">
-    <strong>Podstawa analizy:</strong> Niniejsza analiza została sporządzona na podstawie Jednostkowego Sprawozdania Finansowego WB Electronics S.A. za rok 2024 (plik: WBE_Informacja_dodatkowa_2024.pdf, 15 stron), pobranego w czasie rzeczywistym z Repozytorium Dokumentów Finansowych (e-KRS / RDF) przez Claude Code z użyciem Playwright MCP. Data sporządzenia sprawozdania: 30 maja 2025. Analiza ma charakter wstępny i opiera się wyłącznie na danych jawnych — pełna ocena ryzyk wymaga dostępu do dokumentacji TP, umów wewnątrzgrupowych i danych o rentowności poszczególnych spółek.
+  <!-- 9. METODOLOGIA -->
+  <div class="section-label">09 — Podstawa analizy i metodologia</div>
+
+  <p class="method-text">
+    Analiza oparta na Jednostkowym Sprawozdaniu Finansowym WB Electronics S.A. za rok 2024 (plik: WBE_Informacja_dodatkowa_2024.pdf), pobranym w czasie rzeczywistym z Repozytorium Dokumentów Finansowych (e-KRS / RDF) przez Claude Code z użyciem Playwright MCP. Data sporządzenia sprawozdania przez spółkę: 30 maja 2025. Data analizy: 23 marca 2026.
+  </p>
+
+  <div class="method-box">
+    <strong>Metodologia scoring TP:</strong> Czterostopniowy model oceny ryzyka: (A) scoring bazowy wg wartości transakcji i udziału w przychodach; (B) flagi czerwone (gwarancje bez fee, sprzedaż do stref konfliktów, brak informacji o marżach); (C) czynniki łagodzące (high EBIT margin, dominacja sprzedaży zewnętrznej, silna pozycja rynkowa); (D) kontekstowe korekty branżowe (sektor obronny — ograniczona baza porównawcza). <strong>Wynik: 8/10 HIGH.</strong>
+    <br><br>
+    <strong>Ograniczenia:</strong> Analiza ma charakter wstępny i opiera się wyłącznie na danych jawnych ze sprawozdania finansowego — pełna ocena ryzyk wymaga dostępu do dokumentacji TP, umów wewnątrzgrupowych i danych o rentowności poszczególnych spółek grupy.
   </div>
 
 </div>
