@@ -1,5 +1,11 @@
 # TP Radar — Claude Code Pipeline
 
+## Project root
+
+All relative paths in this file resolve to: `/Users/piotrkarolak/Claude Code/tp-radar/`
+
+Before running any pipeline step, verify you are working in this directory.
+
 ## Trigger command
 
 When the user writes `analizuj [nazwa spółki]` or `analyze [company name]`, execute the full pipeline below. Do not ask for confirmation before starting — begin immediately.
@@ -36,13 +42,13 @@ URL: `https://rdf-przegladarka.ms.gov.pl/wyszukaj-podmiot`
 Use Playwright MCP to:
 1. Navigate to the URL
 2. Search by KRS number
-3. Find the most recent financial statement year
+3. If multiple years available: take the most recent year (highest year number). Note the year in the report header.
 4. Download all available documents:
    - `sprawozdanie.xml` — structured financial data
    - `informacja_dodatkowa.pdf` — notes (related party transactions)
    - `sprawozdanie_zarzadu.pdf` — management report
 
-Save to `.playwright-mcp/` or a temp directory. Read PDFs using the Read tool with `pages` parameter (max 5 pages at a time).
+Save downloaded files to `/tmp/tp-radar-[company-id]/`. Read PDFs using the Read tool with `pages` parameter (max 5 pages at a time).
 
 Fallback: If e-KRS is unavailable or documents missing → try company IR website (investor relations section).
 
@@ -94,7 +100,7 @@ Transaction risk = highest level across 5 dimensions.
 - Step C: Mitigating factors correction
 - Step D: Contextual override if warranted
 
-Full rubric: see `docs/superpowers/specs/2026-03-23-tp-radar-design.md` in the `claude-code-guide` project.
+Full rubric: see `/Users/piotrkarolak/Claude Code/claude-code-guide/docs/superpowers/specs/2026-03-23-tp-radar-design.md`
 
 **For Implied Rate:**
 implied_rate = koszty odsetkowe wobec powiązanych / ((saldo długu wobec powiązanych rok bieżący + rok poprzedni) / 2)
@@ -114,8 +120,11 @@ implied_rate = (computed above)
 Write `reports/[company-id].html` — standalone full HTML report with all 8 sections.
 
 **Report structure (required sections in order):**
-1. Back link: `<a href="../index.html" class="back-link">← Powrót do dashboardu</a>`
-2. Header — company name, KRS, date, risk badge (e.g. "⚠ Ryzyko TP: WYSOKIE"), meta-chips
+
+Navigation (not a content section): `<a href="../index.html" class="back-link">← Powrót do dashboardu</a>` — place immediately after `<body>`.
+
+Content sections:
+1. Header — company name, KRS, date, risk badge (e.g. "⚠ Ryzyko TP: WYSOKIE"), meta-chips
 3. Key financials summary — KPI boxes (revenue, net profit, RP purchases, RP sales, guarantees if applicable)
 4. Group structure — cards per subsidiary with country flag emoji, ownership %, role
 5. Transactions table — all RP transactions split: operational purchases / sales / financial (use `.two-col` grid)
@@ -195,13 +204,15 @@ GitHub Pages rebuilds automatically (~30 seconds after push).
 - analyzed_at: ISO date (YYYY-MM-DD)
 - Amounts in JSON: integers in PLN (not thousands, not millions)
 - Null fields: use `null` in JSON — frontend renders "—"
+- Numeric formats: ebit_margin = percentage (e.g. 21.7), equity_ratio = decimal (e.g. 0.65), debt_ebitda = ratio (e.g. 4.2), implied_rate = percentage (e.g. 8.5), icr = ratio (e.g. 2.5)
 
 ## Error handling
 
 | Situation | Action |
 |-----------|--------|
 | KRS not found in search | Ask user for KRS manually |
-| e-KRS unavailable | Try company IR website |
+| e-KRS unavailable (2 failed attempts) | Try company IR website; if also unavailable, inform user |
 | PDF missing sections | Generate report with "dane częściowe" annotation |
 | Implied rate > 50% or < 0% | Set to null, add note in report |
 | git push fails | Inform user, leave local files intact — do not delete partial data |
+| Company already in companies.json | Ask user: "Spółka już istnieje w bazie (analiza z [date]). Zaktualizować wpis i nadpisać raport?" |
