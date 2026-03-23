@@ -1,5 +1,9 @@
 # TP Radar
 
+## Live dashboard
+
+https://piotrek-karolak.github.io/tp-radar/
+
 Automated Transfer Pricing risk analysis dashboard for Polish companies.
 
 Built with Claude Code — each analysis is triggered by typing `analizuj [company name]` in Claude Code.
