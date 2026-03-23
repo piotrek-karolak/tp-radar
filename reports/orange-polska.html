@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orange Polska S.A. — Analiza ryzyk Transfer Pricing 2024</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #f4f5f7;
+      color: #1a1a2e;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+      color: white;
+      padding: 48px 40px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 350px; height: 350px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .header-tag {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 10px;
+    }
+
+    h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 6px; }
+    .header-sub { font-size: 16px; opacity: 0.75; margin-bottom: 24px; }
+
+    .header-meta {
+      display: flex; gap: 12px; flex-wrap: wrap;
+    }
+    .meta-chip {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 12px;
+    }
+    .meta-chip.warning { background: rgba(239,68,68,0.2); border-color: rgba(239,68,68,0.4); }
+    .meta-chip.ok { background: rgba(34,197,94,0.2); border-color: rgba(34,197,94,0.3); }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 36px 24px; }
+
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #0f3460;
+      border-left: 3px solid #0f3460;
+      padding-left: 10px;
+      margin: 36px 0 16px;
+    }
+
+    /* RISK SCORE HEADER */
+    .risk-overview {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+
+    .risk-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px 22px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.06);
+      text-align: center;
+    }
+
+    .risk-card .score {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 4px;
+      line-height: 1;
+    }
+    .risk-card .score.red { color: #dc2626; }
+    .risk-card .score.orange { color: #ea580c; }
+    .risk-card .score.yellow { color: #ca8a04; }
+    .risk-card .score.green { color: #16a34a; }
+
+    .risk-card .label {
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .risk-card .value { font-size: 16px; font-weight: 600; color: #333; }
+
+    /* TRANSACTIONS TABLE */
+    .table-wrap {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.06);
+      margin-bottom: 8px;
+    }
+
+    .table-header {
+      background: #1a1a2e;
+      color: white;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .table-header h3 { font-size: 14px; font-weight: 600; }
+    .table-header span { font-size: 12px; opacity: 0.7; }
+
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      background: #f8f9ff;
+      padding: 11px 16px;
+      text-align: left;
+      font-size: 11px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #666;
+      border-bottom: 1px solid #eee;
+    }
+    thead th.right { text-align: right; }
+
+    tbody tr { border-bottom: 1px solid #f4f5f7; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #fafbff; }
+
+    tbody td { padding: 11px 16px; font-size: 13px; vertical-align: middle; }
+    tbody td.right { text-align: right; font-variant-numeric: tabular-nums; }
+    tbody td.bold { font-weight: 700; }
+    tbody td.entity { font-weight: 600; color: #1a1a2e; }
+
+    .total-row { background: #f0f2ff !important; border-top: 2px solid #c7d2fe !important; }
+    .total-row td { font-weight: 700; color: #1a1a2e; }
+
+    /* RISK BADGES */
+    .risk-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .risk-badge.CRITICAL { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+    .risk-badge.HIGH { background: #ffedd5; color: #c2410c; border: 1px solid #fdba74; }
+    .risk-badge.MEDIUM { background: #fef9c3; color: #854d0e; border: 1px solid #fde047; }
+    .risk-badge.LOW { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+
+    /* RISK ANALYSIS CARDS */
+    .risk-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 8px; }
+
+    .risk-item {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.06);
+      display: flex;
+    }
+
+    .risk-stripe {
+      width: 6px;
+      flex-shrink: 0;
+    }
+    .risk-stripe.CRITICAL { background: #dc2626; }
+    .risk-stripe.HIGH { background: #ea580c; }
+    .risk-stripe.MEDIUM { background: #ca8a04; }
+    .risk-stripe.LOW { background: #16a34a; }
+
+    .risk-content { padding: 18px 22px; flex: 1; }
+
+    .risk-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .risk-title { font-weight: 700; font-size: 15px; color: #1a1a2e; }
+    .risk-amount { font-size: 13px; font-weight: 600; color: #0f3460; background: #e0e7ff; border-radius: 6px; padding: 2px 10px; }
+
+    .risk-body { font-size: 13px; color: #444; line-height: 1.65; }
+    .risk-body strong { color: #1a1a2e; }
+
+    .risk-bullets { margin-top: 10px; padding-left: 16px; }
+    .risk-bullets li { margin-bottom: 4px; color: #555; }
+
+    .risk-rec {
+      margin-top: 12px;
+      background: #f0f4ff;
+      border-left: 3px solid #4f46e5;
+      padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+      font-size: 12px;
+      color: #3730a3;
+    }
+    .risk-rec strong { color: #312e81; }
+
+    /* STRUCTURE */
+    .structure-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .sub-card {
+      background: white;
+      border-radius: 10px;
+      padding: 14px 18px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.06);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .sub-flag { font-size: 22px; }
+    .sub-info { flex: 1; }
+    .sub-name { font-weight: 700; font-size: 13px; color: #1a1a2e; }
+    .sub-loc { font-size: 12px; color: #888; }
+    .sub-share { font-size: 12px; font-weight: 600; margin-top: 4px; }
+    .sub-share.full { color: #15803d; }
+    .sub-share.major { color: #ca8a04; }
+    .sub-share.minor { color: #dc2626; }
+
+    /* SUMMARY BOX */
+    .summary-box {
+      background: linear-gradient(135deg, #1a1a2e, #0f3460);
+      color: white;
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 8px;
+    }
+    .summary-box h3 { font-size: 18px; margin-bottom: 16px; opacity: 0.85; font-weight: 500; }
+    .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .summary-item { }
+    .summary-item .s-val { font-size: 26px; font-weight: 800; margin-bottom: 2px; }
+    .summary-item .s-label { font-size: 11px; opacity: 0.65; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* NOTE */
+    .note-box {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-left: 4px solid #f59e0b;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: #78350f;
+      margin-bottom: 8px;
+      line-height: 1.65;
+    }
+
+    .disclaimer-box {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 16px;
+      line-height: 1.65;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px;
+      font-size: 11px;
+      color: #aaa;
+      border-top: 1px solid #e5e7eb;
+      margin-top: 40px;
+    }
+
+    .bar-container { width: 100%; background: #f0f0f0; border-radius: 4px; height: 6px; margin-top: 6px; }
+    .bar-fill { height: 6px; border-radius: 4px; }
+    .bar-fill.red { background: #dc2626; }
+    .bar-fill.orange { background: #ea580c; }
+    .bar-fill.blue { background: #3b82f6; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media(max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* FINANCIAL METRICS */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .metric-card {
+      background: white;
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.06);
+      text-align: center;
+    }
+    .metric-card .m-val { font-size: 24px; font-weight: 800; color: #0f3460; margin-bottom: 2px; }
+    .metric-card .m-val.green { color: #15803d; }
+    .metric-card .m-val.yellow { color: #854d0e; }
+    .metric-card .m-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.8px; }
+    .metric-card .m-threshold { font-size: 11px; margin-top: 4px; color: #aaa; }
+
+    /* BALANCE TABLE */
+    .balance-table {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .back-link { display: inline-block; margin: 16px 24px; color: #005a9e; text-decoration: none; font-size: 14px; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<a href="../index.html" class="back-link">← Powrót do dashboardu</a>
+
+<header>
+  <div class="header-tag">Analiza ryzyk · Transfer Pricing · Sprawozdanie jednostkowe 2024</div>
+  <h1>Orange Polska S.A.</h1>
+  <p class="header-sub">Identyfikacja i ocena ryzyk TP na podstawie sprawozdania finansowego za rok 2024 (MSSF/IFRS)</p>
+  <div class="header-meta">
+    <span class="meta-chip">KRS: 0000010681</span>
+    <span class="meta-chip">Warszawa · Aleje Jerozolimskie 160</span>
+    <span class="meta-chip">Podmiot dominujący: Orange S.A. 🇫🇷</span>
+    <span class="meta-chip">Sprawozdanie: 2024-01-01 – 2024-12-31</span>
+    <span class="meta-chip warning">⚠ Ryzyko TP: WYSOKIE</span>
+    <span class="meta-chip">Źródło: e-KRS / RDF · iXBRL</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- SEKCJA 1: KLUCZOWE DANE FINANSOWE -->
+  <div class="section-label">Kluczowe dane finansowe 2024</div>
+
+  <div class="summary-box">
+    <h3>Profil finansowy Orange Polska S.A.</h3>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="s-val">11 259 mln</div>
+        <div class="s-label">Przychody ogółem (PLN)</div>
+      </div>
+      <div class="summary-item">
+        <div class="s-val">1 077 mln</div>
+        <div class="s-label">Zysk netto (PLN)</div>
+      </div>
+      <div class="summary-item">
+        <div class="s-val">957 mln</div>
+        <div class="s-label">Przychody od powiązanych (PLN)</div>
+      </div>
+      <div class="summary-item">
+        <div class="s-val">472 mln</div>
+        <div class="s-label">Zakupy od powiązanych (PLN)</div>
+      </div>
+      <div class="summary-item">
+        <div class="s-val">4 245 mln</div>
+        <div class="s-label">Pożyczki od Grupy Orange (PLN)</div>
+      </div>
+      <div class="summary-item">
+        <div class="s-val">102 mln</div>
+        <div class="s-label">Gwarancje dla spółek zależnych (PLN)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEKCJA 2: OGÓLNA OCENA RYZYK TP -->
+  <div class="section-label">Ogólna ocena ryzyk TP</div>
+
+  <div class="risk-overview">
+    <div class="risk-card">
+      <div class="label">Ogólny poziom ryzyka</div>
+      <div class="score orange">WYSOKI</div>
+      <div class="value">Wynik: 6 / 10</div>
+    </div>
+    <div class="risk-card">
+      <div class="label">Pożyczki od podmiotu dominującego</div>
+      <div class="score orange">4 245 mln</div>
+      <div class="value">PLN — Atlas Services Belgium</div>
+    </div>
+    <div class="risk-card">
+      <div class="label">Implied rate na pożyczkach</div>
+      <div class="score green">3,79%</div>
+      <div class="value">po hedgingu WIBOR: 4,15%</div>
+    </div>
+    <div class="risk-card">
+      <div class="label">Zadłużenie RP / EBITDA</div>
+      <div class="score green">1,21x</div>
+      <div class="value">próg ostrożności &gt;4,0x</div>
+    </div>
+    <div class="risk-card">
+      <div class="label">Transakcje TP do przychodów</div>
+      <div class="score yellow">13%</div>
+      <div class="value">zakupy + sprzedaż operacyjna RP</div>
+    </div>
+  </div>
+
+  <!-- WSKAŹNIKI FINANSOWE TP -->
+  <div class="section-label">Wskaźniki finansowe (Wymiar 3)</div>
+
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="m-val green">13,4%</div>
+      <div class="m-label">Marża EBIT</div>
+      <div class="m-threshold">Ocena: LOW (&gt;5%)</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-val green">50,6%</div>
+      <div class="m-label">Equity Ratio</div>
+      <div class="m-threshold">Ocena: LOW (&gt;30%)</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-val green">1,21x</div>
+      <div class="m-label">Dług RP / EBITDA</div>
+      <div class="m-threshold">Ocena: LOW (&lt;4,0x)</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-val green">3,79%</div>
+      <div class="m-label">Implied Rate</div>
+      <div class="m-threshold">Ocena: LOW (2–10%)</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-val green">21,5x</div>
+      <div class="m-label">ICR (EBITDA / odsetki RP)</div>
+      <div class="m-threshold">Ocena: LOW (&gt;1,0x)</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-val green">1 507 mln</div>
+      <div class="m-label">EBIT (PLN)</div>
+      <div class="m-threshold">EBITDA: 3 507 mln PLN</div>
+    </div>
+  </div>
+
+  <!-- SEKCJA 3: STRUKTURA GRUPY -->
+  <div class="section-label">Struktura grupy kapitałowej</div>
+
+  <div class="note-box">
+    <strong>Podmiot dominujący:</strong> Orange S.A. z siedzibą w Paryżu (Francja) jest podmiotem dominującym najwyższego szczebla Grupy Orange, do której należy Orange Polska S.A. Finansowanie dłużne pochodzi z Atlas Services Belgium S.A. (Belgia) — spółki zależnej Orange S.A.
+  </div>
+
+  <div class="structure-grid">
+    <div class="sub-card">
+      <div class="sub-flag">🇫🇷</div>
+      <div class="sub-info">
+        <div class="sub-name">Orange S.A.</div>
+        <div class="sub-loc">Paryż, Francja · jednostka dominująca najwyższego szczebla</div>
+        <div class="sub-share major">Udział kontrolny w Orange Polska S.A.</div>
+      </div>
+    </div>
+    <div class="sub-card">
+      <div class="sub-flag">🇧🇪</div>
+      <div class="sub-info">
+        <div class="sub-name">Atlas Services Belgium S.A.</div>
+        <div class="sub-loc">Belgia · spółka zależna Orange S.A.</div>
+        <div class="sub-share minor">Kredytodawca — pożyczki terminowe 4 245 mln PLN</div>
+      </div>
+    </div>
+    <div class="sub-card">
+      <div class="sub-flag">🇵🇱</div>
+      <div class="sub-info">
+        <div class="sub-name">Integrated Solutions Sp. z o.o.</div>
+        <div class="sub-loc">Warszawa, Polska</div>
+        <div class="sub-share full">100% · zintegrowane rozwiązania IT i sieciowe</div>
+      </div>
+    </div>
+    <div class="sub-card">
+      <div class="sub-flag">🇵🇱</div>
+      <div class="sub-info">
+        <div class="sub-name">BlueSoft Sp. z o.o.</div>
+        <div class="sub-loc">Warszawa, Polska</div>
+        <div class="sub-share full">100% · usługi i rozwiązania IT</div>
+      </div>
+    </div>
+    <div class="sub-card">
+      <div class="sub-flag">🇵🇱</div>
+      <div class="sub-info">
+        <div class="sub-name">Interkam Sp. z o.o.</div>
+        <div class="sub-loc">Sochaczew, Polska</div>
+        <div class="sub-share full">100% · lokalny operator światłowodowy</div>
+      </div>
+    </div>
+    <div class="sub-card">
+      <div class="sub-flag">🇵🇱</div>
+      <div class="sub-info">
+        <div class="sub-name">Orange Energia Sp. z o.o.</div>
+        <div class="sub-loc">Warszawa, Polska</div>
+        <div class="sub-share full">100% · sprzedaż energii elektrycznej</div>
+      </div>
+    </div>
+    <div class="sub-card">
+      <div class="sub-flag">🇵🇱</div>
+      <div class="sub-info">
+        <div class="sub-name">Telefony Podlaskie S.A.</div>
+        <div class="sub-loc">Sokołów Podlaski, Polska</div>
+        <div class="sub-share major">89,3% · lokalny operator stacjonarny</div>
+      </div>
+    </div>
+    <div class="sub-card">
+      <div class="sub-flag">🇵🇱</div>
+      <div class="sub-info">
+        <div class="sub-name">Orange Retail S.A.</div>
+        <div class="sub-loc">Polska</div>
+        <div class="sub-share full">100% · dystrybucja detaliczna</div>
+      </div>
+    </div>
+    <div class="sub-card">
+      <div class="sub-flag">🇵🇱</div>
+      <div class="sub-info">
+        <div class="sub-name">Światłowód Inwestycje Sp. z o.o.</div>
+        <div class="sub-loc">Polska · wspólne przedsięwzięcie</div>
+        <div class="sub-share minor">50% · JV z Acari Investments (APG)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEKCJA 4: TABELA TRANSAKCJI TP -->
+  <div class="section-label">Transakcje z podmiotami powiązanymi — 2024</div>
+
+  <div class="two-col">
+    <div class="table-wrap">
+      <div class="table-header">
+        <h3>Zakup usług od podmiotów powiązanych</h3>
+        <span>RAZEM: ~472 000 000 PLN</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Podmiot</th>
+            <th class="right">Kwota (mln PLN)</th>
+            <th>Udział</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="entity">Orange Group (excl. Orange S.A.)</td>
+            <td class="right bold">197</td>
+            <td>
+              <div>41,7%</div>
+              <div class="bar-container"><div class="bar-fill orange" style="width:42%"></div></div>
+            </td>
+          </tr>
+          <tr>
+            <td class="entity">Światłowód Inwestycje Sp. z o.o.</td>
+            <td class="right">203</td>
+            <td>
+              <div>43,0%</div>
+              <div class="bar-container"><div class="bar-fill blue" style="width:43%"></div></div>
+            </td>
+          </tr>
+          <tr>
+            <td class="entity">Orange S.A. (jednostka dominująca)</td>
+            <td class="right">72</td>
+            <td>
+              <div>15,3%</div>
+              <div class="bar-container"><div class="bar-fill red" style="width:15%"></div></div>
+            </td>
+          </tr>
+          <tr class="total-row">
+            <td>Razem zakupy od RP</td>
+            <td class="right">472</td>
+            <td>4,2% przychodów</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-header">
+        <h3>Sprzedaż do podmiotów powiązanych</h3>
+        <span>RAZEM: 957 000 000 PLN</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Podmiot</th>
+            <th class="right">Kwota (mln PLN)</th>
+            <th>Udział</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="entity">Grupa Orange (hurtowe usługi telekomunikacyjne + R&D)</td>
+            <td class="right bold">262</td>
+            <td>
+              <div>27,4%</div>
+              <div class="bar-container"><div class="bar-fill orange" style="width:27%"></div></div>
+            </td>
+          </tr>
+          <tr>
+            <td class="entity">Spółki zależne Orange Polska</td>
+            <td class="right">111</td>
+            <td>
+              <div>11,6%</div>
+              <div class="bar-container"><div class="bar-fill blue" style="width:12%"></div></div>
+            </td>
+          </tr>
+          <tr>
+            <td class="entity">Pozostałe podmioty powiązane</td>
+            <td class="right">584</td>
+            <td>
+              <div>61,0%</div>
+              <div class="bar-container"><div class="bar-fill orange" style="width:61%"></div></div>
+            </td>
+          </tr>
+          <tr class="total-row">
+            <td>Razem sprzedaż do RP</td>
+            <td class="right">957</td>
+            <td>8,5% przychodów</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TRANSAKCJE FINANSOWE RP -->
+  <div class="table-wrap">
+    <div class="table-header">
+      <h3>Transakcje finansowe z podmiotami powiązanymi</h3>
+      <span>Pożyczki + odsetki + gwarancje</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Rodzaj</th>
+          <th>Kontrahent</th>
+          <th class="right">Saldo (mln PLN)</th>
+          <th class="right">Przepływ 2024 (mln PLN)</th>
+          <th>Uwagi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pożyczki terminowe (dług długoterminowy)</td>
+          <td class="entity">Atlas Services Belgium S.A. 🇧🇪</td>
+          <td class="right bold">4 067</td>
+          <td class="right">—</td>
+          <td>Termin: sierpień 2031; stopa efektywna 6,74% / 4,15% (po hedgingu)</td>
+        </tr>
+        <tr>
+          <td>Pożyczki terminowe (krótkoterminowe)</td>
+          <td class="entity">Atlas Services Belgium S.A. 🇧🇪</td>
+          <td class="right">178</td>
+          <td class="right">—</td>
+          <td>Łącznie z odsetkami i prowizjami</td>
+        </tr>
+        <tr>
+          <td>Koszty odsetkowe (netto)</td>
+          <td class="entity">Grupa Orange 🇫🇷🇧🇪</td>
+          <td class="right">—</td>
+          <td class="right">(163)</td>
+          <td>Odsetki od pożyczek od Atlas Services Belgium</td>
+        </tr>
+        <tr>
+          <td>Przychody finansowe (dywidendy + odsetki)</td>
+          <td class="entity">Spółki zależne OPL</td>
+          <td class="right">—</td>
+          <td class="right">85</td>
+          <td>Dywidendy i odsetki od pożyczek do spółek zależnych</td>
+        </tr>
+        <tr>
+          <td>Przychody finansowe</td>
+          <td class="entity">Orange S.A. 🇫🇷</td>
+          <td class="right">—</td>
+          <td class="right">17</td>
+          <td>Przychody od jednostki dominującej</td>
+        </tr>
+        <tr>
+          <td>Gwarancje udzielone</td>
+          <td class="entity">Spółki zależne Orange Polska 🇵🇱</td>
+          <td class="right">102</td>
+          <td class="right">—</td>
+          <td>w tym 27 mln PLN gwarancje finansowe; brak informacji o wynagrodzeniu</td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="2">Łączny dług finansowy wobec powiązanych</td>
+          <td class="right">4 245</td>
+          <td class="right">(163) odsetki</td>
+          <td>Implied rate: 3,79%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SEKCJA 5: SALDO ROZLICZEŃ -->
+  <div class="section-label">Saldo rozliczeń z podmiotami powiązanymi</div>
+
+  <div class="balance-table">
+    <div class="table-header">
+      <h3>Należności i zobowiązania wobec powiązanych na 31.12.2024</h3>
+      <span>Ze sprawozdania z sytuacji finansowej</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Pozycja</th>
+          <th class="right">2024 (mln PLN)</th>
+          <th class="right">2023 (mln PLN)</th>
+          <th>Zmiana</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pożyczki od powiązanych (razem)</td>
+          <td class="right bold">4 245</td>
+          <td class="right">4 364</td>
+          <td>▼ –119 mln (refinansowanie)</td>
+        </tr>
+        <tr>
+          <td>— w tym długoterminowe</td>
+          <td class="right">4 067</td>
+          <td class="right">2 694</td>
+          <td>▲ +1 373 mln (nowe pożyczki LT)</td>
+        </tr>
+        <tr>
+          <td>— w tym krótkoterminowe</td>
+          <td class="right">178</td>
+          <td class="right">1 670</td>
+          <td>▼ –1 492 mln (spłata ST)</td>
+        </tr>
+        <tr>
+          <td>Inwestycje w jednostki zależne</td>
+          <td class="right">563</td>
+          <td class="right">448</td>
+          <td>▲ +115 mln (dokapitalizowanie Interkam)</td>
+        </tr>
+        <tr>
+          <td>Inwestycja we wspólne przedsięwzięcie (ŚI)</td>
+          <td class="right">824</td>
+          <td class="right">655</td>
+          <td>▲ +169 mln</td>
+        </tr>
+        <tr>
+          <td>Gwarancje udzielone spółkom zależnym</td>
+          <td class="right">102</td>
+          <td class="right">110</td>
+          <td>▼ –8 mln</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SEKCJA 6: ANALIZA RYZYK -->
+  <div class="section-label">Analiza zidentyfikowanych ryzyk TP</div>
+
+  <div class="risk-list">
+
+    <div class="risk-item">
+      <div class="risk-stripe HIGH"></div>
+      <div class="risk-content">
+        <div class="risk-title-row">
+          <span class="risk-title">Pożyczki od Atlas Services Belgium S.A. (Belgia)</span>
+          <span class="risk-badge HIGH">HIGH</span>
+          <span class="risk-amount">4 245 mln PLN</span>
+        </div>
+        <div class="risk-body">
+          Orange Polska finansuje działalność pożyczkami wewnątrzgrupowymi udzielanymi przez Atlas Services Belgium S.A. — spółkę zależną Orange S.A. z siedzibą w Belgii. Na 31 grudnia 2024 roku saldo wyniosło <strong>4 245 mln PLN</strong> (w tym 4 067 mln długoterminowych, 178 mln krótkoterminowych).
+          <ul class="risk-bullets">
+            <li>Oprocentowanie nominalne: <strong>6,74% p.a.</strong> bez uwzględnienia instrumentów swap; <strong>4,15% p.a.</strong> po uwzględnieniu hedgingu WIBOR</li>
+            <li>Implied rate (kalkulacyjna): <strong>3,79%</strong> — w normie (2–10%), brak red flagi</li>
+            <li>Transakcja transgraniczne Polska–Belgia (UE/OECD), charakter intragroup treasury</li>
+            <li>Wartość pożyczek stanowi <strong>37,7% przychodów</strong> — istotność materialna wysoka</li>
+            <li>Brak wzmianki o benchmarku oprocentowania ani dokumentacji TP dla tej pożyczki w notach</li>
+          </ul>
+        </div>
+        <div class="risk-rec"><strong>Rekomendacja:</strong> Weryfikacja istnienia lokalnej dokumentacji TP (Local File) obejmującej analizę porównawczą oprocentowania (benchmark stóp rynkowych dla pożyczek intragroup w PLN). Ocena, czy instrumenty swap zostały uwzględnione w analizie ceny transferowej.</div>
+      </div>
+    </div>
+
+    <div class="risk-item">
+      <div class="risk-stripe MEDIUM"></div>
+      <div class="risk-content">
+        <div class="risk-title-row">
+          <span class="risk-title">Zakupy od Grupy Orange (usługi hurtowe i R&D)</span>
+          <span class="risk-badge MEDIUM">MEDIUM</span>
+          <span class="risk-amount">197 mln PLN + 72 mln PLN</span>
+        </div>
+        <div class="risk-body">
+          Orange Polska nabywa usługi od Grupy Orange (excl. Orange S.A.) za <strong>197 mln PLN</strong> oraz bezpośrednio od Orange S.A. za <strong>72 mln PLN</strong> (razem 269 mln PLN). Są to głównie usługi roamingu wychodzącego, umowy MVNO, usługi techniczne i R&D.
+          <ul class="risk-bullets">
+            <li>Kontrahenci z Francji i innych krajów UE — jurysdykcje OECD, niskie ryzyko rajowe</li>
+            <li>Usługi telekomunikacyjne hurtowe — potencjalnie możliwy benchmarking CUP (ceny rynkowe)</li>
+            <li>2,4% przychodów ogółem — istotność materialna umiarkowana</li>
+          </ul>
+        </div>
+        <div class="risk-rec"><strong>Rekomendacja:</strong> Weryfikacja metodologii wyceny — preferowana metoda CUP lub TNMM. Sprawdzenie, czy ceny zakupów od Grupy Orange są zgodne z umowami ramowymi Orange Group.</div>
+      </div>
+    </div>
+
+    <div class="risk-item">
+      <div class="risk-stripe MEDIUM"></div>
+      <div class="risk-content">
+        <div class="risk-title-row">
+          <span class="risk-title">Sprzedaż hurtowych usług telekomunikacyjnych do Grupy Orange</span>
+          <span class="risk-badge MEDIUM">MEDIUM</span>
+          <span class="risk-amount">262 mln PLN</span>
+        </div>
+        <div class="risk-body">
+          Orange Polska sprzedaje hurtowe usługi telekomunikacyjne i usługi R&D na rzecz Grupy Orange za <strong>262 mln PLN</strong>. Są to przede wszystkim usługi połączeń przychodzących, roaming wizytorów, udostępnianie infrastruktury i sieci.
+          <ul class="risk-bullets">
+            <li>Transakcje transgraniczne (Polska – Francja/inne kraje Grupy)</li>
+            <li>Możliwy benchmarking rynkowy dla stawek hurtowych (regulowane przez UE)</li>
+            <li>2,3% przychodów ogółem</li>
+          </ul>
+        </div>
+        <div class="risk-rec"><strong>Rekomendacja:</strong> Ocena, czy ceny sprzedaży hurtowej odpowiadają stawkom regulowanym przez UE lub wynegocjowanym rynkowo z niezależnymi operatorami (metoda CUP).</div>
+      </div>
+    </div>
+
+    <div class="risk-item">
+      <div class="risk-stripe MEDIUM"></div>
+      <div class="risk-content">
+        <div class="risk-title-row">
+          <span class="risk-title">Zakupy od Światłowód Inwestycje Sp. z o.o. (JV)</span>
+          <span class="risk-badge MEDIUM">MEDIUM</span>
+          <span class="risk-amount">203 mln PLN</span>
+        </div>
+        <div class="risk-body">
+          Orange Polska nabywa usługi leasingowe i przyszłe usługi od Światłowód Inwestycje Sp. z o.o. (wspólne przedsięwzięcie, 50% OPL + 50% Acari/APG). Zobowiązania dotyczą głównie umów leasingu infrastruktury światłowodowej.
+          <ul class="risk-bullets">
+            <li>Podmiot powiązany krajowy (Polska) — niższe ryzyko jurysdykcyjne</li>
+            <li>JV z APG — konieczność wykazania warunków rynkowych wobec partnera zewnętrznego (de facto ARM)</li>
+            <li>Charakter transakcji: leasing i usługi na przyszłość (z przedpłatą)</li>
+          </ul>
+        </div>
+        <div class="risk-rec"><strong>Rekomendacja:</strong> Weryfikacja, czy warunki umów leasingowych z Światłowód Inwestycje odpowiadają warunkom, jakie zaakceptowałby niezależny partner (APG). Ocena MSSF 16 — prawidłowa klasyfikacja umów leasingowych.</div>
+      </div>
+    </div>
+
+    <div class="risk-item">
+      <div class="risk-stripe MEDIUM"></div>
+      <div class="risk-content">
+        <div class="risk-title-row">
+          <span class="risk-title">Gwarancje udzielone spółkom zależnym</span>
+          <span class="risk-badge MEDIUM">MEDIUM</span>
+          <span class="risk-amount">102 mln PLN</span>
+        </div>
+        <div class="risk-body">
+          Na 31 grudnia 2024 roku Orange Polska S.A. udzieliła gwarancji jednostkom zależnym na łączną kwotę <strong>102 mln PLN</strong>, z czego <strong>27 mln PLN</strong> stanowiły umowy gwarancji finansowych. W notach brak informacji o wynagrodzeniu za udzielone gwarancje.
+          <ul class="risk-bullets">
+            <li>Gwarancje finansowe (27 mln PLN) — wymagają osobnej dokumentacji TP</li>
+            <li>Brak wzmianki o fee gwarancyjnym — potencjalne nieodpłatne świadczenie</li>
+            <li>Gwarancje udzielane spółkom krajowym (niższe ryzyko jurysdykcyjne)</li>
+          </ul>
+        </div>
+        <div class="risk-rec"><strong>Rekomendacja:</strong> Ustalenie, czy za gwarancje pobierane jest wynagrodzenie (fee gwarancyjne). Jeśli nie — przygotowanie dokumentacji TP z benchmarkiem ceny rynkowej gwarancji (zazwyczaj 0,5–3% p.a. wartości gwarancji).</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SEKCJA 7: MACIERZ PRIORYTETÓW -->
+  <div class="section-label">Macierz priorytetów ryzyk TP</div>
+
+  <div class="table-wrap">
+    <div class="table-header">
+      <h3>Ranking ryzyk wg kwoty × poziom</h3>
+      <span>Najważniejsze obszary do weryfikacji</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Transakcja</th>
+          <th>Kontrahent</th>
+          <th class="right">Kwota (mln PLN)</th>
+          <th>Poziom</th>
+          <th>Priorytet</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Pożyczki terminowe</td>
+          <td>Atlas Services Belgium S.A. 🇧🇪</td>
+          <td class="right bold">4 245</td>
+          <td><span class="risk-badge HIGH">HIGH</span></td>
+          <td><strong>P1 — Natychmiastowy</strong></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Sprzedaż hurtowa</td>
+          <td>Grupa Orange 🇫🇷</td>
+          <td class="right">957</td>
+          <td><span class="risk-badge MEDIUM">MEDIUM</span></td>
+          <td>P2 — Ważny</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Zakupy od Grupy Orange</td>
+          <td>Orange Group 🇫🇷🇧🇪</td>
+          <td class="right">269</td>
+          <td><span class="risk-badge MEDIUM">MEDIUM</span></td>
+          <td>P2 — Ważny</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Zakupy od JV</td>
+          <td>Światłowód Inwestycje 🇵🇱</td>
+          <td class="right">203</td>
+          <td><span class="risk-badge MEDIUM">MEDIUM</span></td>
+          <td>P3 — Monitorowany</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Gwarancje finansowe</td>
+          <td>Spółki zależne OPL 🇵🇱</td>
+          <td class="right">102</td>
+          <td><span class="risk-badge MEDIUM">MEDIUM</span></td>
+          <td>P3 — Monitorowany</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- UZASADNIENIE OCENY -->
+  <div class="section-label">Uzasadnienie oceny ogólnej</div>
+
+  <div class="note-box">
+    <strong>Metodologia oceny (wynik: HIGH, 6/10):</strong><br><br>
+    <strong>Krok A (scoring bazowy):</strong> 1 transakcja HIGH (pożyczki od parent group) × 2 = 2 pkt; 4 transakcje MEDIUM × 1 = 4 pkt. Razem = 6 pkt → HIGH<br><br>
+    <strong>Krok B (korekta red flags):</strong> Brak red flags: implied rate 3,79% (w normie 2–10%), ICR 21,5x (>>1), equity ratio 50,6% (>30%), brak going concern. Gwarancje bez fee stanowią minor flag — bez korekty punktowej.<br><br>
+    <strong>Krok C (korekty mitigujące):</strong> Silny profil finansowy (equity ratio 50,6%, stabilne zyski 2 lata, EBIT margin 13,4%) sugeruje korektę –1 pkt. Skorygowany wynik: 5 pkt → borderline MEDIUM/HIGH.<br><br>
+    <strong>Krok D (override kontekstowy):</strong> Zachowano HIGH. Uzasadnienie: absolutna wartość pożyczek od parent group (4 245 mln PLN) jest jedną z największych ekspozycji intragroup debt w polskim segmencie telco. Brak wzmianki o benchmarku oprocentowania ani dokumentacji TP dla kluczowej transakcji finansowej uzasadnia utrzymanie poziomu WYSOKIEGO.
+  </div>
+
+  <!-- SEKCJA 8: ŹRÓDŁO I METODOLOGIA -->
+  <div class="section-label">Źródło danych i metodologia</div>
+
+  <div class="disclaimer-box">
+    <strong>Dane źródłowe:</strong> Jednostkowe Sprawozdanie Finansowe Orange Polska S.A. wg MSSF za rok zakończony 31 grudnia 2024 roku (OPLSA-MSSF-2024-12-31-0-PL.xhtml, identyfikator dokumentu: 9445307). Pobrane z Repozytorium Dokumentów Finansowych MS (rdf-przegladarka.ms.gov.pl) w dniu 2026-03-23.<br><br>
+    <strong>Dane finansowe (w milionach PLN):</strong> Przychody: 11 259 | EBIT: 1 507 | Zysk netto: 1 077 | Aktywa razem: 25 352 | Kapitał własny: 12 826 | EBITDA (excl. IFRS 16): 3 507<br><br>
+    <strong>Metodologia TP:</strong> Ocena wielowymiarowa: Wymiar 1 (typ transakcji), Wymiar 2 (jurysdykcja), Wymiar 3 (profil finansowy: EBIT margin, Equity Ratio, Debt/EBITDA, Implied Rate), Wymiar 4 (wolumen vs. przychody), Wymiar 5 (sygnały compliance). Scoring 4-etapowy (Kroki A–D).<br><br>
+    <strong>Ograniczenia:</strong> Analiza oparta wyłącznie na sprawozdaniu jednostkowym (nie skonsolidowanym). Brak dostępu do pełnej dokumentacji TP, APA ani polityk cen transferowych Grupy Orange. Ocena ma charakter wskaźnikowy i nie stanowi porady prawno-podatkowej.<br><br>
+    <strong>Wygenerowane przez:</strong> Claude Code (Anthropic) · TP Radar Pipeline · 2026-03-23
+  </div>
+
+</div>
+
+<footer>
+  Orange Polska S.A. · KRS 0000010681 · Analiza TP 2024 · TP Radar · Dane ze sprawozdań finansowych (e-KRS/RDF) · Wygenerowane przez Claude Code
+</footer>
+
+</body>
+</html>

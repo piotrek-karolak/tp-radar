@@ -73,6 +73,92 @@
         "subsidiaries_count": 18,
         "countries": ["PL", "UA", "GE", "MY", "IN", "SA"]
       }
+    },
+    {
+      "id": "orange-polska",
+      "name": "Orange Polska S.A.",
+      "krs": "0000010681",
+      "analyzed_at": "2026-03-23",
+      "report_file": "reports/orange-polska.html",
+
+      "group_affiliation": {
+        "role": "SUBSIDIARY",
+        "group_name": "Grupa Orange",
+        "parent_company": "Orange S.A.",
+        "parent_country": "FR",
+        "ultimate_parent": "Orange S.A."
+      },
+
+      "financials": {
+        "revenue": 11259000000,
+        "operating_profit": 1507000000,
+        "ebit_margin": 13.4,
+        "net_profit": 1077000000,
+        "total_assets": 25352000000,
+        "equity": 12826000000,
+        "ebitda": 3507000000,
+        "equity_ratio": 0.506,
+        "debt_ebitda": 1.21,
+        "icr": 21.5,
+        "implied_rate": 3.79
+      },
+
+      "related_party_flows": {
+        "operational": {
+          "purchases": 472000000,
+          "purchases_pct_revenue": 4.2,
+          "sales": 957000000,
+          "sales_pct_revenue": 8.5
+        },
+        "financial": {
+          "loans_received_from_rp": 4245000000,
+          "interest_costs_to_rp": 163000000,
+          "financial_income_from_rp": 102000000,
+          "guarantees_issued": 102000000
+        }
+      },
+
+      "tp_risk": {
+        "overall": "HIGH",
+        "score": 6,
+        "top_risks": [
+          {
+            "name": "Pożyczki od Atlas Services Belgium S.A.",
+            "amount": 4245000000,
+            "level": "HIGH",
+            "category": "financial"
+          },
+          {
+            "name": "Sprzedaż hurtowa do Grupy Orange",
+            "amount": 957000000,
+            "level": "MEDIUM",
+            "category": "operational"
+          },
+          {
+            "name": "Zakupy od Grupy Orange",
+            "amount": 269000000,
+            "level": "MEDIUM",
+            "category": "operational"
+          },
+          {
+            "name": "Zakupy od Światłowód Inwestycje (JV)",
+            "amount": 203000000,
+            "level": "MEDIUM",
+            "category": "operational"
+          },
+          {
+            "name": "Gwarancje dla spółek zależnych",
+            "amount": 102000000,
+            "level": "MEDIUM",
+            "category": "financial"
+          }
+        ]
+      },
+
+      "group": {
+        "subsidiaries_count": 8,
+        "countries": ["PL", "FR", "BE"]
+      }
     }
   ]
 }
