@@ -246,6 +246,73 @@ implied_rate = (computed above)
 
 ---
 
+### Step 7A: Writing style — apply before generating the report
+
+**CRITICAL: Before writing any section of the report, internalize these rules. Every section must comply.**
+
+#### Executive Summary template (section 00)
+
+**SCQA paragraph (2–3 sentences):**
+
+```
+S: [Spółka] jest [rola w grupie], przychody [X] mln PLN ([rok]).
+C: Łączna wartość transakcji z podmiotami powiązanymi wynosi [X] mln PLN
+   ([X]% przychodów) — zidentyfikowano [N] kategorii transakcji TP.
+A: Ocena ryzyka: [POZIOM] ([N]/10) — [top 2–3 tematy jednym zdaniu].
+```
+
+**3 "Tematy wymagające uwagi" cards:**
+- Select the 3 transactions with the highest PLN value that have a methodological question or documentation matter
+- Format: [KATEGORIA] | [Nazwa transakcji] | [Kwota PLN]
+- One sentence: konkretna kwestia metodologiczna lub dokumentacyjna — pisana na poziomie senior TP, bez tłumaczenia pojęć
+
+Category labels: FINANSOWANIE / LICENCJA / JV / USŁUGI / GWARANCJE / INSTRUMENTY / INNE
+
+#### Action Titles — section headers
+
+Headers must be declarative statements, not category labels. Derive from actual data:
+
+| Section | Derive title from | Example |
+|---------|-----------------|---------|
+| 05 — Transakcje | liczba kategorii + łączna wartość | "05 — Transakcje z grupą: 10 kategorii, łącznie >5 mld PLN" |
+| 07 — Ryzyka | liczba HIGH/CRITICAL + co wymagają | "07 — Dwa obszary HIGH wymagają weryfikacji dokumentacji" |
+| 08 — Macierz | liczba priorytetów natychmiastowych | "08 — Macierz priorytetów: 3 działania natychmiastowe" |
+
+#### Pyramid rule for risk-desc
+
+**First sentence of every risk-desc = assessment or conclusion, not description.**
+
+❌ Wrong: "Orange Polska finansuje działalność długoterminowymi pożyczkami od Atlas Services Belgium S.A. — spółki zależnej Orange S.A. W 2024 roku przeprowadzono refinansowanie..."
+✅ Right: "Portfel pożyczek od Atlas (4 245 mln PLN, 37,7% przychodów) był częściowo refinansowany w 2024 — nowa transza stała wymaga aktualnej dokumentacji TP."
+
+#### Recommendation format
+
+```
+Zalecamy [co konkretnie] — [cel/uzasadnienie] — [priorytet czasowy jeśli znany].
+```
+
+**Forbidden constructions:**
+
+| Forbidden | Replace with |
+|-----------|-------------|
+| "Pytanie TP: czy..." | Konkretna obserwacja lub usuń całkowicie |
+| "Zweryfikować dokumentację" | "Zalecamy przegląd dokumentacji X pod kątem Y" |
+| "należy rozważyć możliwość X" | "Zalecamy X" |
+| "warto zweryfikować" | "Zalecamy weryfikację X" |
+| "Potwierdzić, że..." | "Zalecamy potwierdzenie X" lub usuń jeśli oczywiste |
+| Bezosobowa forma bez podmiotu | Aktywna forma z "Zalecamy" |
+
+#### Quality check before finalizing
+
+Before completing the report, answer:
+1. Does section 00 answer "is this an interesting case?" in under 30 seconds?
+2. Does every risk-desc open with an assessment, not a transaction description?
+3. Are all recommendations active ("Zalecamy..."), specific, and with stated purpose?
+
+If any answer is NO — rewrite the relevant section.
+
+---
+
 ### Step 7: Generate report
 
 Write `reports/[company-id].html` — standalone full HTML report.
