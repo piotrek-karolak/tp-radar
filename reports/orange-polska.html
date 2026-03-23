@@ -490,12 +490,16 @@
       <div class="sl">Wynik scoring</div>
     </div>
     <div class="score-card">
-      <div class="sv neutral">4 245 mln</div>
-      <div class="sl">Pożyczki od Grupy Orange (PLN)</div>
+      <div class="sv high">do 1,6% rev</div>
+      <div class="sl">Opłata licencyjna za markę Orange (OBSL)</div>
     </div>
     <div class="score-card">
-      <div class="sv low">3,79%</div>
-      <div class="sl">Implied rate (odsetki / śr. dług RP)</div>
+      <div class="sv neutral">4 245 mln</div>
+      <div class="sl">Pożyczki od Atlas Services Belgium S.A.</div>
+    </div>
+    <div class="score-card">
+      <div class="sv low">4,15%</div>
+      <div class="sl">Stopa pożyczek po IRS (6,74% przed hedgingiem)</div>
     </div>
     <div class="score-card">
       <div class="sv low">1,21×</div>
@@ -543,9 +547,7 @@
   <div class="section-label">04 — Struktura grupy kapitałowej</div>
 
   <div class="info-box">
-    <strong>Podmiot dominujący najwyższego szczebla:</strong> Orange S.A. (Paryż, Francja) —
-    główna jednostka Grupy Orange. Finansowanie dłużne Orange Polska pochodzi od
-    Atlas Services Belgium S.A. (Belgia) — spółki zależnej Orange S.A.
+    <strong>Podmiot dominujący najwyższego szczebla:</strong> Orange S.A. (Paryż, Francja) — 50,67% akcji OPL S.A. na 31.12.2024. Finansowanie dłużne pochodzi od Atlas Services Belgium S.A. (Belgia). Opłata licencyjna za markę Orange jest pobierana przez <strong>Orange Brand Services Limited (OBSL)</strong> z siedzibą w Wielkiej Brytanii — stawka do 1,6% przychodów operacyjnych. Scentralizowane zarządzanie płynnością prowadzone przez Orange S.A. w ramach umowy cash pooling.
   </div>
 
   <div class="struct-grid">
@@ -553,8 +555,8 @@
       <div class="flag">🇫🇷</div>
       <div>
         <div class="struct-name">Orange S.A.</div>
-        <div class="struct-loc">Paryż, Francja · jednostka dominująca</div>
-        <div class="struct-role parent">Kontrolny udział w OPL S.A.</div>
+        <div class="struct-loc">Paryż, Francja · jednostka dominująca (50,67%)</div>
+        <div class="struct-role parent">IRS swap · cash pool · dywidendy 319 mln</div>
       </div>
     </div>
     <div class="struct-card">
@@ -562,7 +564,15 @@
       <div>
         <div class="struct-name">Atlas Services Belgium S.A.</div>
         <div class="struct-loc">Belgia · sub Orange S.A. · kredytodawca</div>
-        <div class="struct-role parent">Pożyczki terminowe — 4 245 mln PLN</div>
+        <div class="struct-role parent">Pożyczki terminowe + RCF — łącznie 4 245 mln PLN</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇬🇧</div>
+      <div>
+        <div class="struct-name">Orange Brand Services Limited (OBSL)</div>
+        <div class="struct-loc">Wielka Brytania · sub Orange S.A. · licencjodawca</div>
+        <div class="struct-role parent">Licencja marki Orange — do 1,6% przychodów operacyjnych</div>
       </div>
     </div>
     <div class="struct-card">
@@ -616,79 +626,101 @@
   </div>
 
   <!-- 5. TRANSAKCJE TP -->
-  <div class="section-label">05 — Transakcje z podmiotami powiązanymi</div>
+  <div class="section-label">05 — Transakcje z podmiotami powiązanymi · 2024 vs 2023</div>
 
   <div class="two-col">
     <div class="table-wrap">
       <div class="table-head">
-        <h3>Zakupy od podmiotów powiązanych</h3>
-        <span>~472 mln PLN</span>
+        <h3>Zakupy towarów i usług od powiązanych</h3>
+        <span>RAZEM 605 mln PLN (2024) · 528 mln (2023)</span>
       </div>
       <table>
         <thead>
           <tr>
-            <th>Podmiot</th>
-            <th class="r">Kwota (mln PLN)</th>
-            <th class="r">% przychodów</th>
+            <th>Podmiot / kategoria</th>
+            <th class="r">2024</th>
+            <th class="r">2023</th>
+            <th>Charakter zakupu</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="entity">Światłowód Inwestycje 🇵🇱</td>
+            <td class="entity">Światłowód Inwestycje (JV 50%) 🇵🇱</td>
             <td class="r bold">203</td>
-            <td class="r">1,8%</td>
+            <td class="r">155</td>
+            <td>Opłaty za dostęp do sieci światłowodowej</td>
           </tr>
           <tr>
-            <td class="entity">Orange Group excl. SA 🇫🇷</td>
-            <td class="r">197</td>
-            <td class="r">1,7%</td>
+            <td class="entity">Grupa Orange excl. Orange S.A. 🇫🇷🇬🇧</td>
+            <td class="r bold">197</td>
+            <td class="r">189</td>
+            <td><span class="badge HIGH">Licencja marki OBSL</span> + hurtowe telco</td>
           </tr>
           <tr>
             <td class="entity">Orange S.A. 🇫🇷</td>
             <td class="r">72</td>
-            <td class="r">0,6%</td>
+            <td class="r">81</td>
+            <td>Usługi hurtowe + usługi B+R</td>
+          </tr>
+          <tr>
+            <td class="entity">Spółki zależne OPL 🇵🇱</td>
+            <td class="r">133</td>
+            <td class="r">103</td>
+            <td>Oprogramowanie komputerowe (IT)</td>
           </tr>
           <tr class="total-row">
-            <td>Razem zakupy RP</td>
-            <td class="r">~472</td>
-            <td class="r">4,2%</td>
+            <td>RAZEM zakupy od powiązanych</td>
+            <td class="r">605</td>
+            <td class="r">528</td>
+            <td>5,4% przychodów (2024)</td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="table-wrap">
       <div class="table-head">
-        <h3>Sprzedaż do podmiotów powiązanych</h3>
-        <span>957 mln PLN</span>
+        <h3>Sprzedaż towarów i usług do powiązanych</h3>
+        <span>RAZEM 957 mln PLN (2024) · 819 mln (2023)</span>
       </div>
       <table>
         <thead>
           <tr>
-            <th>Podmiot</th>
-            <th class="r">Kwota (mln PLN)</th>
-            <th class="r">% przychodów</th>
+            <th>Podmiot / kategoria</th>
+            <th class="r">2024</th>
+            <th class="r">2023</th>
+            <th>Charakter transakcji</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="entity">Pozostałe podmioty powiązane</td>
+            <td class="entity">Światłowód Inwestycje (JV 50%) 🇵🇱</td>
             <td class="r bold">584</td>
-            <td class="r">5,2%</td>
+            <td class="r">405</td>
+            <td>Usługi zarządzania inwestycją + sprzedaż aktywów sieci</td>
           </tr>
           <tr>
-            <td class="entity">Grupa Orange — hurtowe usługi</td>
-            <td class="r">262</td>
-            <td class="r">2,3%</td>
+            <td class="entity">Orange S.A. 🇫🇷</td>
+            <td class="r">195</td>
+            <td class="r">205</td>
+            <td>Hurtowe usługi telekomunikacyjne + usługi B+R</td>
+          </tr>
+          <tr>
+            <td class="entity">Grupa Orange excl. Orange S.A. 🇫🇷</td>
+            <td class="r">67</td>
+            <td class="r">63</td>
+            <td>Hurtowe usługi telekomunikacyjne</td>
           </tr>
           <tr>
             <td class="entity">Spółki zależne OPL 🇵🇱</td>
             <td class="r">111</td>
-            <td class="r">1,0%</td>
+            <td class="r">146</td>
+            <td>Sprzedaż sprzętu telekomunikacyjnego</td>
           </tr>
           <tr class="total-row">
-            <td>Razem sprzedaż RP</td>
+            <td>RAZEM sprzedaż do powiązanych</td>
             <td class="r">957</td>
-            <td class="r">8,5%</td>
+            <td class="r">819</td>
+            <td>8,5% przychodów (2024)</td>
           </tr>
         </tbody>
       </table>
@@ -697,60 +729,102 @@
 
   <div class="table-wrap">
     <div class="table-head">
-      <h3>Transakcje finansowe z podmiotami powiązanymi</h3>
-      <span>Stan na 31.12.2024</span>
+      <h3>Transakcje finansowe i pozostałe z podmiotami powiązanymi</h3>
+      <span>Nota 19, 23, 24, 32 · stan 31.12.2024</span>
     </div>
     <table>
       <thead>
         <tr>
-          <th>Rodzaj</th>
+          <th>Rodzaj transakcji</th>
           <th>Kontrahent</th>
-          <th class="r">Saldo (mln PLN)</th>
-          <th class="r">Przepływ 2024 (mln)</th>
-          <th>Uwagi</th>
+          <th class="r">Saldo 2024</th>
+          <th class="r">Saldo 2023</th>
+          <th>Kluczowe parametry</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Pożyczki terminowe LT</td>
+          <td>Pożyczka terminowa (zmienna)</td>
           <td class="entity">Atlas Services Belgium S.A. 🇧🇪</td>
-          <td class="r bold">4 067</td>
-          <td class="r">—</td>
-          <td>Termin: VIII 2031</td>
+          <td class="r bold">2 703 mln</td>
+          <td class="r">4 203 mln</td>
+          <td>Termin: 20.06.2026 · WIBOR/rynek + marża</td>
         </tr>
         <tr>
-          <td>Pożyczki terminowe ST</td>
+          <td>Pożyczka terminowa (stała) — nowa 2024</td>
           <td class="entity">Atlas Services Belgium S.A. 🇧🇪</td>
-          <td class="r">178</td>
+          <td class="r bold">1 205 mln</td>
           <td class="r">—</td>
-          <td>Z odsetkami i prowizjami</td>
+          <td>Termin: 21.05.2029 · stałe oprocentowanie · refinansowanie ST</td>
         </tr>
         <tr>
-          <td>Koszty odsetkowe</td>
+          <td>Odnawialna linia kredytowa (RCF)</td>
+          <td class="entity">Atlas Services Belgium S.A. 🇧🇪</td>
+          <td class="r">dostępna</td>
+          <td class="r">dostępna</td>
+          <td>Limit: 1 000 mln PLN · termin: 19.11.2027</td>
+        </tr>
+        <tr>
+          <td>Pożyczka terminowa</td>
+          <td class="entity">Światłowód Inwestycje 🇵🇱</td>
+          <td class="r">174 mln</td>
+          <td class="r">—</td>
+          <td>Nowa w 2024 · termin: 31.08.2031</td>
+        </tr>
+        <tr>
+          <td>Depozyty od spółek zależnych</td>
+          <td class="entity">Spółki zależne OPL 🇵🇱</td>
+          <td class="r">166 mln</td>
+          <td class="r">162 mln</td>
+          <td>Konsolidacja sald (cash pool) · termin: 2.01.2025</td>
+        </tr>
+        <tr>
+          <td>Koszty odsetkowe netto (Atlas)</td>
           <td class="entity">Grupa Orange 🇫🇷🇧🇪</td>
           <td class="r">—</td>
-          <td class="r">(163)</td>
-          <td>Implied rate 3,79% · 6,74% nominalne</td>
-        </tr>
-        <tr>
-          <td>Przychody finansowe</td>
-          <td class="entity">Spółki zależne + Orange S.A.</td>
           <td class="r">—</td>
-          <td class="r">102</td>
-          <td>Dywidendy 84 + odsetki 18</td>
+          <td>Przepływ 2024: (163) mln · 6,74% nominalne · 4,15% po IRS</td>
         </tr>
         <tr>
-          <td>Gwarancje udzielone</td>
+          <td>Instrumenty pochodne IRS</td>
+          <td class="entity">Orange S.A. 🇫🇷</td>
+          <td class="r">138 mln FV</td>
+          <td class="r">212 mln FV</td>
+          <td>Nominał: 2 300 mln PLN · OCI (71) mln w 2024</td>
+        </tr>
+        <tr>
+          <td>Depozyty (cash pool treasury)</td>
+          <td class="entity">Orange S.A. 🇫🇷</td>
+          <td class="r">150 mln</td>
+          <td class="r">649 mln</td>
+          <td>Oprocentowanie: stawki rynku pieniężnego · przychody: 17 mln</td>
+        </tr>
+        <tr>
+          <td>Gwarancje udzielone spółkom zależnym</td>
           <td class="entity">Spółki zależne OPL 🇵🇱</td>
-          <td class="r">102</td>
+          <td class="r">102 mln</td>
+          <td class="r">110 mln</td>
+          <td>Brak informacji o pobieranej opłacie gwarancyjnej</td>
+        </tr>
+        <tr>
+          <td>Rozliczenia roamingowe (przez Orange S.A.)</td>
+          <td class="entity">Orange S.A. 🇫🇷</td>
           <td class="r">—</td>
-          <td>W tym 27 mln finansowe; brak info o fee</td>
+          <td class="r">—</td>
+          <td>Przepływ 2024: 55 mln PLN — Orange S.A. reguluje w imieniu OPL</td>
+        </tr>
+        <tr>
+          <td>Dywidendy wypłacone</td>
+          <td class="entity">Orange S.A. 🇫🇷</td>
+          <td class="r">—</td>
+          <td class="r">—</td>
+          <td>Przepływ 2024: 319 mln PLN (2023: 233 mln)</td>
         </tr>
         <tr class="total-row">
-          <td colspan="2">Łączny dług wobec powiązanych</td>
-          <td class="r">4 245</td>
-          <td class="r">(163)</td>
-          <td>37,7% przychodów</td>
+          <td colspan="2">Łączne zobowiązania finansowe wobec powiązanych</td>
+          <td class="r">4 250 mln</td>
+          <td class="r">4 367 mln</td>
+          <td>37,7% przychodów (2024)</td>
         </tr>
       </tbody>
     </table>
@@ -819,101 +893,197 @@
 
   <div class="risk-list">
 
+    <!-- RYZYKO 1: BRAND LICENSE -->
     <div class="risk-card">
       <div class="risk-stripe HIGH"></div>
       <div class="risk-body-inner">
         <div class="risk-title-row">
-          <span class="risk-title">Pożyczki od Atlas Services Belgium S.A.</span>
           <span class="badge HIGH">HIGH</span>
-          <span class="risk-amt">4 245 mln PLN · Belgia</span>
+          <span class="risk-title">Opłata licencyjna za markę Orange — OBSL</span>
+          <span class="risk-amt">do 1,6% przychodów operacyjnych · ~180 mln PLN/rok · 🇬🇧 Wielka Brytania</span>
         </div>
-        <div class="risk-desc">
-          Orange Polska finansuje działalność pożyczkami intragroup od Atlas Services Belgium S.A. (Belgia) — spółki zależnej Orange S.A. Na 31.12.2024 saldo wyniosło <strong>4 245 mln PLN</strong>, z czego 4 067 mln długoterminowych (termin: sierpień 2031).
-          <ul class="risk-bullets">
-            <li>Stopa nominalna: <strong>6,74% p.a.</strong>; po hedgingu IRS: <strong>4,15% p.a.</strong></li>
-            <li>Implied rate kalkulacyjna: <strong>3,79%</strong> — w przedziale 2–10%, brak red flagi</li>
-            <li>Wartość pożyczek = 37,7% przychodów — wysoka istotność materialna</li>
-            <li>Transakcja transgraniczna Polska–Belgia (UE/OECD), charakter intragroup treasury</li>
-            <li>Brak wzmianki o benchmarku oprocentowania ani dokumentacji TP w notach</li>
-          </ul>
+        <p class="risk-desc">
+          Orange Polska działa pod marką Orange na podstawie umowy licencyjnej zawartej z Orange S.A. i <strong>Orange Brand Services Limited (OBSL)</strong> z siedzibą w Wielkiej Brytanii. Umowa licencyjna przewiduje, że OBSL otrzymuje wynagrodzenie w wysokości <strong>do 1,6% przychodów operacyjnych</strong> wypracowanych pod marką Orange. Przy przychodach 11 259 mln PLN oznacza to wynagrodzenie do ok. <strong>180 mln PLN rocznie</strong>. Jest to prawdopodobnie dominująca składowa zakupów od "Grupy Orange excl. Orange S.A." (197 mln PLN).
+        </p>
+        <ul class="risk-bullets">
+          <li>Transakcja Polska–Wielka Brytania — kraje OECD, ale po Brexicie UE nie ma bezpośredniej kontroli nad rozliczeniami OBSL</li>
+          <li>Stawka "do 1,6%" — parametr rynkowy, który należy porównać z benchmarkiem dla opłat licencyjnych za marki globalne w telekomunikacji (typowy zakres: 0,5–3% rev)</li>
+          <li>Metoda TP: CUP (porównywalna umowa licencyjna) lub metoda podziału zysku — marka Orange jest silna, benchmarking może być trudny</li>
+          <li>Zapis "do 1,6%" sugeruje mechanizm z górnym pułapem — czy ustalany jest faktyczny poziom co roku? Czy jest klauzula performance-linked?</li>
+          <li>Charakterystyczny dla globalnych grup telco: opłata brandowa często łączy w sobie markę, goodwill, dostęp do technologii i procedur grupy</li>
+        </ul>
+        <div class="risk-rec">
+          <strong>Rekomendacja:</strong> Zweryfikować dokumentację TP dla tej transakcji — czy stosowana jest metoda CUP z porównywalnymi umowami licencyjnymi dla marek telco, jaki jest faktyczny poziom opłaty w danym roku (czy zawsze 1,6% czy mniej), oraz czy zakres licencji (marka vs. know-how vs. procedury grupy) odpowiada stawce. Potwierdzić, że wynagrodzenie OBSL pokrywa wyłącznie IP, nie ma nakładania się z innymi transakcjami serwisowymi.
         </div>
-        <div class="risk-rec"><strong>Rekomendacja:</strong> Weryfikacja istnienia lokalnej dokumentacji TP (Local File) z analizą porównawczą oprocentowania. Ocena, czy efekt hedgingu IRS uwzględniony w cenie transferowej pożyczki.</div>
       </div>
     </div>
 
+    <!-- RYZYKO 2: POŻYCZKI ATLAS -->
+    <div class="risk-card">
+      <div class="risk-stripe HIGH"></div>
+      <div class="risk-body-inner">
+        <div class="risk-title-row">
+          <span class="badge HIGH">HIGH</span>
+          <span class="risk-title">Pożyczki od Atlas Services Belgium S.A.</span>
+          <span class="risk-amt">4 245 mln PLN · 🇧🇪 Belgia · dwie transze + RCF</span>
+        </div>
+        <p class="risk-desc">
+          Orange Polska finansuje działalność długoterminowymi pożyczkami od Atlas Services Belgium S.A. (Belgia) — spółki zależnej Orange S.A. W 2024 roku przeprowadzono refinansowanie: wygasłą pożyczkę zmienną 1,5 mld PLN (maj 2024) zastąpiono nową pożyczką o <strong>stałym oprocentowaniu 1,205 mld PLN z terminem maj 2029</strong>. Aktualnie portfel obejmuje dwie transze: <strong>2,703 mld PLN zmienne (termin: VI 2026)</strong> i <strong>1,205 mld PLN stałe (termin: V 2029)</strong>, plus RCF do 1,0 mld PLN (termin: XI 2027). Dodatkowo pożyczka 174 mln PLN od Światłowód Inwestycje (VIII 2031).
+        </p>
+        <ul class="risk-bullets">
+          <li>Stopa nominalna bez IRS: <strong>6,74% p.a.</strong> (2023: 7,03%) — bez hedgingu powyżej safe harbour NBP (ok. 6–7% w 2024)</li>
+          <li>Stopa po hedgingu IRS z Orange S.A.: <strong>4,15% p.a.</strong> (2023: 3,21%) — rynkowa</li>
+          <li>Implied rate kalkulacyjna: <strong>3,79%</strong> — w normie (odsetki / średnie saldo)</li>
+          <li>Koszty odsetkowe 2024: (163) mln PLN netto do Grupy Orange</li>
+          <li>Wartość pożyczek = 37,7% przychodów — wysoka istotność materialna</li>
+          <li>Pożyczki niezabezpieczone — typowe dla intragroup treasury</li>
+          <li>Pytanie TP: czy zastosowana stawka uwzględnia "implicit support" grupy czy rating standalone OPL?</li>
+        </ul>
+        <div class="risk-rec">
+          <strong>Rekomendacja:</strong> Weryfikacja dokumentacji TP (Local File) z analizą porównawczą oprocentowania. Kluczowe: (1) czy benchmark uwzględnia efekt hedgingu IRS jako element ceny pożyczki, (2) czy stopa 6,74% dla transzy zmiennej jest rynkowa dla podmiotu o ratingu OPL bez wsparcia grupy, (3) dokumentacja nowej pożyczki stałej z 2024 roku.
+        </div>
+      </div>
+    </div>
+
+    <!-- RYZYKO 3: ŚWIATŁOWÓD INWESTYCJE -->
     <div class="risk-card">
       <div class="risk-stripe MEDIUM"></div>
       <div class="risk-body-inner">
         <div class="risk-title-row">
-          <span class="risk-title">Zakupy usług hurtowych od Grupy Orange</span>
           <span class="badge MEDIUM">MEDIUM</span>
-          <span class="risk-amt">269 mln PLN · Francja/UE</span>
+          <span class="risk-title">Transakcje z Światłowód Inwestycje Sp. z o.o. (JV 50%)</span>
+          <span class="risk-amt">584 mln przychodów + 203 mln kosztów + 711 mln zobowiązań · 🇵🇱</span>
         </div>
-        <div class="risk-desc">
-          OPL nabywa usługi od Orange Group (excl. Orange S.A.) za <strong>197 mln PLN</strong> oraz od Orange S.A. bezpośrednio za <strong>72 mln PLN</strong>. Są to głównie usługi roamingu wychodzącego, umowy MVNO, usługi techniczne i R&D.
-          <ul class="risk-bullets">
-            <li>Kontrahenci z Francji i UE — jurysdykcje OECD, niższe ryzyko rajowe</li>
-            <li>Potencjalny benchmarking CUP dla usług hurtowych (stawki regulowane przez UE)</li>
-          </ul>
+        <p class="risk-desc">
+          Światłowód Inwestycje (JV 50% OPL + 50% Acari/APG) prowadzi budowę infrastruktury światłowodowej. Transakcje z JV są dominującą pozycją w przychodach RP OPL (584 mln PLN z 957 mln ogółem). OPL sprzedaje do JV usługi zarządzania procesem inwestycyjnym i aktywa sieci (584 mln), kupuje dostęp do sieci (203 mln). Zobowiązania wobec JV 711 mln PLN to głównie przedpłaty za przyszłe usługi. W 2024 OPL udzieliła dodatkowego kapitału: 169 mln PLN (udział 50% z 338 mln podwyżki). Nowa pożyczka od JV: 174 mln PLN do VIII 2031. OPL ma opcję nabycia ~1% do kontroli w latach 2027–2029.
+        </p>
+        <ul class="risk-bullets">
+          <li>JV z niezależnym partnerem (APG — holenderski fundusz emerytalny) — naturalny mechanizm rynkowy ARM</li>
+          <li>Przychody 584 mln PLN: czy ceny usług zarządzania i sprzedaży aktywów sieci są rynkowe wobec APG?</li>
+          <li>Zobowiązania 711 mln PLN (leasing/przedpłaty): właściwa klasyfikacja MSSF 16 / prawidłowość ujęcia</li>
+          <li>Opcja konsolidacji w 2027–2029: zmiana statusu podmiotu może zmienić klasyfikację transakcji TP</li>
+        </ul>
+        <div class="risk-rec">
+          <strong>Rekomendacja:</strong> Ze względu na udział niezależnego inwestora (APG), warunki transakcji powinny być zbliżone do rynkowych. Jednak warto zweryfikować dokumentację TP dla usług zarządzania (które jest sprzedawane OPL do JV za 584 mln) — czy stawki odpowiadają rynkowym stawkom zarządzania projektami infrastrukturalnymi.
         </div>
-        <div class="risk-rec"><strong>Rekomendacja:</strong> Weryfikacja metodologii — preferowana metoda CUP lub TNMM. Sprawdzenie zgodności z umowami ramowymi Orange Group.</div>
       </div>
     </div>
 
+    <!-- RYZYKO 4: IRS Z ORANGE S.A. -->
     <div class="risk-card">
       <div class="risk-stripe MEDIUM"></div>
       <div class="risk-body-inner">
         <div class="risk-title-row">
+          <span class="badge MEDIUM">MEDIUM</span>
+          <span class="risk-title">Instrumenty pochodne IRS z Orange S.A. (hedging stopy procentowej)</span>
+          <span class="risk-amt">2 300 mln PLN nominał · FV +138 mln · 🇫🇷 Francja</span>
+        </div>
+        <p class="risk-desc">
+          Orange Polska zawarła umowę z Orange S.A. (podmiot dominujący) dotyczącą <strong>Interest Rate Swap (IRS)</strong> zabezpieczającego ryzyko stopy procentowej pożyczek od Atlas. Na 31.12.2024 nominał kontraktów wynosi <strong>2 300 mln PLN</strong> (vs 3 800 mln rok wcześniej), wartość godziwa: <strong>+138 mln PLN</strong> (aktywo dla OPL). Instrument konwertuje zmienne oprocentowanie pożyczek od Atlas (6,74%) na stałe (~4,15%). W 2024 roku inne całkowite straty z wyceny IRS wyniosły (71) mln PLN.
+        </p>
+        <ul class="risk-bullets">
+          <li>Transakcja zawarta z podmiotem dominującym Orange S.A. — nie z bankiem zewnętrznym → ryzyko TP</li>
+          <li>Czy wycena IRS (warunki, spread) odpowiada warunkom rynkowym, które OPL uzyskałaby od zewnętrznego banku?</li>
+          <li>Efektywność hedgingu: pozytywna FV (+138 mln) — instrument działa jak zakładano przy rosnących stopach</li>
+          <li>Separacja transakcji: IRS i pożyczka od Atlas to odrębne umowy z różnymi podmiotami grupy</li>
+        </ul>
+        <div class="risk-rec">
+          <strong>Rekomendacja:</strong> Weryfikacja warunków umowy IRS z Orange S.A. — porównanie z ofertami banków zewnętrznych na porównywalne swapy dla podmiotu o ratingu OPL. Ocena, czy wynagrodzenie Orange S.A. za udzielenie hedgingu jest rynkowe.
+        </div>
+      </div>
+    </div>
+
+    <!-- RYZYKO 5: ZAKUPY USŁUG OD GRUPY ORANGE -->
+    <div class="risk-card">
+      <div class="risk-stripe MEDIUM"></div>
+      <div class="risk-body-inner">
+        <div class="risk-title-row">
+          <span class="badge MEDIUM">MEDIUM</span>
+          <span class="risk-title">Zakupy usług hurtowych i B+R od Grupy Orange</span>
+          <span class="risk-amt">269 mln PLN · 🇫🇷🇬🇧 Francja / Wielka Brytania</span>
+        </div>
+        <p class="risk-desc">
+          OPL nabywa od Grupy Orange (łącznie 269 mln PLN): od Orange S.A. bezpośrednio <strong>72 mln PLN</strong> (hurtowe usługi telekomunikacyjne i usługi B+R) oraz od pozostałych podmiotów Grupy Orange (excl. Orange S.A.) <strong>197 mln PLN</strong> — ta kwota obejmuje przede wszystkim <em>opłatę licencyjną OBSL za markę</em> (patrz Ryzyko 1) oraz hurtowe usługi telco. Nota wskazuje, że OPL również <strong>otrzymuje</strong> usługi z zakresu badań i rozwoju od Grupy Orange — co oznacza, że B+R jest transakcją dwukierunkową.
+        </p>
+        <ul class="risk-bullets">
+          <li>Kontrahenci z Francji/UE i Wielkiej Brytanii — jurysdykcje OECD</li>
+          <li>Roaming wychodzący (termination rates) — częściowo regulowany przez UE → naturalny CUP</li>
+          <li>Usługi B+R od grupy (Orange Labs): jaki jest model — cost sharing, fully-loaded cost plus, czy inna metoda?</li>
+          <li>55 mln PLN rozliczeń roamingowych regulowanych przez Orange S.A. w imieniu OPL → dodatkowa płatność passthrough</li>
+        </ul>
+        <div class="risk-rec">
+          <strong>Rekomendacja:</strong> Weryfikacja metodologii dla usług B+R (preferowana: TNMM lub cost plus). Dla usług regulowanych (roaming) — zgodność z obowiązującymi regulacjami. Rozdzielenie opłaty licencyjnej OBSL od pozostałych zakupów w dokumentacji.
+        </div>
+      </div>
+    </div>
+
+    <!-- RYZYKO 6: SPRZEDAŻ DO GRUPY ORANGE -->
+    <div class="risk-card">
+      <div class="risk-stripe MEDIUM"></div>
+      <div class="risk-body-inner">
+        <div class="risk-title-row">
+          <span class="badge MEDIUM">MEDIUM</span>
           <span class="risk-title">Sprzedaż hurtowych usług telekomunikacyjnych do Grupy Orange</span>
-          <span class="badge MEDIUM">MEDIUM</span>
-          <span class="risk-amt">262 mln PLN · Francja/UE</span>
+          <span class="risk-amt">262 mln PLN · 🇫🇷 Francja/UE</span>
         </div>
-        <div class="risk-desc">
-          OPL sprzedaje hurtowe usługi telekomunikacyjne i R&D do Grupy Orange za <strong>262 mln PLN</strong>. Są to połączenia przychodzące, roaming wizytorów, udostępnienie infrastruktury i sieci.
-          <ul class="risk-bullets">
-            <li>Transakcje transgraniczne Polska–Francja/inne kraje UE</li>
-            <li>Możliwy benchmark rynkowy dla stawek hurtowych (regulowanych przez UE)</li>
-          </ul>
+        <p class="risk-desc">
+          OPL sprzedaje hurtowe usługi telekomunikacyjne i B+R do Grupy Orange za <strong>262 mln PLN</strong>: do Orange S.A. 195 mln PLN, do pozostałych podmiotów Grupy 67 mln PLN. Są to głównie połączenia przychodzące od roamingowiczów (incoming termination), hurtowe usługi sieciowe i usługi B+R.
+        </p>
+        <ul class="risk-bullets">
+          <li>Dla połączeń roamingowych — stawki częściowo regulowane przez prawo UE (IOT rates)</li>
+          <li>Sprzedaż B+R do Orange S.A.: OPL jest zarówno nabywcą i sprzedawcą B+R — sytuacja rzadka, wymaga analizy podziału</li>
+          <li>Możliwy benchmark rynkowy (CUP) dla stawek hurtowych</li>
+        </ul>
+        <div class="risk-rec">
+          <strong>Rekomendacja:</strong> Ocena, czy ceny sprzedaży hurtowej odpowiadają stawkom regulowanym lub wynegocjowanym z niezależnymi operatorami (metoda CUP). Dla B+R dwukierunkowy — zweryfikować spójność metodologii z zakupami B+R.
         </div>
-        <div class="risk-rec"><strong>Rekomendacja:</strong> Ocena, czy ceny sprzedaży hurtowej odpowiadają stawkom regulowanym lub wynegocjowanym z niezależnymi operatorami (metoda CUP).</div>
       </div>
     </div>
 
+    <!-- RYZYKO 7: SCENTRALIZOWANE ZARZĄDZANIE SKARBCEM -->
     <div class="risk-card">
       <div class="risk-stripe MEDIUM"></div>
       <div class="risk-body-inner">
         <div class="risk-title-row">
-          <span class="risk-title">Zakupy od Światłowód Inwestycje Sp. z o.o. (JV)</span>
           <span class="badge MEDIUM">MEDIUM</span>
-          <span class="risk-amt">203 mln PLN · Polska</span>
+          <span class="risk-title">Scentralizowane zarządzanie skarbcem — cash pool Orange S.A.</span>
+          <span class="risk-amt">150 mln PLN depozytów · 17 mln PLN przychodów · 🇫🇷 Francja</span>
         </div>
-        <div class="risk-desc">
-          OPL nabywa usługi leasingowe i przyszłe świadczenia od Światłowód Inwestycje (JV 50%/50% z Acari/APG). Zobowiązania dotyczą leasingu infrastruktury światłowodowej z przedpłatą.
-          <ul class="risk-bullets">
-            <li>Podmiot krajowy (Polska) — niższe ryzyko jurysdykcyjne</li>
-            <li>JV z APG: konieczność wykazania warunków ARM wobec partnera zewnętrznego</li>
-          </ul>
+        <p class="risk-desc">
+          OPL lokuje nadwyżki środków pieniężnych w <strong>Orange S.A.</strong> w ramach umowy scentralizowanego zarządzania skarbcem (cash pooling). Na 31.12.2024 saldo depozytów wynosi <strong>150 mln PLN</strong> (znaczący spadek z 649 mln w 2023). Przychody finansowe od Orange S.A. z tytułu depozytów: <strong>17 mln PLN</strong>. Oprocentowanie: "stawki rynku pieniężnego".
+        </p>
+        <ul class="risk-bullets">
+          <li>Charakterystyczna transakcja cash pool — typowe w grupach telco</li>
+          <li>Oprocentowanie "stawki rynku pieniężnego" — wymaga weryfikacji, czy rzeczywiście benchmark (WIBOR/EURIBOR overnight?)</li>
+          <li>Ryzyko koncentracji: lokowanie środków w podmiocie zależnym (Orange S.A.) nie w banku zewnętrznym</li>
+          <li>Zmiana salda z 649 mln (2023) do 150 mln (2024) — znaczący odpływ, wymaga wyjaśnienia</li>
+        </ul>
+        <div class="risk-rec">
+          <strong>Rekomendacja:</strong> Weryfikacja warunków umowy cash pooling — oprocentowanie depozytów vs. stawki rynkowe overnight. Potwierdzenie, że zmiana salda o 499 mln PLN wynika z bieżących potrzeb płynnościowych, nie z decyzji grupy o alokacji środków.
         </div>
-        <div class="risk-rec"><strong>Rekomendacja:</strong> Weryfikacja warunków umów leasingowych — czy odpowiadają warunkom akceptowalnym przez niezależnego partnera (APG). Prawidłowość klasyfikacji MSSF 16.</div>
       </div>
     </div>
 
+    <!-- RYZYKO 8: GWARANCJE -->
     <div class="risk-card">
       <div class="risk-stripe MEDIUM"></div>
       <div class="risk-body-inner">
         <div class="risk-title-row">
-          <span class="risk-title">Gwarancje udzielone spółkom zależnym</span>
           <span class="badge MEDIUM">MEDIUM</span>
-          <span class="risk-amt">102 mln PLN (w tym 27 mln finansowych)</span>
+          <span class="risk-title">Gwarancje udzielone spółkom zależnym bez ujawnionej opłaty</span>
+          <span class="risk-amt">102 mln PLN · 🇵🇱 Polska</span>
         </div>
-        <div class="risk-desc">
-          Na 31.12.2024 OPL udzieliła gwarancji spółkom zależnym na łączną kwotę <strong>102 mln PLN</strong>, z czego <strong>27 mln PLN</strong> to umowy gwarancji finansowych. Brak informacji o wynagrodzeniu za gwarancje w notach do sprawozdania.
-          <ul class="risk-bullets">
-            <li>Gwarancje finansowe wymagają osobnej dokumentacji TP</li>
-            <li>Brak wzmianki o fee = potencjalne nieodpłatne świadczenie</li>
-          </ul>
+        <p class="risk-desc">
+          Na 31.12.2024 OPL udzieliła gwarancji spółkom zależnym na łączną kwotę <strong>102 mln PLN</strong> (vs 110 mln w 2023). W notach do sprawozdania brak informacji o wynagrodzeniu za udzielone gwarancje.
+        </p>
+        <ul class="risk-bullets">
+          <li>Gwarancje finansowe wymagają osobnej dokumentacji TP (OECD Ch. X)</li>
+          <li>Brak wzmianki o guarantee fee = potencjalne nieodpłatne świadczenie</li>
+          <li>Kwota 102 mln relatywnie niska vs. np. WB Electronics (933 mln) — niższe ryzyko bezwzględne</li>
+        </ul>
+        <div class="risk-rec">
+          <strong>Rekomendacja:</strong> Ustalenie, czy pobierane jest wynagrodzenie za gwarancje. Jeśli nie — dokumentacja TP z benchmarkiem (rynkowa cena gwarancji finansowej: typowo 0,5–3% p.a. wartości gwarancji → przy 102 mln: 0,5–3 mln PLN rocznie).
         </div>
-        <div class="risk-rec"><strong>Rekomendacja:</strong> Ustalenie, czy pobierane jest wynagrodzenie za gwarancje. Jeśli nie — dokumentacja TP z benchmarkiem (rynkowa cena gwarancji: typowo 0,5–3% p.a.).</div>
       </div>
     </div>
 
@@ -924,8 +1094,8 @@
 
   <div class="table-wrap">
     <div class="table-head">
-      <h3>Ranking według kwoty × poziom ryzyka</h3>
-      <span>Top 5 obszarów do weryfikacji</span>
+      <h3>Macierz ryzyk TP — priorytetyzacja działań</h3>
+      <span>Wg wartości transakcji i poziomu ryzyka · 8 zidentyfikowanych obszarów</span>
     </div>
     <table>
       <thead>
@@ -941,43 +1111,83 @@
       <tbody>
         <tr>
           <td>1</td>
-          <td>Pożyczki terminowe</td>
+          <td>Pożyczki terminowe + RCF</td>
           <td>Atlas Services Belgium S.A. 🇧🇪</td>
           <td class="r bold">4 245</td>
           <td><span class="badge HIGH">HIGH</span></td>
-          <td><strong>P1 — natychmiastowy</strong></td>
+          <td>🔴 Natychmiastowy</td>
         </tr>
         <tr>
           <td>2</td>
-          <td>Sprzedaż hurtowa</td>
-          <td>Grupa Orange 🇫🇷</td>
-          <td class="r">262</td>
+          <td>Sprzedaż do Światłowód Inwestycje (JV)</td>
+          <td>Światłowód Inwestycje 🇵🇱</td>
+          <td class="r bold">584</td>
           <td><span class="badge MEDIUM">MEDIUM</span></td>
-          <td>P2 — ważny</td>
+          <td>🟠 Wysoki</td>
         </tr>
         <tr>
           <td>3</td>
-          <td>Zakupy od Grupy Orange</td>
-          <td>Orange Group 🇫🇷🇧🇪</td>
-          <td class="r">269</td>
+          <td>IRS — swap stopy procentowej</td>
+          <td>Orange S.A. 🇫🇷</td>
+          <td class="r">2 300 nom.</td>
           <td><span class="badge MEDIUM">MEDIUM</span></td>
-          <td>P2 — ważny</td>
+          <td>🟠 Wysoki</td>
         </tr>
         <tr>
           <td>4</td>
-          <td>Zakupy — leasing ŚI</td>
-          <td>Światłowód Inwestycje 🇵🇱</td>
-          <td class="r">203</td>
-          <td><span class="badge MEDIUM">MEDIUM</span></td>
-          <td>P3 — monitorowany</td>
+          <td>Opłata licencyjna za markę Orange</td>
+          <td>Orange Brand Services Ltd (OBSL) 🇬🇧</td>
+          <td class="r">~180 (do 1,6% rev)</td>
+          <td><span class="badge HIGH">HIGH</span></td>
+          <td>🟠 Wysoki</td>
         </tr>
         <tr>
           <td>5</td>
-          <td>Gwarancje finansowe</td>
+          <td>Sprzedaż hurtowa do Grupy Orange</td>
+          <td>Orange S.A. + Grupa Orange 🇫🇷</td>
+          <td class="r">262</td>
+          <td><span class="badge MEDIUM">MEDIUM</span></td>
+          <td>🟡 Standardowy</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Zakupy usług hurtowych + B+R od Grupy</td>
+          <td>Orange S.A. + Grupa Orange 🇫🇷</td>
+          <td class="r">269</td>
+          <td><span class="badge MEDIUM">MEDIUM</span></td>
+          <td>🟡 Standardowy</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>Zakupy od Światłowód Inwestycje (dostęp sieć)</td>
+          <td>Światłowód Inwestycje 🇵🇱</td>
+          <td class="r">203</td>
+          <td><span class="badge MEDIUM">MEDIUM</span></td>
+          <td>🟡 Standardowy</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>Cash pool — depozyty w Orange S.A.</td>
+          <td>Orange S.A. 🇫🇷</td>
+          <td class="r">150</td>
+          <td><span class="badge MEDIUM">MEDIUM</span></td>
+          <td>🟡 Standardowy</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>Gwarancje dla spółek zależnych</td>
           <td>Spółki zależne OPL 🇵🇱</td>
           <td class="r">102</td>
           <td><span class="badge MEDIUM">MEDIUM</span></td>
-          <td>P3 — monitorowany</td>
+          <td>🟡 Standardowy</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>Zakupy oprogramowania od spółek zależnych</td>
+          <td>BlueSoft, Integrated Solutions 🇵🇱</td>
+          <td class="r">133</td>
+          <td><span class="badge LOW">LOW</span></td>
+          <td>🟢 Niski</td>
         </tr>
       </tbody>
     </table>
@@ -988,13 +1198,14 @@
 
   <div class="method-box">
     <strong>Wynik końcowy: HIGH · 6/10</strong><br><br>
-    <strong>Krok A (scoring bazowy):</strong> 1 transakcja HIGH (pożyczki) × 2 = 2 pkt; 4 transakcje MEDIUM × 1 = 4 pkt. Suma = 6 → base HIGH.<br>
-    <strong>Krok B (red flags):</strong> Brak: implied rate 3,79% (w normie), ICR 21,5× (&gt;&gt;1), equity ratio 50,6% (&gt;30%), brak going concern. Minor flag: gwarancje bez jawnego fee — bez korekty punktowej.<br>
-    <strong>Krok C (mitigating):</strong> Silny profil finansowy (equity 50,6%, stabilne zyski, EBIT 13,4%) → korekta –1. Wynik po korekcie: 5 → borderline MEDIUM/HIGH.<br>
-    <strong>Krok D (override):</strong> Utrzymano HIGH. Uzasadnienie: absolutna wartość pożyczek (4 245 mln PLN = 37,7% przychodów) jest jedną z największych ekspozycji intragroup debt w polskim segmencie telco. Brak wzmianki o benchmarku oprocentowania.<br><br>
-    <strong>Źródło danych:</strong> OPLSA-MSSF-2024-12-31-0-PL.xhtml (id: 9445307) — Repozytorium Dokumentów Finansowych MS (rdf-przegladarka.ms.gov.pl) · pobrane 2026-03-23.<br>
+    <strong>Krok A (scoring bazowy):</strong> 2 transakcje HIGH (pożyczki Atlas + licencja OBSL) × 2 = 4 pkt; 6 transakcji MEDIUM × 0,5 = 3 pkt. Suma = 7 → base HIGH.<br>
+    <strong>Krok B (red flags):</strong> Brak krytycznych flag: implied rate 3,79% (w normie), ICR 21,5× (&gt;&gt;1), equity ratio 50,6% (&gt;30%). Minor flags: gwarancje bez jawnego fee, cash pool bez ujawnionej stawki, IRS z podmiotem dominującym zamiast z bankiem. Łącznie +1 pkt → suma 8.<br>
+    <strong>Krok C (mitigating):</strong> Silny profil finansowy (equity 50,6%, EBIT 13,4%, dług/EBITDA 1,21×). Jurysdykcje OECD (Francja, Belgia, Wielka Brytania) — brak rajów. JV z niezależnym APG zapewnia market-check dla transakcji ŚI. Korekta: –2. Wynik po korekcie: 6.<br>
+    <strong>Krok D (override):</strong> Brak override. Wynik 6/10 HIGH jest adekwatny. Uzasadnienie utrzymania HIGH: (1) absolutna wartość pożyczek 4 245 mln PLN, (2) opłata licencyjna OBSL (~180 mln PLN) bez ujawnionego benchmarku, (3) IRS z podmiotem dominującym zamiast z rynkiem, (4) łączna wartość transakcji z powiązanymi przekracza 5 mld PLN rocznie.<br><br>
+    <strong>Zidentyfikowane transakcje TP:</strong> 10 kategorii (vs. 5 w pierwszej wersji raportu). Kluczowe pominięcia pierwotnej analizy: opłata licencyjna OBSL (~180 mln), transakcje ze Światłowód Inwestycje (584 mln przychodów), IRS z Orange S.A. (2 300 mln nominał), cash pool (150 mln), zakupy od spółek zależnych (133 mln).<br><br>
+    <strong>Źródło danych:</strong> OPLSA-MSSF-2024-12-31-0-PL.xhtml (3,98 MB, id: 9445307) — Repozytorium Dokumentów Finansowych MS (rdf-przegladarka.ms.gov.pl) · pobrane 2026-03-23 · Nota 19, 22, 23, 24, 32.2.<br>
     <strong>Ograniczenia:</strong> Analiza oparta wyłącznie na sprawozdaniu jednostkowym. Brak dostępu do pełnej dokumentacji TP, APA ani polityk cen transferowych Grupy Orange. Ocena ma charakter wskaźnikowy i nie stanowi porady podatkowej.<br>
-    <strong>Wygenerowane przez:</strong> Claude Code (Anthropic) · TP Radar Pipeline · 2026-03-23
+    <strong>Wygenerowane przez:</strong> Claude Code (Anthropic) · TP Radar Pipeline · wersja 2.0 · 2026-03-23
   </div>
 
 </div>

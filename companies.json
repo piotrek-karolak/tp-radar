@@ -105,16 +105,20 @@
 
       "related_party_flows": {
         "operational": {
-          "purchases": 472000000,
-          "purchases_pct_revenue": 4.2,
+          "purchases": 605000000,
+          "purchases_pct_revenue": 5.4,
           "sales": 957000000,
-          "sales_pct_revenue": 8.5
+          "sales_pct_revenue": 8.5,
+          "brand_license_entity": "Orange Brand Services Limited (OBSL)",
+          "brand_license_rate_max_pct": 1.6
         },
         "financial": {
           "loans_received_from_rp": 4245000000,
           "interest_costs_to_rp": 163000000,
           "financial_income_from_rp": 102000000,
-          "guarantees_issued": 102000000
+          "guarantees_issued": 102000000,
+          "irs_notional": 2300000000,
+          "treasury_pool_deposits": 150000000
         }
       },
 
