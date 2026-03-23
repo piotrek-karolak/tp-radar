@@ -1,3 +1,78 @@
 {
-  "companies": []
+  "companies": [
+    {
+      "id": "wb-electronics",
+      "name": "WB Electronics S.A.",
+      "krs": "0000369722",
+      "analyzed_at": "2026-03-23",
+      "report_file": "reports/wb-electronics.html",
+
+      "group_affiliation": {
+        "role": "PARENT",
+        "group_name": "WB Group",
+        "parent_company": null,
+        "parent_country": null,
+        "ultimate_parent": "WB Electronics S.A."
+      },
+
+      "financials": {
+        "revenue": 2251549873,
+        "operating_profit": 489000000,
+        "ebit_margin": 21.7,
+        "net_profit": 427594688,
+        "total_assets": null,
+        "equity": null,
+        "ebitda": null,
+        "equity_ratio": null,
+        "debt_ebitda": null,
+        "icr": null,
+        "implied_rate": null
+      },
+
+      "related_party_flows": {
+        "operational": {
+          "purchases": 945343921,
+          "purchases_pct_revenue": 42.0,
+          "sales": 177374106,
+          "sales_pct_revenue": 7.9
+        },
+        "financial": {
+          "guarantees_issued": 932946234,
+          "loans_granted": 11136818,
+          "dividends_received": 85405858,
+          "interest_income": 1190912
+        }
+      },
+
+      "tp_risk": {
+        "overall": "HIGH",
+        "score": 8,
+        "top_risks": [
+          {
+            "name": "Zakupy od FLYTRONIC S.A.",
+            "amount": 606800435,
+            "level": "CRITICAL",
+            "category": "operational"
+          },
+          {
+            "name": "Gwarancje bez wynagrodzenia",
+            "amount": 932946234,
+            "level": "CRITICAL",
+            "category": "financial"
+          },
+          {
+            "name": "Sprzedaż do WB Ukraine LLC",
+            "amount": 127983253,
+            "level": "HIGH",
+            "category": "operational"
+          }
+        ]
+      },
+
+      "group": {
+        "subsidiaries_count": 18,
+        "countries": ["PL", "UA", "GE", "MY", "IN", "SA"]
+      }
+    }
+  ]
 }
