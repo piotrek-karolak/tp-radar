@@ -12,16 +12,12 @@
   /* Risk levels */
   --critical-bg: #fce8e6;
   --critical-color: #c5221f;
-  --critical-border: #f5c6c4;
   --high-bg: #fff3e0;
   --high-color: #e65100;
-  --high-border: #ffcc80;
   --medium-bg: #fff8e1;
   --medium-color: #856404;
-  --medium-border: #ffe082;
   --low-bg: #e6f4ea;
   --low-color: #1a7340;
-  --low-border: #a8d5b5;
 
   --radius: 12px;
   --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
@@ -331,6 +327,7 @@ header .stats {
   max-width: 480px;
   width: 90%;
   box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  position: relative;
 }
 
 .modal h2 { font-size: 20px; color: var(--color-primary); margin-bottom: 16px; }
@@ -355,8 +352,6 @@ header .stats {
   background: none;
   border: none;
 }
-
-.modal { position: relative; }
 
 /* ── Empty State ── */
 .empty-state {
