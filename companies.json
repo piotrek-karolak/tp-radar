@@ -6,7 +6,6 @@
       "krs": "0000369722",
       "analyzed_at": "2026-03-23",
       "report_file": "reports/wb-electronics.html",
-
       "group_affiliation": {
         "role": "PARENT",
         "group_name": "WB Group",
@@ -14,7 +13,6 @@
         "parent_country": null,
         "ultimate_parent": "WB Electronics S.A."
       },
-
       "financials": {
         "revenue": 2251549873,
         "operating_profit": 489000000,
@@ -28,7 +26,6 @@
         "icr": null,
         "implied_rate": null
       },
-
       "related_party_flows": {
         "operational": {
           "purchases": 945343921,
@@ -43,7 +40,6 @@
           "interest_income": 1190912
         }
       },
-
       "tp_risk": {
         "overall": "HIGH",
         "score": 8,
@@ -68,10 +64,16 @@
           }
         ]
       },
-
       "group": {
         "subsidiaries_count": 18,
-        "countries": ["PL", "UA", "GE", "MY", "IN", "SA"]
+        "countries": [
+          "PL",
+          "UA",
+          "GE",
+          "MY",
+          "IN",
+          "SA"
+        ]
       }
     },
     {
@@ -80,7 +82,6 @@
       "krs": "0000010681",
       "analyzed_at": "2026-03-23",
       "report_file": "reports/orange-polska.html",
-
       "group_affiliation": {
         "role": "SUBSIDIARY",
         "group_name": "Grupa Orange",
@@ -88,7 +89,6 @@
         "parent_country": "FR",
         "ultimate_parent": "Orange S.A."
       },
-
       "financials": {
         "revenue": 11259000000,
         "operating_profit": 1507000000,
@@ -102,7 +102,6 @@
         "icr": 21.5,
         "implied_rate": 3.79
       },
-
       "related_party_flows": {
         "operational": {
           "purchases": 605000000,
@@ -121,7 +120,6 @@
           "treasury_pool_deposits": 150000000
         }
       },
-
       "tp_risk": {
         "overall": "HIGH",
         "score": 6,
@@ -158,10 +156,142 @@
           }
         ]
       },
-
       "group": {
         "subsidiaries_count": 8,
-        "countries": ["PL", "FR", "BE"]
+        "countries": [
+          "PL",
+          "FR",
+          "BE"
+        ]
+      }
+    },
+    {
+      "id": "havi-service-hub",
+      "name": "HAVI Service Hub Sp. z o.o.",
+      "krs": "0000735863",
+      "analyzed_at": "2026-03-24",
+      "report_file": "reports/havi-service-hub.html",
+      "group_affiliation": {
+        "role": "SUBSIDIARY",
+        "group_name": "Grupa HAVI",
+        "parent_company": "Havi Global Logistic GmbH",
+        "parent_country": "DE",
+        "ultimate_parent": "The HAVI Group LP (USA)"
+      },
+      "financials": {
+        "revenue": 73499477,
+        "operating_profit": 2854414,
+        "ebit_margin": 3.88,
+        "net_profit": 3142441,
+        "total_assets": 60183986,
+        "equity": 48415226,
+        "ebitda": 3045412,
+        "equity_ratio": 0.804,
+        "debt_ebitda": null,
+        "icr": null,
+        "implied_rate": null
+      },
+      "related_party_flows": {
+        "operational": {
+          "purchases": 13332598,
+          "purchases_pct_revenue": 18.14,
+          "sales": 73499477,
+          "sales_pct_revenue": 100.0,
+          "brand_license_entity": null,
+          "brand_license_rate_max_pct": null
+        },
+        "financial": {
+          "loans_received_from_rp": null,
+          "loans_granted": null,
+          "interest_costs_to_rp": null,
+          "guarantees_issued": null,
+          "guarantees_received": null,
+          "dividends_received": null,
+          "interest_income": 2314044,
+          "irs_notional": null,
+          "treasury_pool_deposits": 54734860,
+          "financial_income_from_rp": 3825992
+        }
+      },
+      "tp_risk": {
+        "overall": "HIGH",
+        "score": 8,
+        "top_risks": [
+          {
+            "name": "Cash pooling z grupą HAVI",
+            "level": "HIGH",
+            "amount_pln": 54734860,
+            "description": "Saldo debetowe 90,9% aktywów; operator i stawka nieujawnione; implied rate 4,51%"
+          },
+          {
+            "name": "Zakupy od HAVI Logistics Business Services GmbH (DE)",
+            "level": "HIGH",
+            "amount_pln": 11296354,
+            "description": "84,7% zakupów TP bez opisu metodologii cenowej; transakcja wzajemna"
+          },
+          {
+            "name": "Sprzedaż usług SSC do ~40 spółek grupy",
+            "level": "MEDIUM",
+            "amount_pln": 73499477,
+            "description": "100% przychodów od powiązanych; deklaratywny ALS bez benchmarku"
+          },
+          {
+            "name": "FX Forward EUR/PLN",
+            "level": "MEDIUM",
+            "amount_pln": 40459244,
+            "description": "4 kontrakty z UniCredit; nominał 9,18 mln EUR; FV +387 930 PLN"
+          },
+          {
+            "name": "Przychody odsetkowe z cash pool",
+            "level": "MEDIUM",
+            "amount_pln": 2314044,
+            "description": "Implied rate 4,51% p.a.; brak dokumentacji ALS dla oprocentowania"
+          }
+        ]
+      },
+      "group": {
+        "entities": [
+          {
+            "name": "The HAVI Group LP",
+            "country": "US",
+            "role": "Ostateczny właściciel (top)"
+          },
+          {
+            "name": "HAVI Europe Management GmbH & Co KG",
+            "country": "DE",
+            "role": "Europejska spółka holdingowa"
+          },
+          {
+            "name": "Havi Global Logistic GmbH",
+            "country": "DE",
+            "role": "Bezpośredni właściciel 100%"
+          },
+          {
+            "name": "HAVI Service Hub Sp. z o.o.",
+            "country": "PL",
+            "role": "Podmiot analizowany (SSC)"
+          },
+          {
+            "name": "HAVI Logistics Business Services GmbH",
+            "country": "DE",
+            "role": "Kluczowy dostawca/odbiorca"
+          },
+          {
+            "name": "HAVI Logistics GmbH",
+            "country": "DE",
+            "role": "Odbiorca usług: 9,0 mln PLN"
+          },
+          {
+            "name": "HAVI Logistics Sp. z o.o.",
+            "country": "PL",
+            "role": "Odbiorca usług: 5,6 mln PLN"
+          },
+          {
+            "name": "HAVI Global Solutions Worldwide LLC",
+            "country": "US",
+            "role": "Odbiorca usług: 7,1 mln PLN"
+          }
+        ]
       }
     }
   ]

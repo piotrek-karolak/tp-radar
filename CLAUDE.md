@@ -1,5 +1,30 @@
 # TP Radar — Claude Code Pipeline
 
+## Available tools — use these, not manual alternatives
+
+| Tool | Type | When to use |
+|------|------|-------------|
+| `pdf-tools` MCP | MCP server | Reading PDFs from e-KRS — use instead of Read tool with pages |
+| `excel` MCP | MCP server | Generating .xlsx exports of companies.json or financial data |
+| `mermaid` MCP | MCP server | Drawing group structure diagrams (section 04 of report) |
+| `docs` MCP | MCP server | Reading XHTML/XML/DOCX documents as structured text |
+| `fetch` MCP | MCP server | Fetching IR websites, KRS pages as plain text — simpler than Playwright for static pages |
+| `memory` MCP | MCP server | Store key facts about companies between sessions (group structure, prior findings) |
+| `sequentialthinking` MCP | MCP server | Enable for complex multi-step analysis — forces step-by-step reasoning before acting |
+| `sqlite` MCP | MCP server | Query tp-radar.db — use when companies.json grows or needs SQL-style filtering |
+| `context7` MCP | MCP/Plugin | Current JS/HTML/CSS docs — use when writing or debugging report HTML |
+| `/commit` | Plugin skill | Committing and pushing after analysis (replaces manual git) |
+| `/pdf` | Skill | Advanced PDF operations (merge, extract tables, OCR) |
+| `/xlsx` | Skill | Exporting structured data to Excel with formatting |
+| `/pptx` | Skill | Generating PowerPoint presentations from reports |
+| `/docx` | Skill | Generating Word documents from reports |
+
+**Rule:** When a dedicated MCP tool or skill exists for a task, always prefer it over manual alternatives (Read tool, Bash, Python scripts).
+
+**Always-on plugins:** `security-guidance` scans every file written for vulnerabilities. `explanatory-output-style` explains actions as they happen. `serena` provides deep code analysis when needed.
+
+---
+
 ## Project root
 
 All relative paths in this file resolve to: `/Users/piotrkarolak/Claude Code/tp-radar/`
@@ -48,7 +73,7 @@ Use Playwright MCP to:
    - `informacja_dodatkowa.pdf` — notes (related party transactions)
    - `sprawozdanie_zarzadu.pdf` — management report
 
-Save downloaded files to `/tmp/tp-radar-[company-id]/`. Read PDFs using the Read tool with `pages` parameter (max 5 pages at a time).
+Save downloaded files to `/tmp/tp-radar-[company-id]/`. **Read PDFs using the `pdf-tools` MCP server** (preferred over Read tool — better table extraction). Fallback to Read tool with `pages` parameter only if pdf-tools fails.
 
 Fallback: If e-KRS is unavailable or documents missing → try company IR website (investor relations section).
 
@@ -317,7 +342,11 @@ If any answer is NO — rewrite the relevant section.
 
 Write `reports/[company-id].html` — standalone full HTML report.
 
-**Design reference: use `reports/orange-polska.html` as the CSS and structure template.** Copy the full `<style>` block from that file verbatim — do not modify it. The design uses Playfair Display + DM Mono + DM Sans with warm off-white (#f5f1ea) editorial aesthetic.
+**Design reference:** All styles are in `assets/style.css` (shared). New reports must link to it:
+```html
+<link rel="stylesheet" href="../assets/style.css">
+```
+Do NOT copy any `<style>` block — reports have no inline CSS. Design uses Inter font, warm off-white `#f5f2ee`, Linear-inspired aesthetic.
 
 **Report sections (9 required, in order):**
 
@@ -346,6 +375,7 @@ Navigation: <a href="../index.html" class="back-link">← powrót do dashboardu<
    → .info-box with description of group structure and key TP context
    → .struct-card per entity: flag emoji, name, location, ownership %, role
    → Include ALL entities that appear in TP transactions — not just subsidiaries
+   → Use `mermaid` MCP to generate group structure diagram (embed as SVG inline or reference)
 
 6. 05 — Transakcje z podmiotami powiązanymi
    → .two-col: purchases table + sales table (with year-over-year comparison)
@@ -375,9 +405,9 @@ Navigation: <a href="../index.html" class="back-link">← powrót do dashboardu<
 **Language:** All report content in **Polish**.
 
 **CSS conventions:**
-- Copy `<style>` block from `reports/orange-polska.html` verbatim
+- Use `<link rel="stylesheet" href="../assets/style.css">` — no inline `<style>` block
 - Risk level classes: `.CRITICAL`, `.HIGH`, `.MEDIUM`, `.LOW` (uppercase)
-- Badge colors via CSS variables: `--critical: #dc2626`, `--high: #ea580c`, `--medium: #b45309`, `--low: #15803d`
+- Badge colors via CSS variables: `--critical: #dc2626`, `--high: #ea580c`, `--medium: #ca8a04`, `--low: #16a34a`
 - Stripe uses `.risk-stripe.CRITICAL / .HIGH / .MEDIUM / .LOW`
 
 ---
@@ -452,7 +482,7 @@ Pliki do zatwierdzenia:
 Czy zatwierdzić i opublikować na GitHub Pages? (git add + commit + push)
 ```
 
-Wait for user confirmation. If confirmed:
+Wait for user confirmation. If confirmed — use the `/commit` plugin skill to stage, commit and push. Fallback to manual git if plugin unavailable:
 
 ```bash
 git add reports/[company-id].html companies.json

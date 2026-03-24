@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HAVI Service Hub Sp. z o.o. — Analiza TP 2024</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a href="../index.html" class="topbar-back">← powrót do dashboardu</a>
+  <div class="topbar-logo topbar-logo--right">TP Radar</div>
+</div>
+
+<div class="report-header">
+  <div class="report-header-inner">
+    <div class="report-eyebrow">Analiza ryzyk Transfer Pricing · Sprawozdanie jednostkowe PSR/UoR 2024</div>
+    <h1 class="report-title">HAVI Service Hub Sp. z o.o.</h1>
+    <p class="report-subtitle">Krakowskie centrum usług wspólnych grupy HAVI — księgowość i zarządzanie łańcuchem dostaw dla ~40 spółek europejskich i amerykańskich</p>
+    <div class="header-chips">
+      <span class="header-chip">KRS 0000735863</span>
+      <span class="header-chip">Kraków</span>
+      <span class="header-chip">Spółka zależna HAVI Group LP (USA)</span>
+      <span class="header-chip">PSR / UoR</span>
+      <span class="header-chip">Analiza: 2026-03-24</span>
+      <span class="header-chip risk-chip HIGH">⚠ Ryzyko TP: WYSOKIE · 8/10</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 00 — EXECUTIVE SUMMARY -->
+  <div class="section-label">00 — Executive Summary</div>
+
+  <div class="info-box" style="margin-bottom: 24px;">
+    <p><strong>S:</strong> HAVI Service Hub Sp. z o.o. jest europejskim centrum usług wspólnych (SSC) grupy HAVI, świadczącym usługi księgowe i zarządzania łańcuchem dostaw na rzecz ~40 spółek z grupy w Europie i USA. Przychody 2024: 73,5 mln PLN (+26,7% r/r).</p>
+    <p><strong>C:</strong> 100% przychodów pochodzi od podmiotów powiązanych (73,5 mln PLN), a 90,9% aktywów stanowi saldo debetowe cash poolingu (54,7 mln PLN). Zidentyfikowano 4 kategorie transakcji TP.</p>
+    <p><strong>A:</strong> Ocena ryzyka: <strong>WYSOKIE (8/10)</strong> — cash pool 54,7 mln PLN bez ujawnionego operatora i stopy rynkowej; zakupy od HAVI Logistics Business Services (DE) 11,3 mln PLN bez metodologii cenowej; 100% przychodów od powiązanych z deklaratywnym ALS bez benchmarku.</p>
+  </div>
+
+  <div class="risk-score-row">
+    <div class="score-card">
+      <div class="sv high">WYSOKI</div>
+      <div class="sl">Ogólny poziom ryzyka TP</div>
+    </div>
+    <div class="score-card">
+      <div class="sv neutral">8/10</div>
+      <div class="sl">Wynik scoring</div>
+    </div>
+    <div class="score-card">
+      <div class="sv high">54,7 mln PLN</div>
+      <div class="sl">Cash pool — 90,9% aktywów — HIGH</div>
+    </div>
+    <div class="score-card">
+      <div class="sv high">11,3 mln PLN</div>
+      <div class="sl">Zakupy HAVI LBS (DE) — brak metodologii</div>
+    </div>
+    <div class="score-card">
+      <div class="sv warn">100%</div>
+      <div class="sl">Przychody od powiązanych — deklaratywny ALS</div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top: 32px;">Tematy wymagające uwagi</div>
+
+  <div class="attention-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:32px;">
+    <div class="info-box" style="margin:0;border-left:4px solid var(--high);">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--high);font-weight:600;margin-bottom:6px;">USŁUGI FINANSOWE · Cash pooling · 54 734 860 PLN</div>
+      <p>Saldo debetowe cash poolingu = 90,9% aktywów; operator i stawka procentowa nieujawnione w sprawozdaniu. Stawka implikowana 4,51% (przychody odsetkowe / średnie saldo) wymaga potwierdzenia arm's length.</p>
+    </div>
+    <div class="info-box" style="margin:0;border-left:4px solid var(--high);">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--high);font-weight:600;margin-bottom:6px;">USŁUGI · Zakupy od HAVI Logistics Business Services (DE) · 11 296 354 PLN</div>
+      <p>Najistotniejsza pojedyncza transakcja zakupu (15,4% przychodów, 84,7% wszystkich zakupów TP). Charakter usług i metodologia cenowa nie są opisane w dokumentach sprawozdawczych.</p>
+    </div>
+    <div class="info-box" style="margin:0;border-left:4px solid var(--medium);">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--medium);font-weight:600;margin-bottom:6px;">USŁUGI · Sprzedaż do grupy (100% przychodów) · 73 499 477 PLN</div>
+      <p>Pełna zależność przychodowa od grupy. Oświadczenie o warunkach rynkowych bez powołania na benchmark lub metodę TP. Brak informacji o mechanizmie alokacji kosztów do ceny usługi.</p>
+    </div>
+  </div>
+
+  <!-- 1. KLUCZOWE DANE FINANSOWE -->
+  <div class="section-label">01 — Kluczowe dane finansowe</div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kv">73,5 mln</div>
+      <div class="kl">Przychody ze sprzedaży (PLN)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kv">2,9 mln</div>
+      <div class="kl">Zysk z działalności operacyjnej EBIT (PLN)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kv">3,1 mln</div>
+      <div class="kl">Zysk netto (PLN)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kv">60,2 mln</div>
+      <div class="kl">Suma bilansowa (PLN)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kv">48,4 mln</div>
+      <div class="kl">Kapitał własny (PLN)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kv">3,0 mln</div>
+      <div class="kl">EBITDA (EBIT + amortyzacja) (PLN)</div>
+    </div>
+  </div>
+
+  <!-- 2. OCENA RYZYK TP -->
+  <div class="section-label">02 — Ogólna ocena ryzyk TP</div>
+
+  <div class="risk-score-row">
+    <div class="score-card">
+      <div class="sv high">WYSOKI</div>
+      <div class="sl">Ogólny poziom ryzyka TP</div>
+    </div>
+    <div class="score-card">
+      <div class="sv neutral">8/10</div>
+      <div class="sl">Wynik scoring</div>
+    </div>
+    <div class="score-card">
+      <div class="sv warn">4,51%</div>
+      <div class="sl">Implied rate — cash pool (p.a.)</div>
+    </div>
+    <div class="score-card">
+      <div class="sv warn">18,1%</div>
+      <div class="sl">Zakupy RP / przychody</div>
+    </div>
+    <div class="score-card">
+      <div class="sv high">90,9%</div>
+      <div class="sl">Cash pool / suma bilansowa</div>
+    </div>
+  </div>
+
+  <!-- 3. WSKAŹNIKI FINANSOWE -->
+  <div class="section-label">03 — Wskaźniki finansowe (Wymiar 3)</div>
+
+  <div class="metrics-row">
+    <div class="metric">
+      <div class="mv warn">3,88%</div>
+      <div class="mk">Marża EBIT</div>
+      <div class="mt">Ocena: MEDIUM (SSC: niska marża typowa, ale poniżej 5%)</div>
+    </div>
+    <div class="metric">
+      <div class="mv ok">80,4%</div>
+      <div class="mk">Wskaźnik kapitału własnego</div>
+      <div class="mt">Ocena: LOW (solidna kapitalizacja — brak długu zewnętrznego)</div>
+    </div>
+    <div class="metric">
+      <div class="mv ok">—</div>
+      <div class="mk">Dług finansowy RP / EBITDA</div>
+      <div class="mt">N/D — brak zadłużenia od powiązanych</div>
+    </div>
+    <div class="metric">
+      <div class="mv warn">4,51%</div>
+      <div class="mk">Implied rate — cash pool</div>
+      <div class="mt">Przychody odsetkowe / średnie saldo; wymaga potwierdzenia ALS</div>
+    </div>
+    <div class="metric">
+      <div class="mv warn">+26,7%</div>
+      <div class="mk">Dynamika przychodów r/r</div>
+      <div class="mt">Szybki wzrost SSC — ekspansja na rynki USA planowana</div>
+    </div>
+    <div class="metric">
+      <div class="mv warn">290</div>
+      <div class="mk">Przeciętne zatrudnienie (FTE)</div>
+      <div class="mt">Wzrost z 258 w 2023 — Kraków + Katowice</div>
+    </div>
+  </div>
+
+  <!-- 4. STRUKTURA GRUPY -->
+  <div class="section-label">04 — Struktura grupy kapitałowej</div>
+
+  <div class="info-box">
+    <strong>HAVI Service Hub Sp. z o.o. — wyspecjalizowane centrum usług wspólnych (SSC) grupy HAVI.</strong>
+    Spółka świadczy usługi księgowe (60,5% przychodów) oraz zarządzania łańcuchem dostaw (39,3%) na rzecz ~40 podmiotów grupy w Europie, Ameryce Północnej i Ukrainie. Jedynym właścicielem jest Havi Global Logistic GmbH (Niemcy). Nadrzędna spółka europejska: HAVI Europe Management GmbH &amp; Co KG (Duisburg). Ostateczny właściciel: The HAVI Group LP (Illinois, USA). Kluczowe ryzyko TP: brak transparentności mechanizmu kształtowania cen w transakcjach usługowych zarówno po stronie przychodów, jak i kosztów.
+  </div>
+
+  <div class="struct-grid">
+    <div class="struct-card">
+      <div class="flag">🇺🇸</div>
+      <div>
+        <div class="struct-name">The HAVI Group LP</div>
+        <div class="struct-loc">Illinois, USA</div>
+        <div class="struct-role parent">Ostateczny właściciel grupy</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇩🇪</div>
+      <div>
+        <div class="struct-name">HAVI Europe Management GmbH &amp; Co KG</div>
+        <div class="struct-loc">Duisburg, Niemcy</div>
+        <div class="struct-role parent">Europejska spółka holdingowa · podpis SF w Bundesanzeiger</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇩🇪</div>
+      <div>
+        <div class="struct-name">Havi Global Logistic GmbH</div>
+        <div class="struct-loc">Niemcy</div>
+        <div class="struct-role full">100% właściciel · bezpośredni wspólnik</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇵🇱</div>
+      <div>
+        <div class="struct-name">HAVI Service Hub Sp. z o.o.</div>
+        <div class="struct-loc">Kraków (KRS: 0000735863)</div>
+        <div class="struct-role full">Podmiot analizowany · SSC dla grupy HAVI</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇩🇪</div>
+      <div>
+        <div class="struct-name">HAVI Logistics Business Services GmbH</div>
+        <div class="struct-loc">Niemcy</div>
+        <div class="struct-role major">Kluczowy dostawca usług (11,3 mln PLN) · odbiorca usług (6,2 mln PLN)</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇩🇪</div>
+      <div>
+        <div class="struct-name">HAVI Europe Management</div>
+        <div class="struct-loc">Niemcy</div>
+        <div class="struct-role major">Odbiorca usług: 7,7 mln PLN · dostawca: 0,25 mln PLN</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇩🇪</div>
+      <div>
+        <div class="struct-name">HAVI Logistics GmbH</div>
+        <div class="struct-loc">Niemcy</div>
+        <div class="struct-role major">Odbiorca usług: 9,0 mln PLN · dostawca: 0,45 mln PLN</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇺🇸</div>
+      <div>
+        <div class="struct-name">HAVI Global Solutions Worldwide LLC</div>
+        <div class="struct-loc">USA</div>
+        <div class="struct-role major">Odbiorca usług: 7,1 mln PLN (13. największy)</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇵🇱</div>
+      <div>
+        <div class="struct-name">HAVI Logistics Sp. z o.o.</div>
+        <div class="struct-loc">Polska</div>
+        <div class="struct-role major">Odbiorca usług: 5,6 mln PLN · kraj</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇦🇹</div>
+      <div>
+        <div class="struct-name">HAVI Logistics G.m.b.H.</div>
+        <div class="struct-loc">Austria</div>
+        <div class="struct-role major">Odbiorca usług: 3,7 mln PLN</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇮🇹</div>
+      <div>
+        <div class="struct-name">HAVI Logistics s.r.l.</div>
+        <div class="struct-loc">Włochy</div>
+        <div class="struct-role major">Odbiorca usług: 3,6 mln PLN · koszty 292 tys PLN</div>
+      </div>
+    </div>
+    <div class="struct-card">
+      <div class="flag">🇸🇪</div>
+      <div>
+        <div class="struct-name">Havilog AB</div>
+        <div class="struct-loc">Szwecja</div>
+        <div class="struct-role major">Odbiorca usług: 3,2 mln PLN</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. TRANSAKCJE TP -->
+  <div class="section-label">05 — Transakcje z podmiotami powiązanymi: 4 kategorie, łącznie &gt;141 mln PLN</div>
+
+  <div class="two-col">
+    <div class="table-wrap">
+      <div class="table-head">
+        <h3>Zakupy usług od podmiotów powiązanych</h3>
+        <span>RAZEM 13 332 598 PLN (18,1% przychodów)</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Podmiot</th>
+            <th>Kraj</th>
+            <th class="r">Kwota (PLN)</th>
+            <th>Udział</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="entity">HAVI Logistics Business Services GmbH</td>
+            <td>🇩🇪 DE</td>
+            <td class="r bold">11 296 354</td>
+            <td><span class="badge HIGH">84,7%</span></td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Logistics GmbH</td>
+            <td>🇩🇪 DE</td>
+            <td class="r">446 005</td>
+            <td>3,3%</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Europe Management</td>
+            <td>🇩🇪 DE</td>
+            <td class="r">249 294</td>
+            <td>1,9%</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Logistics s.r.l. (IT)</td>
+            <td>🇮🇹 IT</td>
+            <td class="r">292 412</td>
+            <td>2,2%</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Lojistik (TR)</td>
+            <td>🇹🇷 TR</td>
+            <td class="r">171 257</td>
+            <td>1,3%</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Logistics FSL S.L. (ES)</td>
+            <td>🇪🇸 ES</td>
+            <td class="r">47 176</td>
+            <td>0,4%</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Logistics Sp. z o.o. (PL)</td>
+            <td>🇵🇱 PL</td>
+            <td class="r">326 830</td>
+            <td>2,5%</td>
+          </tr>
+          <tr>
+            <td class="entity">Havilog AB (SE)</td>
+            <td>🇸🇪 SE</td>
+            <td class="r">2 205</td>
+            <td>0,0%</td>
+          </tr>
+          <tr>
+            <td class="entity">Havi Logistics Unipessoal (PT)</td>
+            <td>🇵🇹 PT</td>
+            <td class="r">232 765</td>
+            <td>1,7%</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Logistics S.R.L. (RO)</td>
+            <td>🇷🇴 RO</td>
+            <td class="r">168 739</td>
+            <td>1,3%</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Logistics ApS (DK)</td>
+            <td>🇩🇰 DK</td>
+            <td class="r">94</td>
+            <td>0,0%</td>
+          </tr>
+          <tr>
+            <td class="entity">The Havi Group LP (US)</td>
+            <td>🇺🇸 US</td>
+            <td class="r">−6 258</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Global Solutions Worldwide LLC</td>
+            <td>🇺🇸 US</td>
+            <td class="r">2 139</td>
+            <td>0,0%</td>
+          </tr>
+          <tr>
+            <td class="entity">Pozostałe</td>
+            <td>—</td>
+            <td class="r">103 936</td>
+            <td>0,7%</td>
+          </tr>
+          <tr class="total-row">
+            <td>RAZEM</td>
+            <td>—</td>
+            <td class="r">13 332 598</td>
+            <td>100%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-head">
+        <h3>Sprzedaż usług do podmiotów powiązanych</h3>
+        <span>RAZEM 73 499 477 PLN (100% przychodów)</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Podmiot</th>
+            <th>Kraj</th>
+            <th class="r">Kwota (PLN)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="entity">HAVI Logistics GmbH</td>
+            <td>🇩🇪 DE</td>
+            <td class="r bold">9 017 126</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Europe Management</td>
+            <td>🇩🇪 DE</td>
+            <td class="r">7 695 042</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Global Solutions Worldwide LLC</td>
+            <td>🇺🇸 US</td>
+            <td class="r">7 117 925</td>
+          </tr>
+          <tr>
+            <td class="entity">Havi Logistic Business Services</td>
+            <td>🇩🇪 DE</td>
+            <td class="r">6 227 986</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Logistics Sp. z o.o.</td>
+            <td>🇵🇱 PL</td>
+            <td class="r">5 626 563</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Logistics G.m.b.H. (AT)</td>
+            <td>🇦🇹 AT</td>
+            <td class="r">3 708 013</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Logistics s.r.l. (IT)</td>
+            <td>🇮🇹 IT</td>
+            <td class="r">3 639 871</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Logistics GmbH (AT rejestr CH)</td>
+            <td>🇨🇭 CH</td>
+            <td class="r">3 426 652</td>
+          </tr>
+          <tr>
+            <td class="entity">Havilog AB</td>
+            <td>🇸🇪 SE</td>
+            <td class="r">3 223 457</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Logistics ApS</td>
+            <td>🇩🇰 DK</td>
+            <td class="r">2 552 918</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Logistics S.R.L. (RO)</td>
+            <td>🇷🇴 RO</td>
+            <td class="r">2 659 258</td>
+          </tr>
+          <tr>
+            <td class="entity">Havi Logistics B.V.</td>
+            <td>🇳🇱 NL</td>
+            <td class="r">2 445 595</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Logistics FSL S.L. (ES)</td>
+            <td>🇪🇸 ES</td>
+            <td class="r">3 298 378</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Logistics Kft. (HU)</td>
+            <td>🇭🇺 HU</td>
+            <td class="r">1 767 609</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Logistics AS (NO)</td>
+            <td>🇳🇴 NO</td>
+            <td class="r">1 498 009</td>
+          </tr>
+          <tr>
+            <td class="entity">HAVI Lojistik (TR)</td>
+            <td>🇹🇷 TR</td>
+            <td class="r">1 588 648</td>
+          </tr>
+          <tr>
+            <td class="entity">Pozostałe (~20 podmiotów)</td>
+            <td>—</td>
+            <td class="r">7 906 424</td>
+          </tr>
+          <tr class="total-row">
+            <td>RAZEM</td>
+            <td>—</td>
+            <td class="r">73 499 477</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Transakcje finansowe -->
+  <div class="table-wrap" style="margin-top: 24px;">
+    <div class="table-head">
+      <h3>Transakcje finansowe z podmiotami powiązanymi</h3>
+      <span>Cash pool, FX forward, przychody finansowe</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Kategoria</th>
+          <th>Podmiot / Instrument</th>
+          <th class="r">Kwota / Saldo (PLN)</th>
+          <th>Uwagi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge HIGH">Cash pool</span></td>
+          <td class="entity">Nieujawniony operator grupy HAVI</td>
+          <td class="r bold">54 734 860</td>
+          <td>Saldo debetowe na 31.12.2024; 90,9% aktywów; r/r: 47 781 tys.</td>
+        </tr>
+        <tr>
+          <td><span class="badge MEDIUM">Przychody odsetkowe</span></td>
+          <td class="entity">Z tytułu cashpoolingu (gr. HAVI)</td>
+          <td class="r">2 314 044</td>
+          <td>Implied rate: 4,51% p.a. Wykazane w RZiS poz. G_II.</td>
+        </tr>
+        <tr>
+          <td><span class="badge MEDIUM">FX Forward (EUR/PLN)</span></td>
+          <td class="entity">UniCredit (bank zewnętrzny)</td>
+          <td class="r">40 459 244</td>
+          <td>4 kontrakty z 01.08.2024; nominał 9 180 000 EUR; FV +387 930 PLN; rozliczenia 2025</td>
+        </tr>
+        <tr>
+          <td><span class="badge LOW">Inne przych. finansowe</span></td>
+          <td class="entity">Różnice kursowe / pozostałe</td>
+          <td class="r">1 480 667</td>
+          <td>Wykazane w RZiS poz. G_V; prawdopodobnie FX gains i inne</td>
+        </tr>
+        <tr>
+          <td><span class="badge LOW">Koszty finansowe</span></td>
+          <td class="entity">Odsetki bankowe / inne</td>
+          <td class="r">9 762</td>
+          <td>Minimalne koszty odsetkowe — brak zadłużenia wobec powiązanych</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 6. SALDO ROZRACHUNKÓW -->
+  <div class="section-label">06 — Saldo rozrachunków z podmiotami powiązanymi · 31.12.2024 vs 31.12.2023</div>
+
+  <div class="table-wrap">
+    <div class="table-head">
+      <h3>Saldo rozrachunków handlowych</h3>
+      <span>Należności: 2 928 848 PLN | Zobowiązania: 1 929 414 PLN</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Podmiot</th>
+          <th>Kraj</th>
+          <th class="r">Należności 2024 (PLN)</th>
+          <th class="r">Zobowiązania 2024 (PLN)</th>
+          <th class="r">Należności 2023 (PLN)</th>
+          <th class="r">Zobowiązania 2023 (PLN)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="entity">HAVI Europe Management</td>
+          <td>🇩🇪 DE</td>
+          <td class="r bold">1 286 390</td>
+          <td class="r">241 773</td>
+          <td class="r">11 487</td>
+          <td class="r">199 732</td>
+        </tr>
+        <tr>
+          <td class="entity">HAVI Logistics Business Services</td>
+          <td>🇩🇪 DE</td>
+          <td class="r">701 786</td>
+          <td class="r bold">1 553 877</td>
+          <td class="r">401 845</td>
+          <td class="r">971 927</td>
+        </tr>
+        <tr>
+          <td class="entity">HAVI Logistics Sp. z o.o.</td>
+          <td>🇵🇱 PL</td>
+          <td class="r">450 807</td>
+          <td class="r">41 559</td>
+          <td class="r">23 331</td>
+          <td class="r">—</td>
+        </tr>
+        <tr>
+          <td class="entity">HAVI Global Solutions Worldwide LLC</td>
+          <td>🇺🇸 US</td>
+          <td class="r">300 686</td>
+          <td class="r">37 661</td>
+          <td class="r">—</td>
+          <td class="r">—</td>
+        </tr>
+        <tr>
+          <td class="entity">HAVI Logistics s.r.o. (SK)</td>
+          <td>🇸🇰 SK</td>
+          <td class="r">57 672</td>
+          <td class="r">49 602</td>
+          <td class="r">15 218</td>
+          <td class="r">—</td>
+        </tr>
+        <tr>
+          <td class="entity">Havi Logistics AS (NO)</td>
+          <td>🇳🇴 NO</td>
+          <td class="r">40 532</td>
+          <td class="r">—</td>
+          <td class="r">37 018</td>
+          <td class="r">—</td>
+        </tr>
+        <tr>
+          <td class="entity">HAVI Logistics GmbH (DE)</td>
+          <td>🇩🇪 DE</td>
+          <td class="r">36 650</td>
+          <td class="r">294 397</td>
+          <td class="r">36 797</td>
+          <td class="r">—</td>
+        </tr>
+        <tr>
+          <td class="entity">HAVI Logistics s.r.l. (RO)</td>
+          <td>🇷🇴 RO</td>
+          <td class="r">12 135</td>
+          <td class="r">230 798</td>
+          <td class="r">9 905</td>
+          <td class="r">—</td>
+        </tr>
+        <tr>
+          <td class="entity">HAVI Logistics s.r.o. (CZ)</td>
+          <td>🇨🇿 CZ</td>
+          <td class="r">51 559</td>
+          <td class="r">—</td>
+          <td class="r">—</td>
+          <td class="r">—</td>
+        </tr>
+        <tr>
+          <td class="entity">LLC Havi Logistics (UA)</td>
+          <td>🇺🇦 UA</td>
+          <td class="r">11 132</td>
+          <td class="r">259 073</td>
+          <td class="r">—</td>
+          <td class="r">—</td>
+        </tr>
+        <tr>
+          <td class="entity">Pozostałe</td>
+          <td>—</td>
+          <td class="r">79 501</td>
+          <td class="r">220 673</td>
+          <td class="r">584 648</td>
+          <td class="r">583 289</td>
+        </tr>
+        <tr class="total-row">
+          <td>RAZEM</td>
+          <td>—</td>
+          <td class="r">2 928 848</td>
+          <td class="r">1 929 414</td>
+          <td class="r">1 108 249</td>
+          <td class="r">1 555 215</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 7. ANALIZA RYZYK TP -->
+  <div class="section-label">07 — Dwa obszary HIGH wymagające udokumentowanej metodologii cenowej</div>
+
+  <div class="risk-list">
+
+    <div class="risk-card">
+      <div class="risk-stripe HIGH"></div>
+      <div class="risk-body">
+        <div class="risk-header">
+          <span class="badge HIGH">HIGH</span>
+          <span class="risk-title">Cash pooling z grupą HAVI</span>
+          <span class="risk-amt">54 734 860 PLN saldo · 90,9% aktywów</span>
+        </div>
+        <div class="risk-desc">
+          <p>Cash pool pochłania 90,9% sumy bilansowej Spółki — wyłączna pozycja finansująca całą nadwyżkę płynności generowaną przez działalność SSC. Stawka implikowana wynosi 4,51% p.a. (przychody odsetkowe 2 314 044 PLN / średnie saldo 51,3 mln PLN), co jest zbliżone do poziomu EURIBOR 3M w 2024 r. (~3,9%), lecz dokumentacja arm's length nie jest wspomniana w sprawozdaniu.</p>
+          <ul>
+            <li>Operator cash pool nieujawniony w żadnym z trzech dokumentów (brak nazwy, siedziby, formy prawnej umowy)</li>
+            <li>Saldo r/r wzrosło o 6 954 tys. PLN (+14,6%) — brak informacji o warunkach naliczania odsetek</li>
+            <li>Brak ujawnienia rodzaju poolingu (notional vs physical), waluty bazowej i sposobu rozliczeń</li>
+          </ul>
+        </div>
+        <div class="risk-rec">
+          Zalecamy sporządzenie dokumentacji TP dla transakcji cash pool zgodnie z art. 11b ustawy o CIT, obejmującej identyfikację operatora, mechanizm ustalania oprocentowania i porównanie ze stawkami rynkowymi (EURIBOR/WIBOR benchmark) — priorytet wysoki przed złożeniem zeznania CIT-8 za 2024 r.
+        </div>
+      </div>
+    </div>
+
+    <div class="risk-card">
+      <div class="risk-stripe HIGH"></div>
+      <div class="risk-body">
+        <div class="risk-header">
+          <span class="badge HIGH">HIGH</span>
+          <span class="risk-title">Zakupy usług od HAVI Logistics Business Services GmbH (DE)</span>
+          <span class="risk-amt">11 296 354 PLN · 15,4% przychodów</span>
+        </div>
+        <div class="risk-desc">
+          <p>HAVI Logistics Business Services (Niemcy) stanowi 84,7% wszystkich zakupów TP Spółki — jedna transakcja dominuje strukturę kosztową w stopniu wyjątkowym nawet dla SSC. Jednocześnie ten sam podmiot jest 4. co do wielkości odbiorcą usług Spółki (6,2 mln PLN przychody), co oznacza wzajemne świadczenie usług i ryzyko niewłaściwej alokacji bez jasnej metodologii.</p>
+          <ul>
+            <li>Charakter nabywanych usług: nieopis w żadnym dokumencie (brak wyraźnego wskazania w notach ani sprawozdaniu zarządu)</li>
+            <li>Brak wskazania metody cenowej — TNMM, CUP, cost+ ?</li>
+            <li>Transakcja dwustronna z tym samym podmiotem (netting risk): netto −5,1 mln PLN pozycja kosztowa</li>
+          </ul>
+        </div>
+        <div class="risk-rec">
+          Zalecamy weryfikację dokumentacji TP dla nabycia usług od HAVI LBS pod kątem opisu świadczenia, metodologii cenowej i potwierdzenia braku krzyżowego subsydiowania transakcji sprzedaży do tego samego podmiotu — priorytet wysoki, szczególnie przy planowanej ekspansji na rynki USA w 2025 r.
+        </div>
+      </div>
+    </div>
+
+    <div class="risk-card">
+      <div class="risk-stripe MEDIUM"></div>
+      <div class="risk-body">
+        <div class="risk-header">
+          <span class="badge MEDIUM">MEDIUM</span>
+          <span class="risk-title">Sprzedaż usług SSC do ~40 spółek grupy (100% przychodów)</span>
+          <span class="risk-amt">73 499 477 PLN · 100% przychodów</span>
+        </div>
+        <div class="risk-desc">
+          <p>Pełna zależność przychodowa od podmiotów powiązanych to norma dla SSC, jednak wymaga solidnej dokumentacji TP: metody kalkulacji ceny (typowo cost+ lub TNMM), benchmarku marży operacyjnej dla porównywalnych SSC i potwierdzenia alokacji korzyści na każdego odbiorcy. Nota 46 zawiera jedynie ogólne oświadczenie: "Transakcje zawierane ze stronami powiązanymi nie odbiegały od warunków rynkowych."</p>
+          <ul>
+            <li>Brak wskazania metody TP dla kalkulacji cen usług (brak TNMM/cost+ opisu w notach)</li>
+            <li>Marża EBIT 3,88% — pozytywny wzrost z −5,97% w 2023, lecz nadal w dolnym przedziale typowych marż SSC (benchmarki TNMM: 3–8%)</li>
+            <li>Geograficzne rozproszenie: 15+ krajów, w tym Ukraina, Turcja — odbiory z podwyższonym ryzykiem jurysdykcyjnym</li>
+          </ul>
+        </div>
+        <div class="risk-rec">
+          Zalecamy przegląd dokumentacji TP dla transakcji sprzedaży usług pod kątem aktualności benchmarku marży operacyjnej i potwierdzenia, że poziom 3,88% mieści się w przedziale arm's length dla lat 2024–2025 — priorytet standardowy.
+        </div>
+      </div>
+    </div>
+
+    <div class="risk-card">
+      <div class="risk-stripe MEDIUM"></div>
+      <div class="risk-body">
+        <div class="risk-header">
+          <span class="badge MEDIUM">MEDIUM</span>
+          <span class="risk-title">Kontrakty forward EUR/PLN (FX hedging)</span>
+          <span class="risk-amt">40 459 244 PLN nominał (9 180 000 EUR) · FV +387 930 PLN</span>
+        </div>
+        <div class="risk-desc">
+          <p>Cztery kontrakty forward z UniCredit (zewnętrzny bank, nie podmiot powiązany) zawarte 01.08.2024 na sprzedaż EUR w celu zabezpieczenia działalności operacyjnej denominowanej w EUR. Wycena godziwa dostarczona przez UniCredit. Instrumenty zewnętrzne — ryzyko TP jest niskie, jednak warto zweryfikować, czy hedging nie jest realizowany przez pośrednika z grupy.</p>
+          <ul>
+            <li>UniCredit: bank zewnętrzny, nie spółka powiązana — brak bezpośredniego ryzyka TP</li>
+            <li>Pozostałe przychody finansowe (G_V = 1 480 667 PLN) — charakter niewyjaśniony; potencjalnie zyski z zamkniętych pozycji forward lub inne</li>
+          </ul>
+        </div>
+        <div class="risk-rec">
+          Zalecamy potwierdzenie, że kontrakty FX forward zawierane są bezpośrednio z bankami zewnętrznymi (nie przez treasury pooling z podmiotem powiązanym), oraz wyjaśnienie pozycji G_V (1,5 mln PLN przychodów) w dokumentacji CIT — priorytet niski/standardowy.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 8. MACIERZ PRIORYTETÓW -->
+  <div class="section-label">08 — Macierz priorytetów: 2 działania natychmiastowe</div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Transakcja</th>
+          <th>Podmiot</th>
+          <th class="r">Kwota (PLN)</th>
+          <th>Poziom</th>
+          <th>Priorytet</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td class="entity">Cash pool — saldo depozytów</td>
+          <td>Gr. HAVI (operator nieujawniony)</td>
+          <td class="r bold">54 734 860</td>
+          <td><span class="badge HIGH">HIGH</span></td>
+          <td>🔴 Natychmiastowy</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td class="entity">Zakupy usług centralnych</td>
+          <td>HAVI Logistics Business Services (DE)</td>
+          <td class="r bold">11 296 354</td>
+          <td><span class="badge HIGH">HIGH</span></td>
+          <td>🔴 Natychmiastowy</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td class="entity">Sprzedaż usług SSC (przychody operacyjne)</td>
+          <td>~40 spółek grupy HAVI</td>
+          <td class="r">73 499 477</td>
+          <td><span class="badge MEDIUM">MEDIUM</span></td>
+          <td>🟠 Wysoki</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td class="entity">Przychody odsetkowe z cash pool</td>
+          <td>Gr. HAVI</td>
+          <td class="r">2 314 044</td>
+          <td><span class="badge MEDIUM">MEDIUM</span></td>
+          <td>🟠 Wysoki</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td class="entity">FX Forward EUR/PLN</td>
+          <td>UniCredit (zewnętrzny)</td>
+          <td class="r">40 459 244</td>
+          <td><span class="badge MEDIUM">MEDIUM</span></td>
+          <td>🟡 Standardowy</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td class="entity">Inne przychody finansowe (G_V)</td>
+          <td>Nieokreślony</td>
+          <td class="r">1 480 667</td>
+          <td><span class="badge LOW">LOW</span></td>
+          <td>🟢 Niski</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 9. METODOLOGIA -->
+  <div class="section-label">09 — Uzasadnienie oceny i metodologia</div>
+
+  <div class="method-box">
+    <h3>Uzasadnienie scoring TP (HIGH · 8/10)</h3>
+
+    <p><strong>Krok A — Scoring bazowy:</strong></p>
+    <ul>
+      <li>CRITICAL (×3): 0 transakcji = 0 pkt</li>
+      <li>HIGH (×2): 2 transakcje (cash pool 54,7 mln; zakupy HAVI LBS 11,3 mln) = 4 pkt</li>
+      <li>MEDIUM (×1): 2 transakcje (sprzedaż usług 73,5 mln; FX forward) = 2 pkt</li>
+      <li><strong>Łącznie: 6/10 → poziom HIGH bazowy</strong></li>
+    </ul>
+
+    <p><strong>Krok B — Korekta red flags (+2):</strong></p>
+    <ul>
+      <li>Cash pool &gt;50% aktywów: TAK → +1</li>
+      <li>100% przychodów od powiązanych bez benchmarku: TAK → +1</li>
+    </ul>
+    <p><strong>Wynik po korekcie: 8/10 → HIGH</strong></p>
+
+    <p><strong>Krok C — Czynniki łagodzące (0):</strong></p>
+    <ul>
+      <li>Sprawozdanie zbadane przez biegłego rewidenta: kompensuje formalne ryzyko błędu</li>
+      <li>Marża EBIT dodatnia (3,88%) w roku 2024 vs. strata operacyjna w 2023: poprawa profilu finansowego</li>
+      <li>Brak zadłużenia wobec powiązanych: eliminuje ryzyko cienkiej kapitalizacji</li>
+    </ul>
+
+    <p><strong>Krok D — Override:</strong> brak przesłanek do override.</p>
+
+    <h3>Źródła dokumentów</h3>
+    <ul>
+      <li>Roczne sprawozdanie finansowe 2024 (e-sprawozdanie_HUB202412062025.BES.xades.xml) — pobrane z e-KRS, ID dokumentu: 9784763, zgłoszenie: 4201965, data sporządzenia: 2025-06-12</li>
+      <li>Informacja dodatkowa 2024 (Informacjadodatkowa2024.pdf) — 7 stron, nota 46 zawiera pełen wykaz transakcji z powiązanymi</li>
+      <li>Sprawozdanie zarządu za 2024 r. (Sprawozdanie zarządu za rok 2024.BES.pdf) — 3 strony</li>
+      <li>Źródło: Repozytorium Dokumentów Finansowych MS (rdf-przegladarka.ms.gov.pl), KRS 0000735863, data pobrania: 2026-03-24</li>
+    </ul>
+
+    <h3>Ograniczenia analizy</h3>
+    <p>Analiza oparta wyłącznie na publicznie dostępnych sprawozdaniach finansowych. Nie uwzględnia dokumentacji TP ani umów grupowych. Oświadczenie zarządu o rynkowości transakcji nie jest weryfikowane wobec benchmarków rynkowych. Informacja dodatkowa (nota 46) nie zawiera opisu metodologii cenowej ani nazwy operatora cash pool — te braki stanowią kluczowe ograniczenie oceny.</p>
+  </div>
+
+</div>
+</body>
+</html>
