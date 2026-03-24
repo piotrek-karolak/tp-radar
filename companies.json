@@ -181,6 +181,7 @@
         "ultimate_parent": "The HAVI Group LP (USA)"
       },
       "financials": {
+        "year": 2024,
         "revenue": 73499477,
         "operating_profit": 2854414,
         "ebit_margin": 3.88,
@@ -191,7 +192,64 @@
         "equity_ratio": 0.804,
         "debt_ebitda": null,
         "icr": null,
-        "implied_rate": null
+        "implied_rate": 4.51,
+        "cost_structure": {
+          "personnel_costs": 51432412,
+          "depreciation": 190998,
+          "external_services": 17317494,
+          "materials_and_goods": 291808,
+          "other_operating_costs": 907875
+        }
+      },
+      "financials_prev": {
+        "year": 2023,
+        "revenue": 58005972,
+        "operating_profit": -3479312,
+        "ebit_margin": -5.99,
+        "net_profit": 350987,
+        "total_assets": 54066698,
+        "equity": 45272785,
+        "ebitda": -3092027,
+        "equity_ratio": 0.84,
+        "debt_ebitda": null,
+        "cost_structure": {
+          "personnel_costs": 44248044,
+          "depreciation": 387284,
+          "external_services": 15497402,
+          "materials_and_goods": 257962,
+          "other_operating_costs": 477279
+        }
+      },
+      "yoy_deltas": {
+        "revenue_pct": 26.7,
+        "ebit_margin_pp": 9.9,
+        "net_profit_pct": 795.3,
+        "ebitda_pct": null,
+        "tp_purchases_pct": null,
+        "tp_sales_pct": 26.7,
+        "personnel_costs_pct": 16.2,
+        "external_services_pct": 11.7
+      },
+      "tax": {
+        "tax_expense": 3528204,
+        "profit_before_tax": 6670644,
+        "etr": null,
+        "statutory_rate": 19.0,
+        "etr_deviation_pp": null,
+        "deferred_tax_asset": 1335803,
+        "deferred_tax_liability": 112258,
+        "deferred_tax_net": 1223545,
+        "tax_notes": "ETR 52,9% — odwrócenie DTA z 3 870 → 1 336 tys. PLN (pokrycie strat l. ubiegłych). Bieżący podatek: 996 191 PLN (stawka bieżąca: 14,9%).",
+        "tax_risk_level": "MEDIUM"
+      },
+      "mgmt_report": {
+        "read": true,
+        "tp_policy_mentioned": false,
+        "apa_mentioned": false,
+        "group_structure_changes": "Brak",
+        "strategy_highlights": "Centralizacja SCM (rynki USA), integracja z centrum IT Grupy HAVI, automatyzacja procure-to-pay",
+        "mgmt_commentary_on_results": "Zysk netto 3 142 441 PLN za 2024; wzrost przychodów o 26,7% do 73,5 mln PLN; zarząd proponuje pokrycie strat z lat ubiegłych",
+        "risk_flags": ["Ekspansja USA — nowe transakcje TP z jurysdykcją USA planowane od 2025"]
       },
       "related_party_flows": {
         "operational": {
