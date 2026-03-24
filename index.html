@@ -32,7 +32,11 @@
   <div class="page-stats" id="page-stats"></div>
 </div>
 
-<div class="filter-bar">
+<div class="toolbar">
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input id="search" class="toolbar-input" placeholder="Szukaj spółki...">
+  </div>
   <div class="filter-chips" id="filter-chips">
     <button class="filter-chip active" data-risk="all">Wszystkie</button>
     <button class="filter-chip" data-risk="CRITICAL">
@@ -48,8 +52,7 @@
       <span class="chip-dot" style="background:var(--low)"></span>Low
     </button>
   </div>
-  <input type="text" id="search" placeholder="Szukaj spółki..." autocomplete="off">
-  <span class="count" id="count"></span>
+  <span class="toolbar-count" id="count"></span>
 </div>
 
 <div class="dashboard-wrap">
