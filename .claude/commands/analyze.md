@@ -175,13 +175,57 @@ Implied rate: `koszty_odsetkowe_RP / ((saldo_długu_RP_t + saldo_długu_RP_t-1) 
 
 ---
 
-## Step 6: Wskaźniki finansowe
+## Step 6: Oblicz wskaźniki finansowe i delty r/r
+
+### 6A. Wskaźniki bieżące
 
 ```
 equity_ratio = equity / total_assets
-debt_ebitda  = financial_debt_related / ebitda   (null jeśli EBITDA ujemna/brak)
+debt_ebitda  = financial_debt_related / ebitda   (null jeśli EBITDA ≤0 lub brak)
 icr          = ebitda / interest_costs_related    (null jeśli brak kosztów RP)
 ```
+
+### 6B. ETR i profil podatkowy
+
+```
+etr              = tax_expense / profit_before_tax  (null jeśli PBT ≤0)
+etr_deviation_pp = etr - 0.19                       (null jeśli etr null)
+deferred_tax_net = deferred_tax_asset - deferred_tax_liability
+```
+
+Jeśli etr <0% lub >40%: ustaw `etr = null`, zapisz anomalię w `tax_notes`.
+
+### 6C. Delty r/r
+
+```
+revenue_pct           = (revenue_T - revenue_T1) / abs(revenue_T1) * 100
+ebit_margin_pp        = ebit_margin_T - ebit_margin_T1
+net_profit_pct        = (net_profit_T - net_profit_T1) / abs(net_profit_T1) * 100
+ebitda_pct            = (ebitda_T - ebitda_T1) / abs(ebitda_T1) * 100
+tp_purchases_pct      = (tp_purchases_T - tp_purchases_T1) / abs(tp_purchases_T1) * 100
+tp_sales_pct          = (tp_sales_T - tp_sales_T1) / abs(tp_sales_T1) * 100
+personnel_costs_pct   = (personnel_T - personnel_T1) / abs(personnel_T1) * 100
+external_services_pct = (ext_services_T - ext_services_T1) / abs(ext_services_T1) * 100
+```
+
+Jeśli T-1 = 0 lub `financials_prev = null`: delta = null.
+Jeśli |delta| > 200% lub < -80%: dodaj adnotację "Anomalna zmiana — zweryfikuj dane źródłowe".
+
+### 6D. Reguły formatowania liczb w raporcie HTML
+
+| Kontekst | Format | Przykład |
+|----------|--------|---------|
+| Kwoty ≥ 1 mln PLN | X,X mln PLN | 73,5 mln PLN |
+| Kwoty 100 tys.–999 tys. PLN | XXX tys. PLN | 389 tys. PLN |
+| Kwoty < 100 tys. PLN | XX XXX PLN | 54 890 PLN |
+| Wartości % ≥ 5% | Bez miejsc po przecinku | 27% nie 26,7% |
+| Wartości % < 5% | 1 miejsce | 3,9% nie 3,88% |
+| Delty r/r ≥ 5% | Bez miejsc po przecinku | +27% |
+| Delty r/r < 5% (marże, wskaźniki) | 1 miejsce | +0,3pp |
+| Wskaźniki (equity ratio, debt/EBITDA) | 2 miejsca | 0,80 |
+| Wartości ujemne | Minus przed liczbą, bez nawiasów | −3,2 mln PLN |
+
+**Zasada:** gdy wątpliwość — mniej miejsc po przecinku. To raport dla analityka, nie eksport danych.
 
 ---
 
@@ -338,20 +382,134 @@ Nie wymyślaj nazw klas ani układu.
 
 **ZAKAZ w `.method-box`:** `<h3>`, `<p>`, `<ul>`, `<li>` — tylko `<strong>` i `<br>`.
 
-### Wszystkie 9 sekcji (w kolejności)
+### Wszystkie 11 sekcji (w kolejności)
 
-| # | CSS | Zawartość |
-|---|-----|-----------|
+| # | CSS klasy | Zawartość |
+|---|-----------|-----------|
 | 00 | `info-box` + grid `risk-card` | Akapit + 3 karty TOP tematów |
-| 01 | `.kpi-grid` | Revenue, EBIT, net profit, assets, equity, EBITDA |
+| 01 | `.kpi-grid` + `.yoy-table` | KPI (6 kart) + tabela r/r (3 grupy wierszy) |
 | 02 | `.risk-score-row` | Poziom, score, 3 kluczowe metryki TP |
-| 03 | `.metrics-row` | EBIT margin, equity ratio, debt/EBITDA, implied rate, ICR |
+| 03 | `.metrics-row` + `.tax-row` | Wskaźniki finansowe + blok podatkowy (ETR) |
 | 04 | `.struct-grid` | info-box opisu + struct-card per podmiot |
 | 05 | `.two-col` + `.table-wrap` | Zakupy + sprzedaż TP + tabela transakcji finansowych |
 | 06 | `.table-wrap` | Saldo rozrachunków y/y per podmiot |
 | 07 | `.risk-list` | risk-card per typ transakcji, malejąco wg ryzyka |
-| 08 | `.table-wrap` | Macierz priorytetów: #, transakcja, podmiot, kwota, poziom, 🔴🟠🟡🟢 |
-| 09 | `.method-box` | Scoring A→D inline + źródła + ograniczenia |
+| 08 | `.table-wrap` | Macierz priorytetów |
+| 09 | `.method-box` | Scoring A→D + źródła + ograniczenia |
+| 10 | `.info-box` + `.mgmt-grid` + `.rf-list` | Kontekst ze sprawozdania zarządu |
+
+### Sekcja 01 — tabela r/r (po .kpi-grid)
+
+```html
+<table class="yoy-table">
+  <thead>
+    <tr>
+      <th>Wskaźnik</th>
+      <th>[Rok T]</th>
+      <th>[Rok T-1]</th>
+      <th>Δ r/r</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="yoy-separator"><td colspan="4">Wyniki finansowe</td></tr>
+    <tr>
+      <td>Przychody netto</td>
+      <td>[X,X mln PLN]</td>
+      <td>[X,X mln PLN]</td>
+      <td class="delta-[pos/neg/warn/neutral]">[+/-X%]</td>
+    </tr>
+    <!-- Kontynuuj: EBIT, Marża EBIT (pp), Zysk netto, EBITDA -->
+    <tr class="yoy-separator"><td colspan="4">Struktura kosztów</td></tr>
+    <!-- Koszty pracownicze, Usługi obce, Amortyzacja -->
+    <tr class="yoy-separator"><td colspan="4">Transakcje z podmiotami powiązanymi</td></tr>
+    <!-- Przychody TP, Zakupy TP, główne salda finansowe TP jeśli istnieją -->
+  </tbody>
+</table>
+```
+
+**Klasy delta — reguła przypisania:**
+- `delta-pos` (zielony): poprawa — wyższe przychody, wyższa marża, niższa koncentracja TP
+- `delta-neg` (czerwony): delta < −30% lub > +200% na transakcjach TP lub kosztach (anomalia)
+- `delta-warn` (pomarańczowy): |delta| ≥ 20% na transakcjach TP lub kosztach pracowniczych; odchylenie marży > 2pp
+- `delta-neutral` (szary): zmiana < 20% bez TP-istotności
+
+**Pomiń tabelę r/r jeśli `financials_prev = null`:** zamiast niej wstaw:
+```html
+<div class="info-box">Dane porównawcze niedostępne — spółka w pierwszym roku działalności lub brak danych za rok poprzedni.</div>
+```
+
+### Sekcja 03 — blok podatkowy (po .metrics-row)
+
+```html
+<div class="tax-row">
+  <div class="tax-metric">
+    <div class="tv [high/warn/ok/neutral]">[X% lub —]</div>
+    <div class="tk">ETR (efektywna stopa podatkowa)</div>
+    <div class="tt">Podatek [X tys.] PLN / zysk brutto [X mln] PLN · Ustawowa: 19%</div>
+  </div>
+  <div class="tax-metric">
+    <div class="tv [high/warn/ok/neutral]">[±X,Xpp lub —]</div>
+    <div class="tk">Odchylenie ETR od stawki ustawowej</div>
+    <div class="tt">[Wyjaśnienie: ulga R&D / SSE / straty z lat ubiegłych / brak odchylenia]</div>
+  </div>
+  <div class="tax-metric">
+    <div class="tv [high/warn/ok/neutral]">[±X,X mln PLN lub —]</div>
+    <div class="tk">Podatek odroczony netto</div>
+    <div class="tt">[Aktywo/Zobowiązanie — interpretacja ryzyka]</div>
+  </div>
+</div>
+```
+
+**Klasy wartości `tv`:**
+- `high`: ETR <10% lub >35%; duże zobowiązanie odroczone netto (>10% zysku brutto)
+- `warn`: ETR 10–14% lub 26–35%; odchylenie >5pp
+- `ok`: ETR 15–25% (zakres normalny)
+- `neutral`: dane niedostępne, ETR null, lub zakres graniczny 25–26%
+
+Jeśli `tax.etr = null`: pokaż "—" z adnotacją wyjaśniającą brak danych.
+
+### Sekcja 10 — Kontekst biznesowy (sprawozdanie zarządu)
+
+**Warunek renderowania:**
+- `mgmt_report.read = true` → pełna sekcja 10
+- `mgmt_report.read = false` → tylko info-box z adnotacją
+- Blok 4E < 50% wypełniony → info-box "Sprawozdanie zarządu — dane częściowe"
+
+```html
+<div class="section-label">10 — Kontekst biznesowy ze sprawozdania zarządu</div>
+
+<!-- Jeśli mgmt_report.read = false: -->
+<div class="info-box">Sprawozdanie zarządu niedostępne w e-KRS dla tego okresu sprawozdawczego.</div>
+
+<!-- Jeśli mgmt_report.read = true: -->
+<div class="info-box" style="margin-bottom: 16px;">
+  [Komentarz zarządu do wyników — 2–3 zdania. Cytuj lub parafrazuj sprawozdanie.]
+</div>
+
+<div class="mgmt-grid">
+  <div class="mgmt-card">
+    <div class="mgmt-card-label">Strategia i plany</div>
+    <div class="mgmt-card-body">[Kluczowe punkty strategiczne z perspektywy TP]</div>
+  </div>
+  <div class="mgmt-card">
+    <div class="mgmt-card-label">Zmiany w strukturze grupy</div>
+    <div class="mgmt-card-body">[Zmiany podmiotowe, nowe spółki, likwidacje — lub: Brak zmian strukturalnych w roku [T].]</div>
+  </div>
+</div>
+
+<ul class="rf-list">
+  <li class="rf-item">
+    <span class="rf-badge HIGH">HIGH</span>
+    <span>[Opis red flaga TP ze sprawozdania — konkretne zdarzenie, nie ogólnik]</span>
+  </li>
+  <!-- powtórz per red flag -->
+</ul>
+```
+
+**Jeśli brak red flagów ze sprawozdania:** zamiast `rf-list`:
+```html
+<p style="color: var(--text-3); font-size: 13px; margin-top: 8px;">Brak red flagów TP zidentyfikowanych w sprawozdaniu zarządu.</p>
+```
 
 ---
 
