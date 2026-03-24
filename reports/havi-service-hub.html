@@ -32,28 +32,43 @@
 <div class="container">
 
   <!-- 00 — EXECUTIVE SUMMARY -->
-  <div class="section-label">00 — Executive Summary</div>
+  <div class="section-label">00 — Podsumowanie dla analityka</div>
 
-  <div class="info-box">
-    <p><strong>S:</strong> HAVI Service Hub Sp. z o.o. jest europejskim centrum usług wspólnych (SSC) grupy HAVI, świadczącym usługi księgowe i zarządzania łańcuchem dostaw na rzecz ~40 spółek z grupy w Europie i USA. Przychody 2024: 73,5 mln PLN (+26,7% r/r).</p>
-    <p><strong>C:</strong> 100% przychodów pochodzi od podmiotów powiązanych (73,5 mln PLN), a 90,9% aktywów stanowi saldo debetowe cash poolingu (54,7 mln PLN). Zidentyfikowano 4 kategorie transakcji TP.</p>
-    <p><strong>A:</strong> Ocena ryzyka: <strong>WYSOKIE (8/10)</strong> — cash pool 54,7 mln PLN bez ujawnionego operatora i stopy rynkowej; zakupy od HAVI Logistics Business Services (DE) 11,3 mln PLN bez metodologii cenowej; 100% przychodów od powiązanych z deklaratywnym ALS bez benchmarku.</p>
+  <div class="info-box" style="margin-bottom: 8px;">
+    HAVI Service Hub Sp. z o.o. jest krakowskim centrum usług wspólnych (SSC) grupy HAVI, świadczącym usługi księgowe i zarządzania łańcuchem dostaw na rzecz ~40 spółek z grupy w Europie i USA, z przychodami 73,5 mln PLN za 2024 rok (+26,7% r/r). 100% przychodów pochodzi od podmiotów powiązanych, a 90,9% aktywów stanowi saldo debetowe cash poolingu (54,7 mln PLN). Zidentyfikowano 4 kategorie transakcji TP. Ocena ryzyka: <strong>HIGH (8/10)</strong> — dwa tematy wymagają weryfikacji dokumentacji: cash pool z grupą HAVI (54,7 mln PLN, operator i stawka nieujawnione) oraz zakupy usług od HAVI Logistics Business Services GmbH (11,3 mln PLN, brak metodologii cenowej).
   </div>
 
-  <div class="section-label">Tematy wymagające uwagi</div>
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px;">
 
-  <div class="info-box">
-    <p><span class="badge HIGH">USŁUGI FINANSOWE</span> <strong>Cash pooling · 54 734 860 PLN</strong></p>
-    <p>Saldo debetowe cash poolingu = 90,9% aktywów; operator i stawka procentowa nieujawnione w sprawozdaniu. Stawka implikowana 4,51% p.a. wymaga potwierdzenia arm’s length — dokumentacja TP dla tej transakcji nie jest wzmiankowana.</p>
-  </div>
-  <div class="info-box">
-    <p><span class="badge HIGH">USŁUGI</span> <strong>Zakupy od HAVI Logistics Business Services (DE) · 11 296 354 PLN</strong></p>
-    <p>Dominująca transakcja zakupowa (84,7% wszystkich zakupów TP, 15,4% przychodów) bez opisu charakteru usług ani metodologii cenowej. Ten sam podmiot jest 4. co do wielkości odbiorcą usług Spółki — transakcja wzajemna bez mechanizmu alokacji.</p>
-  </div>
-  <div class="info-box">
-    <p><span class="badge MEDIUM">USŁUGI</span> <strong>Sprzedaż usług SSC do ~40 spółek grupy · 73 499 477 PLN</strong></p>
-    <p>Pełna zależność przychodowa od grupy przy marży EBIT 3,88%. Nota 46 zawiera jedynie oświadczenie o rynkowości transakcji — brak wskazania metody TP ani benchmarku marży operacyjnej.</p>
-  </div>
+    <div class="risk-card" style="margin: 0;">
+      <div class="risk-stripe HIGH"></div>
+      <div class="risk-body-inner" style="padding: 16px 18px;">
+        <div style="font-family: var(--font); font-size: 10px; letter-spacing: 2px; color: var(--text-3); text-transform: uppercase; margin-bottom: 6px;">FINANSOWANIE WEWNĘTRZNE</div>
+        <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Cash pooling z grupą HAVI</div>
+        <div style="font-family: var(--font); font-size: 12px; color: var(--high); margin-bottom: 8px;">54 734 860 PLN &middot; 90,9% aktywów</div>
+        <div style="font-size: 12px; color: #4a4540; line-height: 1.5;">Saldo debetowe dominuje bilanś Spółki; operator i stawka oprocentowania nieujawnione w żadnym z dokumentów. Stawka implikowana 4,51% p.a. wymaga potwierdzenia arm’s length.</div>
+      </div>
+    </div>
+
+    <div class="risk-card" style="margin: 0;">
+      <div class="risk-stripe HIGH"></div>
+      <div class="risk-body-inner" style="padding: 16px 18px;">
+        <div style="font-family: var(--font); font-size: 10px; letter-spacing: 2px; color: var(--text-3); text-transform: uppercase; margin-bottom: 6px;">USŁUGI</div>
+        <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Zakupy od HAVI Logistics Business Services GmbH</div>
+        <div style="font-family: var(--font); font-size: 12px; color: var(--high); margin-bottom: 8px;">11 296 354 PLN &middot; 84,7% zakupów TP</div>
+        <div style="font-size: 12px; color: #4a4540; line-height: 1.5;">Dominująca transakcja zakupowa bez opisu świadczenia i metodologii cenowej. Ten sam podmiot równocześnie jest odbiorcą usług Spółki (6,2 mln PLN) — transakcja wzajemna wymagająca odrębnej dokumentacji.</div>
+      </div>
+    </div>
+
+    <div class="risk-card" style="margin: 0;">
+      <div class="risk-stripe MEDIUM"></div>
+      <div class="risk-body-inner" style="padding: 16px 18px;">
+        <div style="font-family: var(--font); font-size: 10px; letter-spacing: 2px; color: var(--text-3); text-transform: uppercase; margin-bottom: 6px;">USŁUGI SSC</div>
+        <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Sprzedaż usług do ~40 spółek grupy</div>
+        <div style="font-family: var(--font); font-size: 12px; color: var(--medium); margin-bottom: 8px;">73 499 477 PLN &middot; 100% przychodów</div>
+        <div style="font-size: 12px; color: #4a4540; line-height: 1.5;">Pełna zależność przychodowa od grupy przy marży EBIT 3,88%. Nota 46 zawiera jedynie deklaratywne oświadczenie o rynkowości — brak metody TP ani benchmarku marży operacyjnej.</div>
+      </div>
+    </div>
 
   </div>
 
