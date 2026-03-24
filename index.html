@@ -8,42 +8,51 @@
 </head>
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="header-eyebrow">Transfer Pricing Intelligence · Polska</div>
-    <h1>TP <span>Radar</span></h1>
-    <p class="header-sub">Automatyczna analiza ryzyk Transfer Pricing polskich spółek na podstawie sprawozdań finansowych z e-KRS</p>
-    <div class="header-stats">
-      <div class="stat-block">
-        <div class="stat-num" id="stat-total">—</div>
-        <div class="stat-label">Spółek w bazie</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-num" id="stat-critical">—</div>
-        <div class="stat-label">Critical risk</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-num" id="stat-high">—</div>
-        <div class="stat-label">High risk</div>
-      </div>
-    </div>
+<div class="topbar">
+  <div class="topbar-logo">
+    <div class="topbar-logo-icon">TP</div>
+    TP Radar
   </div>
-</header>
-
-<div class="filter-bar">
-  <select id="filter-risk">
-    <option value="all">Wszystkie poziomy</option>
-    <option value="CRITICAL">CRITICAL</option>
-    <option value="HIGH">HIGH</option>
-    <option value="MEDIUM">MEDIUM</option>
-    <option value="LOW">LOW</option>
-  </select>
-  <input type="text" id="search" placeholder="Szukaj spółki..." autocomplete="off">
-  <span class="count" id="count"></span>
-  <button class="btn btn-primary" id="add-btn">+ Dodaj spółkę</button>
+  <div class="topbar-sep"></div>
+  <nav class="topbar-nav">
+    <a href="index.html" class="active">Dashboard</a>
+    <a href="#">Spółki</a>
+    <a href="#">Metodologia</a>
+  </nav>
+  <div class="topbar-right">
+    <button class="topbar-btn" id="add-btn">+ Dodaj spółkę</button>
+  </div>
 </div>
 
-<div class="container">
+<div class="page-header">
+  <div class="page-header-left">
+    <h1 class="page-title">Transfer Pricing Intelligence</h1>
+    <p class="page-subtitle">Analiza ryzyk TP polskich spółek na podstawie sprawozdań finansowych</p>
+  </div>
+  <div class="page-stats" id="page-stats"></div>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-chips" id="filter-chips">
+    <button class="filter-chip active" data-risk="all">Wszystkie</button>
+    <button class="filter-chip" data-risk="CRITICAL">
+      <span class="chip-dot" style="background:var(--critical)"></span>Critical
+    </button>
+    <button class="filter-chip" data-risk="HIGH">
+      <span class="chip-dot" style="background:var(--high)"></span>High
+    </button>
+    <button class="filter-chip" data-risk="MEDIUM">
+      <span class="chip-dot" style="background:var(--medium)"></span>Medium
+    </button>
+    <button class="filter-chip" data-risk="LOW">
+      <span class="chip-dot" style="background:var(--low)"></span>Low
+    </button>
+  </div>
+  <input type="text" id="search" placeholder="Szukaj spółki..." autocomplete="off">
+  <span class="count" id="count"></span>
+</div>
+
+<div class="dashboard-wrap">
   <div class="grid" id="grid">
     <div class="empty-state">
       <h3>Ładowanie...</h3>
