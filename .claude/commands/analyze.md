@@ -41,71 +41,106 @@ Czytaj PDF przez **`pdf-tools` MCP** (lepsza ekstrakcja tabel). Fallback: Read t
 
 ---
 
-## Step 4: Ekstrakcja danych — CZYTAJ ZANIM PISZESZ
+## Step 4: Ekstrakcja danych — QUALITY GATE
 
-**REGUŁA KRYTYCZNA: Nie pisz raportu dopóki nie wypełnisz całego szablonu poniżej.**
+**REGUŁA KRYTYCZNA: Nie pisz raportu dopóki nie wypełnisz wszystkich 6 bloków poniżej.**
 
-### 4A. Kluczowe liczby finansowe
+**Progi kompletności:**
+- Bloki 4A–4D i 4F: jeśli >30% pól niezapisanych (nie `null` z potwierdzenia braku, ale po prostu nieuzupełnionych) → wróć do dokumentów.
+- Blok 4E (sprawozdanie zarządu): próg 50% — jeśli <50% pól wypełnionych, pomiń sekcję 10 raportu, ale **nie blokuj raportu**.
 
-- Przychody netto ze sprzedaży
-- Zysk z działalności operacyjnej (EBIT)
-- Zysk netto
-- Aktywa razem
-- Kapitał własny
-- EBITDA (EBIT + amortyzacja)
-- Amortyzacja
-- Koszty odsetkowe wobec powiązanych
-
-### 4B. Szablon ekstrakcji TP — wypełnij przed Step 5
+### Szablon ekstrakcji — wypełnij przed Step 5
 
 ```
-=== EKSTRAKCJA TP — [Company Name] ===
+=== EXTRACTION TEMPLATE — [Nazwa Spółki] [Rok T] ===
 
-NOTA O TRANSAKCJACH Z PODMIOTAMI POWIĄZANYMI
----------------------------------------------
-A. Przychody od powiązanych:
-   - [Podmiot] → [kwota] PLN — [opis]
-   RAZEM: [kwota] PLN
+━━━ BLOK 4A: FINANSE BIEŻĄCE (rok T) ━━━━━━━━━━━━━━
+Przychody netto:                  ___ PLN
+EBIT:                             ___ PLN
+Zysk brutto (przed podatkiem):    ___ PLN
+Podatek dochodowy (bieżący):      ___ PLN
+Zysk netto:                       ___ PLN
+Aktywa razem:                     ___ PLN
+Kapitał własny:                   ___ PLN
+EBITDA:                           ___ PLN
+Amortyzacja:                      ___ PLN
 
-B. Zakupy od powiązanych:
-   - [Podmiot] → [kwota] PLN — [opis]
-   RAZEM: [kwota] PLN
+━━━ BLOK 4B: FINANSE POPRZEDNI ROK (rok T-1) ━━━━━━
+[Te same pola co 4A — zawsze z kolumny porównawczej SF]
+Rok T-1:                          ___
+Przychody netto:                  ___ PLN
+EBIT:                             ___ PLN
+Zysk brutto (przed podatkiem):    ___ PLN
+Podatek dochodowy (bieżący):      ___ PLN
+Zysk netto:                       ___ PLN
+Aktywa razem:                     ___ PLN
+Kapitał własny:                   ___ PLN
+EBITDA:                           ___ PLN
+Amortyzacja:                      ___ PLN
+
+━━━ BLOK 4C: STRUKTURA KOSZTÓW (T i T-1) ━━━━━━━━━
+Koszty pracownicze T / T-1:       ___ / ___ PLN
+Amortyzacja T / T-1:              ___ / ___ PLN
+Usługi obce T / T-1:              ___ / ___ PLN
+Materiały i towary T / T-1:       ___ / ___ PLN
+Pozostałe koszty T / T-1:         ___ / ___ PLN
+
+━━━ BLOK 4D: TRANSAKCJE TP (+ delta r/r) ━━━━━━━━━
+A. Przychody od podmiotów powiązanych:
+   - [Podmiot] → T: ___ PLN / T-1: ___ PLN — Δ: ___% — [opis]
+   RAZEM T: ___ PLN / T-1: ___ PLN
+
+B. Zakupy od podmiotów powiązanych:
+   - [Podmiot] → T: ___ PLN / T-1: ___ PLN — Δ: ___% — [opis]
+   RAZEM T: ___ PLN / T-1: ___ PLN
 
 C. Przychody finansowe od powiązanych:
-   - dywidendy: [kwota] PLN od [podmiot]
-   - odsetki: [kwota] PLN od [podmiot]
+   - dywidendy: T: ___ PLN / T-1: ___ PLN od [podmiot]
+   - odsetki: T: ___ PLN / T-1: ___ PLN od [podmiot]
 
 D. Koszty finansowe do powiązanych:
-   - odsetki: [kwota] PLN do [podmiot]
+   - odsetki: T: ___ PLN / T-1: ___ PLN do [podmiot]
 
 E. Salda rozrachunków (31.12):
-   - Należności: [kwota] PLN (per podmiot)
-   - Zobowiązania: [kwota] PLN (per podmiot)
-   - Zobowiązania finansowe: [kwota] PLN (per podmiot)
+   - Należności: T: ___ PLN / T-1: ___ PLN (per podmiot)
+   - Zobowiązania: T: ___ PLN / T-1: ___ PLN (per podmiot)
+   - Zobowiązania finansowe: T: ___ PLN / T-1: ___ PLN (per podmiot)
 
-DODATKOWE TRANSAKCJE
---------------------
-□ Opłata licencyjna / royalty:     podmiot: ___ stawka: ___% kwota: ___ PLN
-□ Management fees:                  podmiot: ___ zakres: ___ kwota: ___ PLN
-□ Usługi B+R:                       kierunek: ___ podmiot: ___ kwota: ___ PLN
-□ Cash pooling:                     operator: ___ saldo: ___ PLN odsetki: ___ PLN
-□ IRS / FX forward z powiązanymi:   podmiot: ___ nominał: ___ FV: ___ PLN
-□ Pożyczki (per transza):           podmiot | kwota | termin | oprocentowanie
-□ Gwarancje:                        kwota: ___ PLN beneficjenci: ___ fee: tak/nie
-□ Refaktury:                        wystawione: ___ PLN otrzymane: ___ PLN
-□ Dywidendy:                        wypłacone: ___ PLN otrzymane: ___ PLN
-□ Leasing z powiązanymi:            podmiot: ___ nominał: ___ PLN
-□ Inne:                             opis: ___ kwota: ___ PLN
+DODATKOWE TYPY TRANSAKCJI (zaznacz wszystkie):
+□ Licencja / royalty:  podmiot: ___ stawka: ___% kwota T/T-1: ___ / ___ PLN
+□ Management fees:     podmiot: ___ zakres: ___ kwota T/T-1: ___ / ___ PLN
+□ Usługi B+R:          kierunek: ___ podmiot: ___ kwota T/T-1: ___ / ___ PLN
+□ Cash pooling:        operator: ___ saldo T/T-1: ___ / ___ PLN odsetki: ___ PLN
+□ IRS / FX forward:    podmiot: ___ nominał: ___ FV: ___ PLN
+□ Pożyczki (per transza): podmiot | kwota | termin | oprocentowanie | saldo T-1
+□ Gwarancje:           kwota: ___ PLN beneficjenci: ___ fee: tak/nie
+□ Refaktury:           wystawione: ___ PLN otrzymane: ___ PLN
+□ Dywidendy:           wypłacone: ___ PLN otrzymane: ___ PLN
+□ Leasing z powiązanymi: podmiot: ___ nominał: ___ PLN
+□ Inne:                opis: ___ kwota T/T-1: ___ / ___ PLN
 
-SPRAWOZDANIE ZARZĄDU
---------------------
-□ Sekcja TP przeczytana: TAK/NIE
-□ Umowy ramowe z grupą: ___
-□ Zmiany struktury grupy: ___
-□ Wzmianki o dokumentacji TP / APA: ___
+━━━ BLOK 4E: SPRAWOZDANIE ZARZĄDU ━━━━━━━━━━━━━━━━
+Przeczytane: TAK/NIE
+Polityka TP wzmiankowana: TAK/NIE
+APA / porozumienia cenowe wzmiankowane: TAK/NIE
+Zmiany struktury grupy: [opis lub BRAK]
+Strategia i plany: [kluczowe punkty]
+Komentarz zarządu do wyników: [cytat/parafraza]
+Red flagi TP ze sprawozdania: [lista lub BRAK]
+
+━━━ BLOK 4F: PROFIL PODATKOWY ━━━━━━━━━━━━━━━━━━━
+Podatek dochodowy bieżący:        ___ PLN
+Zysk brutto (przed podatkiem):    ___ PLN
+ETR obliczony:                    ___% (podatek / zysk brutto)
+Odchylenie od 19%:                ___pp
+Aktywo z tytułu podatku odrocz.:  ___ PLN
+Zobowiązanie z tyt. pod. odrocz.: ___ PLN
+Podatek odroczony netto:          ___ PLN (aktywo+/zobowiązanie-)
+Wyjaśnienie odchylenia:           [ulga R&D / SSE / straty / inne]
+Poziom ryzyka podatkowego:        LOW / MEDIUM / HIGH / null
 ```
 
-### 4C. Ekstrakcja iXBRL/XHTML
+### 4G. Ekstrakcja iXBRL/XHTML
 
 ```python
 import re, html
@@ -119,7 +154,7 @@ for m in re.finditer(r'Transakcje z podmiotami|Strony powiązane', text, re.IGNO
         print(text[m.start():m.start()+6000]); break
 ```
 
-Szukaj oddzielnie: `licencj` · `management|zarządzan` · `cash pool|depozyt` · `instrument.*pochodn|IRS` · `gwarancj` · `refaktur`
+Szukaj oddzielnie: `licencj` · `management|zarządzan` · `cash pool|depozyt` · `instrument.*pochodn|IRS` · `gwarancj` · `refaktur` · `podatek odroczony` · `efektywna stawka`
 
 ---
 
