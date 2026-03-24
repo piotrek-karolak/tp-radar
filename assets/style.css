@@ -135,14 +135,14 @@ body {
   font-size: 13px;
   color: rgba(240,237,232,0.45);
   text-decoration: none;
-  font-family: var(--font);
+  font-family: monospace;
   letter-spacing: 0.2px;
   transition: color 0.15s;
 }
 
 .topbar-back:hover { color: rgba(240,237,232,0.7); }
 
-.topbar-logo-right {
+.topbar-logo--right {
   margin-left: auto;
   font-size: 13px;
   font-weight: 600;
@@ -266,9 +266,9 @@ body {
 .filter-chip:hover { border-color: var(--border-med); color: var(--text); }
 
 .filter-chip.active {
-  background: var(--text);
+  background: var(--brand);
   color: var(--bg);
-  border-color: var(--text);
+  border-color: var(--brand);
 }
 
 .chip-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
@@ -630,6 +630,18 @@ footer {
   color: rgba(240,237,232,0.6);
 }
 
+.header-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  font-size: 12px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(240,237,232,0.6);
+}
+
 .chip.risk-high,
 .chip.risk-critical {
   background: rgba(220,38,38,0.15);
@@ -637,6 +649,11 @@ footer {
   color: #fca5a5;
   font-weight: 600;
 }
+
+.risk-chip.CRITICAL { background: var(--critical-bg); color: var(--critical); border-color: rgba(220,38,38,0.3); }
+.risk-chip.HIGH     { background: var(--high-bg);     color: var(--high);     border-color: rgba(234,88,12,0.3); }
+.risk-chip.MEDIUM   { background: var(--medium-bg);   color: var(--medium);   border-color: rgba(202,138,4,0.3); }
+.risk-chip.LOW      { background: var(--low-bg);      color: var(--low);      border-color: rgba(22,163,74,0.3); }
 
 /* ── Report container ── */
 /* Dashboard uses .dashboard-wrap to avoid collision */
@@ -865,7 +882,7 @@ tbody td.entity { font-weight: 600; }
   box-shadow: var(--shadow);
 }
 
-.risk-stripe { width: 4px; flex-shrink: 0; }
+.risk-stripe { width: 3px; flex-shrink: 0; }
 .risk-stripe.CRITICAL { background: var(--critical); }
 .risk-stripe.HIGH     { background: var(--high); }
 .risk-stripe.MEDIUM   { background: var(--medium); }
