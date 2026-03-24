@@ -540,6 +540,38 @@ if prefix_count < rec_count: errors.append(f'only {prefix_count}/{rec_count} ris
 inline_styles = re.findall(r'(?<!section 00)<[^>]+ style="(?!display: grid|margin: 0|padding:|font-|letter-spacing|font-weight|color)[^"]*"', h)
 if inline_styles: errors.append(f'unexpected inline styles: {inline_styles[:3]}')
 
+import json as _json
+
+# company_id must match the slug used in reports/[id].html — replace [id] below
+company_id = '[company-slug]'
+
+# Load JSON to cross-check HTML vs data
+try:
+    with open('companies.json', encoding='utf-8') as _jf:
+        _jdata = _json.load(_jf)
+    _company = next((c for c in _jdata['companies'] if c['id'] == company_id), None)
+    _financials_prev = _company.get('financials_prev') if _company else None
+except Exception as _e:
+    errors.append(f'Could not load companies.json for cross-check: {_e}')
+    _financials_prev = None
+
+# New v2 structural checks
+if _financials_prev is not None and 'class="yoy-table"' not in h:
+    errors.append('yoy-table missing despite financials_prev data in JSON')
+if 'class="tax-row"' not in h:
+    errors.append('tax-row block missing from section 03')
+_section_10_present = '>10 —' in h or 'section-label">10' in h
+if _section_10_present and 'class="mgmt-grid"' not in h:
+    errors.append('section 10 present but mgmt-grid missing')
+if _section_10_present and 'class="mgmt-card-label"' not in h:
+    errors.append('section 10 present but mgmt-card missing')
+
+# Number formatting check — no exact PLN amounts (should use mln/tys)
+import re as _re
+_exact_zloty = _re.findall(r'\b\d{1,3}(?:\s\d{3}){2,}\s*PLN', h)
+if _exact_zloty:
+    errors.append(f'Exact PLN amounts found (use mln/tys format): {_exact_zloty[:2]}')
+
 if errors:
     print("ERRORS — napraw przed commitem:")
     for e in errors: print(f"  ✗ {e}")
@@ -551,17 +583,44 @@ else:
 
 ## Step 10: Zaktualizuj companies.json
 
-Dodaj wpis do tablicy `companies`. Nigdy nie nadpisuj istniejących wpisów.
+Dodaj lub zaktualizuj wpis w tablicy `companies`. Nigdy nie nadpisuj istniejących wpisów.
 
-Pola `financials`: revenue, operating_profit, ebit_margin, net_profit, total_assets, equity, ebitda, equity_ratio, debt_ebitda, icr, implied_rate — wszystkie `number | null`.
+### Pola `financials` (rozszerzone v2):
+revenue, operating_profit, ebit_margin, net_profit, total_assets, equity, ebitda,
+equity_ratio, debt_ebitda, icr, implied_rate,
+**year** (rok T jako integer, np. 2024),
+**cost_structure**: { personnel_costs, depreciation, external_services, materials_and_goods, other_operating_costs }
 
-Pola `related_party_flows.operational`: purchases, purchases_pct_revenue, sales, sales_pct_revenue, brand_license_entity, brand_license_rate_max_pct.
+### Nowe bloki v2:
 
-Pola `related_party_flows.financial`: loans_received_from_rp, loans_granted, interest_costs_to_rp, guarantees_issued, guarantees_received, dividends_received, interest_income, irs_notional, treasury_pool_deposits, financial_income_from_rp.
+**`financials_prev`** — te same pola co `financials` + `year` dla roku T-1; ustaw `null` jeśli pierwszy rok działalności spółki.
 
-Waliduj po zapisie:
+**`yoy_deltas`** — wszystkie wartości jako float (% lub pp), null gdy brak danych T-1:
+revenue_pct, ebit_margin_pp, net_profit_pct, ebitda_pct,
+tp_purchases_pct, tp_sales_pct, personnel_costs_pct, external_services_pct
+
+**`tax`** — profil podatkowy:
+tax_expense, profit_before_tax, etr, statutory_rate (zawsze 19.0),
+etr_deviation_pp, deferred_tax_asset, deferred_tax_liability, deferred_tax_net,
+tax_notes (string | null), tax_risk_level // enum: "LOW" | "MEDIUM" | "HIGH" | null
+
+**`mgmt_report`** — sprawozdanie zarządu:
+read (bool), tp_policy_mentioned (bool), apa_mentioned (bool),
+group_structure_changes (string | null), strategy_highlights (string | null),
+mgmt_commentary_on_results (string | null), risk_flags (array of strings)
+
+### Walidacja po zapisie:
 ```bash
-python3 -c "import json; d=json.load(open('companies.json')); print(f'OK — {len(d[\"companies\"])} spółek')"
+python3 -c "
+import json
+with open('companies.json', encoding='utf-8') as f:
+    d = json.load(f)
+co = next(c for c in d['companies'] if c['id'] == '[company-id]')
+required_v2 = ['financials_prev', 'yoy_deltas', 'tax', 'mgmt_report']
+missing = [k for k in required_v2 if k not in co]
+print(f'Missing v2 fields: {missing}' if missing else f'OK — v2 schema complete for {co[\"name\"]}')
+print(f'Total companies: {len(d[\"companies\"])}')
+"
 ```
 
 ---
