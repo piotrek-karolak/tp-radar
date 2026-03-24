@@ -429,7 +429,7 @@ Nie wymyślaj nazw klas ani układu.
 
 **Klasy delta — reguła przypisania:**
 - `delta-pos` (zielony): poprawa — wyższe przychody, wyższa marża, niższa koncentracja TP
-- `delta-neg` (czerwony): delta < −30% lub > +200% na transakcjach TP lub kosztach (anomalia)
+- `delta-neg` (czerwony): dla KAŻDEGO wiersza: delta < −30% (gwałtowne pogorszenie) lub > +200% (anomalia); priorytet nad delta-warn
 - `delta-warn` (pomarańczowy): |delta| ≥ 20% na transakcjach TP lub kosztach pracowniczych; odchylenie marży > 2pp
 - `delta-neutral` (szary): zmiana < 20% bez TP-istotności
 
@@ -502,7 +502,11 @@ Jeśli `tax.etr = null`: pokaż "—" z adnotacją wyjaśniającą brak danych.
     <span class="rf-badge HIGH">HIGH</span>
     <span>[Opis red flaga TP ze sprawozdania — konkretne zdarzenie, nie ogólnik]</span>
   </li>
-  <!-- powtórz per red flag -->
+  <li class="rf-item">
+    <span class="rf-badge MEDIUM">MEDIUM</span>
+    <span>[Opis red flaga TP ze sprawozdania — konkretne zdarzenie, nie ogólnik]</span>
+  </li>
+  <!-- powtórz per red flag; użyj HIGH/MEDIUM/CRITICAL zgodnie z oceną ryzyka -->
 </ul>
 ```
 
