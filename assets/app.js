@@ -22,6 +22,12 @@ function fmtDate(isoDate) {
   return `${d}.${m}.${y}`;
 }
 
+// ── HTML escape helper ───────────────────────────────────────
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
 // ── Card rendering ──────────────────────────────────────────
 
 function renderCard(company) {
@@ -57,7 +63,7 @@ function renderCard(company) {
 
   const riskItemsHtml = topRisks.map(r => `
     <li class="card-risk-item">
-      <span class="ritem-name">${r.name}</span>
+      <span class="ritem-name">${esc(r.name)}</span>
       <span class="ritem-badge ${r.level}">${r.level}</span>
     </li>
   `).join('');
@@ -70,7 +76,7 @@ function renderCard(company) {
   `).join('');
 
   return `
-    <article class="card" data-risk="${level}" data-name="${company.name.toLowerCase()}"
+    <article class="card" data-risk="${level}" data-name="${esc(company.name.toLowerCase())}"
              onclick="window.location='${company.report_file}'">
       <div class="card-stripe ${level}"></div>
       <div class="card-inner">
@@ -81,8 +87,8 @@ function renderCard(company) {
         </div>
 
         <div>
-          <h2 class="card-name">${company.name}</h2>
-          <p class="card-group">${groupMeta || 'Spółka niezależna'}</p>
+          <h2 class="card-name">${esc(company.name)}</h2>
+          <p class="card-group">${esc(groupMeta) || 'Spółka niezależna'}</p>
         </div>
 
         <div class="card-kpis">
@@ -142,15 +148,17 @@ function filterAndRender() {
     grid.innerHTML = filtered.map(renderCard).join('');
   }
 
-  // Empty slot — always at the end of the grid
-  const emptySlot = document.createElement('div');
-  emptySlot.className = 'card card-empty';
-  emptySlot.innerHTML = `
-    <span class="card-empty-icon">+</span>
-    <span class="card-empty-label">Dodaj spółkę</span>
-    <span class="card-empty-hint">analizuj [nazwa spółki]</span>
-  `;
-  grid.appendChild(emptySlot);
+  // Empty slot — only when there are results (hidden during "Brak wyników" state)
+  if (filtered.length > 0) {
+    const emptySlot = document.createElement('div');
+    emptySlot.className = 'card card-empty';
+    emptySlot.innerHTML = `
+      <span class="card-empty-icon">+</span>
+      <span class="card-empty-label">Dodaj spółkę</span>
+      <span class="card-empty-hint">analizuj [nazwa spółki]</span>
+    `;
+    grid.appendChild(emptySlot);
+  }
 
   count.textContent = `${filtered.length} / ${allCompanies.length}`;
 }
@@ -211,24 +219,24 @@ async function init() {
   }
 }
 
-document.getElementById('filter-chips').addEventListener('click', e => {
+document.getElementById('filter-chips')?.addEventListener('click', e => {
   const chip = e.target.closest('.filter-chip');
   if (!chip) return;
   document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
   chip.classList.add('active');
   filterAndRender();
 });
-document.getElementById('search').addEventListener('input', filterAndRender);
+document.getElementById('search')?.addEventListener('input', filterAndRender);
 
-document.getElementById('add-btn').addEventListener('click', () => {
+document.getElementById('add-btn')?.addEventListener('click', () => {
   document.getElementById('modal').classList.add('active');
 });
 
-document.getElementById('modal-close').addEventListener('click', () => {
+document.getElementById('modal-close')?.addEventListener('click', () => {
   document.getElementById('modal').classList.remove('active');
 });
 
-document.getElementById('modal').addEventListener('click', e => {
+document.getElementById('modal')?.addEventListener('click', e => {
   if (e.target === document.getElementById('modal'))
     document.getElementById('modal').classList.remove('active');
 });
