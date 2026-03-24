@@ -76,8 +76,8 @@ function renderCard(company) {
       <div class="card-inner">
 
         <div class="card-top">
-          <span class="risk-chip ${level}">${level}</span>
-          <span class="card-score">${risk.score || 0}/10</span>
+          <span class="risk-badge ${level}"><span class="risk-dot"></span>${level}</span>
+          <span class="score-badge">${risk.score || 0}/10</span>
         </div>
 
         <div>
@@ -86,11 +86,11 @@ function renderCard(company) {
         </div>
 
         <div class="card-kpis">
-          <div>
+          <div class="kpi-tile">
             <div class="kpi-val">${kpi1.val}</div>
             <div class="kpi-key">${kpi1.key}</div>
           </div>
-          <div>
+          <div class="kpi-tile">
             <div class="kpi-val">${kpi2.val}</div>
             <div class="kpi-key">${kpi2.key}</div>
           </div>
@@ -113,7 +113,7 @@ function renderCard(company) {
 let allCompanies = [];
 
 function filterAndRender() {
-  const riskFilter = document.getElementById('filter-risk').value;
+  const riskFilter = document.querySelector('.filter-chip.active')?.dataset.risk || 'all';
   const searchTerm = document.getElementById('search').value.toLowerCase().trim();
 
   let filtered = allCompanies.filter(c => {
@@ -142,6 +142,16 @@ function filterAndRender() {
     grid.innerHTML = filtered.map(renderCard).join('');
   }
 
+  // Empty slot — always at the end of the grid
+  const emptySlot = document.createElement('div');
+  emptySlot.className = 'card card-empty';
+  emptySlot.innerHTML = `
+    <span class="card-empty-icon">+</span>
+    <span class="card-empty-label">Dodaj spółkę</span>
+    <span class="card-empty-hint">analizuj [nazwa spółki]</span>
+  `;
+  grid.appendChild(emptySlot);
+
   count.textContent = `${filtered.length} / ${allCompanies.length}`;
 }
 
@@ -154,13 +164,42 @@ async function init() {
     const data = await resp.json();
     allCompanies = data.companies || [];
 
-    // Update header stats
+    // Update header stats — render stat pills into #page-stats
     const criticalCount = allCompanies.filter(c => (c.tp_risk || {}).overall === 'CRITICAL').length;
     const highCount     = allCompanies.filter(c => (c.tp_risk || {}).overall === 'HIGH').length;
+    const mediumCount   = allCompanies.filter(c => (c.tp_risk || {}).overall === 'MEDIUM').length;
+    const lowCount      = allCompanies.filter(c => (c.tp_risk || {}).overall === 'LOW').length;
 
-    document.getElementById('stat-total').textContent   = allCompanies.length;
-    document.getElementById('stat-critical').textContent = criticalCount;
-    document.getElementById('stat-high').textContent     = highCount;
+    const statsEl = document.getElementById('page-stats');
+    if (statsEl) {
+      statsEl.innerHTML = `
+        <div class="stat-pill">
+          <span class="stat-dot" style="background:#888"></span>
+          <span class="stat-num">${allCompanies.length}</span>
+          <span class="stat-label">spółki</span>
+        </div>
+        ${criticalCount ? `<div class="stat-pill">
+          <span class="stat-dot" style="background:#dc2626"></span>
+          <span class="stat-num">${criticalCount}</span>
+          <span class="stat-label">CRITICAL</span>
+        </div>` : ''}
+        ${highCount ? `<div class="stat-pill">
+          <span class="stat-dot" style="background:#ea580c"></span>
+          <span class="stat-num">${highCount}</span>
+          <span class="stat-label">HIGH</span>
+        </div>` : ''}
+        ${mediumCount ? `<div class="stat-pill">
+          <span class="stat-dot" style="background:#ca8a04"></span>
+          <span class="stat-num">${mediumCount}</span>
+          <span class="stat-label">MEDIUM</span>
+        </div>` : ''}
+        ${lowCount ? `<div class="stat-pill">
+          <span class="stat-dot" style="background:#16a34a"></span>
+          <span class="stat-num">${lowCount}</span>
+          <span class="stat-label">LOW</span>
+        </div>` : ''}
+      `;
+    }
 
     filterAndRender();
   } catch (err) {
@@ -172,7 +211,13 @@ async function init() {
   }
 }
 
-document.getElementById('filter-risk').addEventListener('change', filterAndRender);
+document.getElementById('filter-chips').addEventListener('click', e => {
+  const chip = e.target.closest('.filter-chip');
+  if (!chip) return;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  filterAndRender();
+});
 document.getElementById('search').addEventListener('input', filterAndRender);
 
 document.getElementById('add-btn').addEventListener('click', () => {
