@@ -1,0 +1,8 @@
+exclude:
+  - docs/
+  - sessions/
+  - .claude/
+  - .superpowers/
+  - .serena/
+  - "*.db"
+  - CLAUDE.md
