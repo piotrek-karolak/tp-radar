@@ -67,7 +67,7 @@
 
 ## 3. Pipeline Worker — 4 Phases
 
-### Phase 1: Scraping + Parsing (deterministic, no AI)
+### Phase 1: Scraping + Parsing (deterministic first, AI fallback)
 Progress: 0% → 25%
 
 ```
@@ -85,21 +85,38 @@ Progress: 0% → 25%
     - PDF (text-based) → pdfplumber → text + tables
     - PDF (scanned) → auto-detect (<50 chars/page = scan) → OCR (Tesseract)
 
+    AI FALLBACK: If deterministic parsing fails or produces incomplete results
+    (e.g., malformed XML, unusual PDF layout, tables not extractable by pdfplumber),
+    send the raw document content to Claude API with extraction instructions.
+    This costs extra tokens but prevents pipeline failure on edge cases.
+
 1d. Online research (parallel with 1b-1c)
     - Company IR website
     - Parent/group profile
     - Press articles, stock exchange communications (if GPW-listed)
     - KRS online — board composition, connections, history
 
-    Output: raw text with metadata (source, retrieval date)
+    Output:
+    - Structured data (from XML/parsing)
+    - FULL TEXT of all documents (for deep analysis in Phase 2)
+    - Online research text with metadata (source, retrieval date)
 ```
 
-### Phase 2: Extraction (Claude API, prompt 1)
+**Important:** Phase 1 preserves BOTH structured extractions AND full document text.
+Structured data is the backbone; full text enables Phase 2 to find insights
+that no template anticipated. The depth of analysis is the product's value —
+this is not a form-filling engine.
+
+### Phase 2: Extraction + Deep Reading (Claude API, prompt 1)
 Progress: 25% → 60%
 
 ```
 System prompt: financial analyst persona
-Input: parsed data from Phase 1 (XML structured + PDF text + online research)
+Input:
+  - Structured data from XML parsing (backbone — numbers, tags)
+  - FULL TEXT of all documents (informacja dodatkowa, sprawozdanie zarządu, etc.)
+  - Online research results
+  - User's custom focus areas (if provided — see "User Prompt Injection" below)
 Tools:
   - save_financials(year, revenue, ebit, ...)
   - save_tp_transactions(entity, amount, type, ...)
@@ -110,7 +127,16 @@ Tools:
   - add_insight(category, observation, evidence) ← model's reasoning space
 ```
 
-Key: `add_insight()` lets the model record observations beyond the template. These flow into Phases 3-4.
+**Key design principle:** The model receives BOTH structured data AND full document text.
+Structured data fills the template efficiently. Full text enables the model to:
+- Catch nuances in accounting notes that no template field covers
+- Read between the lines of management commentary
+- Connect information across different documents
+- Identify company-specific patterns that generic fields miss
+
+The perceptiveness and depth of this analysis is the core product value.
+
+`add_insight()` lets the model record observations beyond the template. These flow into Phases 3-4.
 
 Extraction template, prompt persona, and quality gates to be designed in detail during implementation (separate design session per phase).
 
@@ -133,22 +159,58 @@ Categories: open string — "tp", "cit", "vat", "ip_box", "custom", and any futu
 
 Prompt design, persona, and rule balance to be refined during implementation.
 
-### Phase 4: Report Generation (Claude API, prompt 3)
+### Phase 4: Report Generation — Multi-Agent Review (Claude API, 3 prompts)
 Progress: 80% → 100%
 
-```
-System prompt: report writer persona with style guide
-Input: complete data + scoring from Phases 2-3
-Output: Markdown per section (React renders to HTML)
+This phase uses a **write → review → revise** workflow with multiple agents:
 
-Tools:
-  - write_section(key, title, summary_md, full_md)
-  - write_custom_section(title, summary_md, full_md, after_key)
 ```
+Step 4a — WRITER AGENT
+  System prompt: report writer persona with style guide
+  Input: complete data + scoring from Phases 2-3 + user's custom focus (if any)
+  Output: Markdown per section
+  Tools:
+    - write_section(key, title, summary_md, full_md)
+    - write_custom_section(title, summary_md, full_md, after_key)
+    - write_user_answer(question, answer_md) ← response to user's custom prompt
+
+Step 4b — REVIEWER AGENTS (1-2 reviewers, run in parallel)
+  Reviewer 1: domain accuracy — are the tax/TP claims correct? Are risks properly assessed?
+  Reviewer 2: quality & clarity — is the writing clear, professional, well-structured?
+  Input: draft report sections + source data (for fact-checking)
+  Output: structured feedback per section (approve / revise with comments)
+
+Step 4c — WRITER AGENT (revision pass)
+  Input: original draft + reviewer feedback
+  Output: final report sections
+  Only revises sections that received "revise" feedback.
+```
+
+**Cost impact:** ~2x token cost for Phase 4 (~$0.60 instead of ~$0.30). Acceptable because:
+- It's only text (not large document processing)
+- Report quality is the user-facing deliverable — this is where quality matters most
+- Total analysis cost still well within $1-2 budget
 
 Model generates both SUMMARY and FULL variants of each section. Custom sections for company-specific topics.
 
 Report style guide and golden standard to be developed during implementation.
+
+### User Prompt Injection (optional personalization)
+
+When triggering an analysis, the user can optionally provide a custom prompt:
+
+> "Szczególnie interesuje mnie polityka cash poolingu i czy stopy procentowe są rynkowe.
+> Sprawdź też czy ta spółka kwalifikuje się do IP Box."
+
+This text is:
+1. Stored in `analyses.user_prompt` (new field)
+2. Injected into Phase 2 system prompt as additional focus area
+3. Injected into Phase 3 for targeted risk/opportunity identification
+4. Injected into Phase 4 — writer generates an additional section: **"Odpowiedź na Twoje pytanie"**
+   with a direct, targeted response to the user's specific questions
+
+Without a custom prompt, the full standard analysis runs normally. The custom prompt
+adds depth in the user's area of interest — it doesn't replace the standard analysis.
 
 ### Why 4 phases, not one prompt
 1. Phase 1 needs no AI — saves tokens ($)
@@ -159,10 +221,16 @@ Report style guide and golden standard to be developed during implementation.
 ### Token cost estimate per analysis
 | Phase | Input tokens | Output tokens | ~Cost |
 |-------|-------------|---------------|-------|
-| Phase 2 (extraction) | ~30k | ~5k | ~$0.40 |
-| Phase 3 (scoring) | ~10k | ~3k | ~$0.15 |
-| Phase 4 (report) | ~15k | ~8k | ~$0.30 |
-| **Total** | | | **~$0.85** |
+| Phase 1 (AI fallback, if needed) | ~10k | ~2k | ~$0.10 |
+| Phase 2 (extraction + deep reading) | ~40k | ~8k | ~$0.55 |
+| Phase 3 (scoring) | ~15k | ~5k | ~$0.25 |
+| Phase 4a (report writing) | ~20k | ~10k | ~$0.35 |
+| Phase 4b (2 reviewers) | ~30k | ~4k | ~$0.25 |
+| Phase 4c (revision) | ~15k | ~5k | ~$0.15 |
+| **Total** | | | **~$1.65** |
+
+Estimate revised upward from $0.85 to ~$1.65 due to: full-text analysis (more input tokens),
+multi-agent review loop, and AI fallback for parsing. Still well within $1-5 budget.
 
 ---
 
@@ -192,6 +260,7 @@ analyses:
   completed_at      TIMESTAMP
   error_message     TEXT (nullable)
   cost_usd          DECIMAL (nullable)
+  user_prompt       TEXT (nullable) -- optional custom focus/questions from user
 
 -- Structured data extracted by Phase 2
 extracted_data:
@@ -289,6 +358,11 @@ REPORT: [Company Name]
 06. [Custom — model adds if relevant]
     E.g., SSE (Special Economic Zone), WHT, restructuring
 
+── USER'S QUESTION (only if user provided custom prompt) ─
+06b. Odpowiedź na Twoje pytanie
+     Direct, targeted response to user's specific questions
+     References relevant data from other sections
+
 ── SUMMARY ──────────────────────────────────────────
 07. Risks & Opportunities — consolidated view
     Table: risk/opportunity, category, amount, level
@@ -319,7 +393,14 @@ REPORT: [Company Name]
 ### Stack
 - **React + Vite** — fast dev server, zero config
 - **TailwindCSS** — utility-first, no custom stylesheets. Claude writes it well.
-- **No heavy UI framework** — custom design, evolved from current tp-radar aesthetic
+- **No heavy UI framework** — custom design, NOT "AI slop"
+
+### Design philosophy
+This must look and feel like a **professional product**, not a developer prototype.
+Design research required before implementation: study best-in-class analytics dashboards
+(Linear, Stripe Dashboard, Notion, Bloomberg Terminal) for patterns, information density,
+and interaction design. The goal is a tool that PwC professionals would be proud to show
+to clients. Separate frontend design session needed — visual companion + mockups.
 
 ### Views
 
@@ -327,6 +408,7 @@ REPORT: [Company Name]
 - Topbar: logo, navigation, user
 - Stats: X companies, Y HIGH+ risks, Z analyses running
 - Input: "Wpisz nazwę spółki..." + [Analizuj] button
+- Optional: "Na co szczególnie zwrócić uwagę?" expandable textarea
 - Filters: risk level, date, status
 - Company cards (score, key metrics, link to report)
 
@@ -352,15 +434,27 @@ REPORT: [Company Name]
 **`/report/:id/export/pdf`** — server-side PDF generation (Puppeteer)
 **`/report/:id/export/html`** — standalone HTML (like current reports)
 
-### Authentication (MVP)
-- Email + password login, JWT tokens
-- Allowlisted emails in environment variable
-- No OAuth/SSO in v1
+### Authentication
+- **MVP:** Email + password login, JWT tokens. Allowlisted emails.
+- **Target:** Google / Apple OAuth (easy onboarding, no password management).
+  Implementation: use a library like `authlib` (Python) + frontend OAuth flow.
+  Prioritize Google first (most common in corporate environments).
 
 ### Per-user isolation (prepared, not active in MVP)
 - `analyses.user_id` links to `users.id`
 - MVP: no filter (all users see all)
 - Later: `WHERE user_id = current_user` — zero schema changes
+
+### Future: Teams & Sharing
+- Team workspaces: group of users with shared access to a pool of analyses
+- Report sharing: generate a shareable link (read-only, optionally time-limited)
+- Data model supports this: add `teams` table, `team_id` FK on `analyses`,
+  sharing = `shared_links` table with `analysis_id` + `token` + `expires_at`
+
+### Future: Payment Gateway
+- Per-analysis fee (Stripe Checkout or Stripe Payment Links)
+- TBD: pricing model, free tier, subscription vs pay-per-use
+- Architecture: payment verified before job starts, `analyses.payment_id` FK
 
 ---
 
