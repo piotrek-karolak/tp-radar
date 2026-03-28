@@ -102,6 +102,15 @@ Progress: 0% → 25%
     - Online research text with metadata (source, retrieval date)
 ```
 
+### Alternative input: Manual upload (fallback)
+
+When e-KRS is unavailable or scraping fails, users can upload PDF/XML files directly
+via drag & drop in the web UI. Uploaded files enter the pipeline at Phase 2 (same
+extraction flow). This ensures the product works even without automated scraping.
+
+Upload accepts: XML/XHTML (sprawozdanie), PDF (informacja dodatkowa, sprawozdanie
+zarządu). Files are validated for format before processing.
+
 **Important:** Phase 1 preserves BOTH structured extractions AND full document text.
 Structured data is the backbone; full text enables Phase 2 to find insights
 that no template anticipated. The depth of analysis is the product's value —
@@ -174,9 +183,9 @@ Step 4a — WRITER AGENT
     - write_custom_section(title, summary_md, full_md, after_key)
     - write_user_answer(question, answer_md) ← response to user's custom prompt
 
-Step 4b — REVIEWER AGENTS (1-2 reviewers, run in parallel)
-  Reviewer 1: domain accuracy — are the tax/TP claims correct? Are risks properly assessed?
-  Reviewer 2: quality & clarity — is the writing clear, professional, well-structured?
+Step 4b — REVIEWER AGENT (single reviewer, combined scope)
+  Reviewer checks BOTH: domain accuracy (tax/TP claims correct, risks properly assessed)
+  AND quality/clarity (writing clear, professional, well-structured)
   Input: draft report sections + source data (for fact-checking)
   Output: structured feedback per section (approve / revise with comments)
 
@@ -225,11 +234,11 @@ adds depth in the user's area of interest — it doesn't replace the standard an
 | Phase 2 (extraction + deep reading) | ~40k | ~8k | ~$0.55 |
 | Phase 3 (scoring) | ~15k | ~5k | ~$0.25 |
 | Phase 4a (report writing) | ~20k | ~10k | ~$0.35 |
-| Phase 4b (2 reviewers) | ~30k | ~4k | ~$0.25 |
+| Phase 4b (1 reviewer) | ~15k | ~2k | ~$0.15 |
 | Phase 4c (revision) | ~15k | ~5k | ~$0.15 |
-| **Total** | | | **~$1.65** |
+| **Total** | | | **~$1.55** |
 
-Estimate revised upward from $0.85 to ~$1.65 due to: full-text analysis (more input tokens),
+Estimate revised upward from $0.85 to ~$1.55 due to: full-text analysis (more input tokens),
 multi-agent review loop, and AI fallback for parsing. Still well within $1-5 budget.
 
 ---
@@ -553,16 +562,51 @@ These do NOT change the architecture but are recorded for planning:
 
 ---
 
+## 8b. Legal Disclaimer (required in all reports)
+
+Every generated report MUST include the following disclaimer in section 08 (Data Sources & Disclaimers):
+
+> Niniejszy raport ma charakter wyłącznie informacyjny i nie stanowi doradztwa podatkowego
+> w rozumieniu ustawy z dnia 5 lipca 1996 r. o doradztwie podatkowym. Raport został
+> wygenerowany automatycznie z wykorzystaniem sztucznej inteligencji na podstawie publicznie
+> dostępnych danych. Przed podjęciem decyzji biznesowych lub podatkowych należy skonsultować
+> się z licencjonowanym doradcą podatkowym.
+>
+> Analiza nie zastępuje dokumentacji cen transferowych ani benchmarkingu. AI nie przeprowadza
+> analizy porównywalności — nie ma dostępu do komercyjnych baz danych. Scoring ryzyka jest
+> orientacyjny i nie stanowi opinii podatkowej.
+
+This text is non-negotiable and must appear in every report regardless of completeness level.
+
+---
+
 ## 9. Implementation Approach
 
+### Plan sequence (revised after design review)
+
+1. **Plan 1** ✅ Foundation — backend scaffolding, auth, CRUD, frontend shell, tests
+2. **Plan 2** UI Lite — dashboard with mock data (from v1 analyses), report view with hardcoded data. Gives visual product early.
+3. **Plan 3** Extraction + Scoring — Claude API prompts for Phase 2 + Phase 3. Quality gates, scoring calibration on known companies.
+4. **Plan 4** Report Generation — Phase 4 (writer + reviewer). Connect to UI.
+5. **Plan 5** Scraping — Phase 1 (Playwright + pdfplumber + OCR). PDF upload fallback.
+6. **Plan 6** Full UI + Deployment — complete frontend, Railway + Cloudflare Pages.
+
+### Design per phase
 Each pipeline phase will be designed in detail in a separate session:
 1. **Research** the domain (e.g., TP methodology, CIT rules)
 2. **Design** the prompt: persona, instructions, tools, quality gates
-3. **Build golden standard** — expected output for test companies
+3. **Build golden standard** — expected output for known test companies (calibration)
 4. **Implement** the code
 5. **Evaluate** on real companies, iterate
 
-This ensures each phase is "thought through to atoms" before implementation, not built from a rough sketch.
+### Scoring calibration
+Score calibration uses 10-20 companies with known risk profiles (companies the team has worked with).
+Compare AI output vs expert expectation, tune prompts and thresholds until alignment is satisfactory.
+
+### Deterministic rules in prompts, not code
+Materiality thresholds (art. 11k CIT: PLN 10M goods/services, PLN 10M financial, PLN 2.5M tax havens),
+safe harbour rules (LVAS cost+5%), and cross-validation checks are included in Claude API prompts
+for Phases 2-3, not hardcoded as business logic. A strong reasoning model handles these reliably.
 
 ---
 

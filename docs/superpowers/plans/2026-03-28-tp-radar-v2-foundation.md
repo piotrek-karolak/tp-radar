@@ -2523,9 +2523,9 @@ After completing all tasks:
 - **Docker** Compose for local dev, Dockerfile for backend
 - **GitHub repo** ready for Plan 2
 
-**Next plans:**
-- **Plan 2:** Pipeline Phase 1 — scraping, parsing, OCR (requires separate session)
-- **Plan 3:** Pipeline Phases 2-3 — extraction + scoring (requires prompt design session)
-- **Plan 4:** Pipeline Phase 4 — multi-agent report generation (requires prompt design session)
-- **Plan 5:** Frontend — full UI design + implementation (requires design research session)
-- **Plan 6:** Deploy to Railway + Cloudflare Pages
+**Next plans (revised after design review 2026-03-28):**
+- **Plan 2:** UI Lite — dashboard with mock data (from v1), report view with hardcoded data
+- **Plan 3:** Extraction + Scoring — Claude API prompts for Phase 2 + Phase 3, calibration
+- **Plan 4:** Report Generation — Phase 4 (writer + 1 reviewer), connect to UI
+- **Plan 5:** Scraping — Phase 1 (Playwright + pdfplumber + OCR), PDF upload fallback
+- **Plan 6:** Full UI + Deployment — complete frontend, Railway + Cloudflare Pages
