@@ -2874,3 +2874,41 @@ New endpoint: POST /analyses/{id}/documents (multipart upload).
 
 37+ tests covering all pipeline components."
 ```
+
+---
+
+## Status: DONE (2026-04-02)
+
+All 11 tasks completed. 67 tests passing. 10 commits pushed to main.
+
+---
+
+## What Next
+
+### Immediate: Calibration on real documents
+1. Set `ANTHROPIC_API_KEY` in `tp-radar-v2/backend/.env`
+2. Start PostgreSQL: `docker compose up -d`
+3. Run Alembic migration: `cd backend && uv run alembic upgrade head`
+4. Start backend: `uv run uvicorn app.main:app --reload`
+5. Register a user, create analysis via API, upload v1 documents (from `.playwright-mcp/` dirs)
+6. Verify pipeline runs end-to-end with real Claude API calls
+7. Run calibration: `uv run python -m scripts.calibrate -v`
+8. Tune prompts in `extraction.py` and `scoring.py` if needed
+
+### Plan 4: Report Generation
+- Phase 4 of the pipeline: writer agent + reviewer agent + revision pass
+- Write → review → revise workflow using Claude API
+- Generates `report_sections` (summary_md + full_md) per section
+- Connects to existing Report View in frontend
+- Estimated scope: ~8 tasks
+
+### Plan 5: Scraping (data acquisition)
+- **Primary:** rejestr.io API (0.50 PLN/query) — NOT Playwright
+- **Fallback:** Playwright scraping e-KRS
+- **KRS lookup:** Official Open API (`api-krs.ms.gov.pl`) — free, registry data only
+- Research done 2026-04-02: government does NOT provide API for financial statements
+
+### Plan 6: Full UI + Deployment
+- Upload UI in frontend (drag & drop)
+- Pipeline progress live view (SSE already wired)
+- Railway (backend) + Cloudflare Pages (frontend)
